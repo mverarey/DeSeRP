@@ -1,0 +1,25 @@
+{
+  "name": "deserp",
+  "version": "3.5",
+  "homepage": "http://depotserver.com",
+  "authors": [
+    "Mauricio Vera <m.vera@depotserver.com>"
+  ],
+  "main": "assets/deserp/DeSeRP.js",
+  "ignore": [
+    "**/.*",
+    "vendor",
+    "assets",
+    "!assets/deserp",
+    "!assets/DeSeRP.png"
+  ],
+  "dependencies": {
+    "admin-lte": "~2.1.2",
+    "jquery": ">3.0",
+    "bootstrap-table": "*",
+    "dropzonejs":"*",
+    "font-awesome":">4.3",
+    "ionicons":"~2.0.1",
+    "notifyjs":"~0.4.1"
+  }
+}

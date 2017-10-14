@@ -1,0 +1,6 @@
+.DS_Store
+assets/*
+vendor/*
+tmp/*
+composer.phar
+composer.lock

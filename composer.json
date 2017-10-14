@@ -1,0 +1,26 @@
+{
+	"name": "mverarey/dsrp",
+    	"description": "DeSeRP",
+	"authors": [
+	{
+	    "name": "Mauricio Vera",
+	    "email": "m.vera@depotserver.com",
+	    "homepage": "http://www.mauriciovera.com/"
+	}],
+	"require": {
+	        "ezyang/htmlpurifier": "*",
+	        "slim/slim": "^3.8",
+	        "league/flysystem": "^1.0",
+	        "league/flysystem-aws-s3-v3": "^1.0",
+	        "swiftmailer/swiftmailer": "^5.4",
+	        "firebase/php-jwt": "^5.0",
+	        "illuminate/database": "*",
+	        "twig/twig": "^1.35",
+	        "imagine/imagine":"^0.7.1"
+	},
+	"autoload": {
+		"psr-4": {
+			"DepotServer\\":        "classes"
+		}
+	}
+}
