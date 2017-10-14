@@ -4,3 +4,5 @@ vendor/*
 tmp/*
 composer.phar
 composer.lock
+!assets/deserp
+!assets/DeSeRP.png
