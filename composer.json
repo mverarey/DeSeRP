@@ -25,8 +25,10 @@
 	},
     	"scripts": {
 		"post-install-cmd": [
-		     "bower install",
-		     "php core/instalar.php"
-		 ]
+			"bower install"
+		],
+		"post-update-cmd": [
+			"bower install"
+		]
 	}
 }
