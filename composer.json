@@ -8,6 +8,7 @@
 	    "homepage": "http://www.mauriciovera.com/"
 	}],
 	"require": {
+	        "php": "^7.0",
 	        "ezyang/htmlpurifier": "*",
 	        "slim/slim": "^3.8",
 	        "league/flysystem": "^1.0",
