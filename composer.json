@@ -23,8 +23,10 @@
 			"DepotServer\\":        "classes"
 		}
 	},
-	"post-install-cmd": [
-	     "bower install",
-	     "php core/instalar.php"
-	 ]
+    	"scripts": {
+		"post-install-cmd": [
+		     "bower install",
+		     "php core/instalar.php"
+		 ]
+	}
 }
