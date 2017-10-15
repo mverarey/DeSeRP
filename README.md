@@ -1,6 +1,6 @@
 ![DeSeRP](https://raw.githubusercontent.com/mverarey/dsrp/master/assets/DeSeRP.png)
 
-[![Build Status](https://api.travis-ci.org/mverarey/dsrp.svg?branch=master)](https://api.travis-ci.org/mverarey/dsrp)
+[![Build Status](https://api.travis-ci.org/mverarey/dsrp.svg?branch=master)](https://travis-ci.org/mverarey/dsrp)
 
 - [Requirements](#requirements)
 
