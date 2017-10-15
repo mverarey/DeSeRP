@@ -52,7 +52,7 @@ class FileManager
   }
 
   public function existeArchivo($path){
-    return $this->manager->has('fs://'.$path);
+    return $this->manager->has('fs://'.$path) ;
   }
 
   private function validarPath($path){

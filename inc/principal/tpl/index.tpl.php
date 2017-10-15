@@ -23,7 +23,7 @@
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
 </head>
-<body class="hold-transition skin-blue sidebar-mini fixed">
+<body class="hold-transition sidebar-mini fixed <?= strlen($_SESSION['usuario']['tema']) > 0 ? $_SESSION['usuario']['tema']  : 'skin-blue' ?>">
 <!-- Site wrapper -->
 <div class="wrapper">
   <header class="main-header">

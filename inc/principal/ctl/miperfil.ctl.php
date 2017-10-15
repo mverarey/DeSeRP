@@ -16,6 +16,11 @@ if(strlen($this->req['nombre']) > 0){
 
 	$res = $c->actualizar("usuarios", array( "nombre" => $nombre, "email" => $email, "servidorSMTP" => $servidor, "passwordSMTP" => $password, "tema" => $tema), $id, true);
 	if($res){
+
+		$_SESSION['usuario']['nombre'] = $nombre;
+		$_SESSION['usuario']['email'] = $email;
+		$_SESSION['usuario']['tema'] = $tema;
+
 		echo $this->msgOK("Cambios realizados exitosamente!");
 	}
 	
@@ -38,7 +43,7 @@ if(strlen($_FILES['file']['name']) > 0){
 	$imagine = new \Imagine\Gd\Imagine();
 	try{
 		$img = $imagine->open($_FILES['file']['tmp_name']);
-		$this->filesystem->escribirArchivo( $archivo.'_thumb.jpg', $img->thumbnail(new Box(140, 140))->get('jpg'),  $path, true); 
+		$this->filesystem->escribirArchivo( $archivo.'_thumb.jpg', $img->thumbnail(new Box(140, 140), \Imagine\Image\ImageInterface::THUMBNAIL_OUTBOUND)->get('jpg'),  $path, true); 
 		$this->filesystem->escribirArchivo( $archivo.'.jpg', $img->get('jpg'), $path, true); 
 		if( $this->filesystem->existeArchivo($path.$archivo.'.jpg') ){
 			$_SESSION['usuario']['imagen'] = '/'.$path.$archivo.'_thumb.jpg';
@@ -85,11 +90,7 @@ $scr = <<<Script
 		$("#frmFoto").show().removeClass("hidden");
 	});
 
-	Dropzone.options.frmFoto = {
-	  init: function() {
-	    this.on("addedfile", function(file) { alert("Added file."); });
-	  }
-	};
+	$("#txttema").val("{$_SESSION['usuario']['tema']}");
 Script;
 $this->agregarScript($scr);
 

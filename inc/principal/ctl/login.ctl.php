@@ -40,14 +40,13 @@ if($_REQUEST['validacion'] == md5(date("dmY"))){
 			}
 			$_SESSION['usuario']['area']['principal'] = 3;
 
-			$archivo = 'perfil_'.md5('perfil_'.$_SESSION['usuario']['id'].'_thumb.jpg');
+			$archivo = 'perfil_'.md5('perfil_'.$_SESSION['usuario']['id']).'_thumb.jpg';
 			$path = 'tmp/imgs/';
 			if( $this->filesystem->existeArchivo($path.$archivo) ){
 				$_SESSION['usuario']['imagen'] = '/'.$path.$archivo;
 			}else{
 				$_SESSION['usuario']['imagen'] = '/assets/admin-lte/dist/img/avatar5.png';
 			}
-
 			//echo strlen($_REQUEST['ruta']);
 			if(strlen($_REQUEST['ruta']) > 0){
 				header("Location: /".$_REQUEST['ruta']);

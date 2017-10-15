@@ -167,7 +167,20 @@
 					<div class="form-group">
 						<label for="txttema" class="col-sm-2 control-label">Tema</label>
 						<div class="col-sm-10">
-							<select id="txttema" name="tema" class="form-control"><option value="" {@pag->temaPred}>Predeterminado</option></select>
+							<select id="txttema" name="tema" class="form-control">
+								<option value="skin-yellow" >Amarillo</option>
+								<option value="skin-yellow-light" >Amarillo / Menú claro</option>
+								<option value="skin-blue" {@pag->temaPred}>Azul</option>
+								<option value="skin-blue-light" >Azul / Menú claro</option>
+								<option value="skin-black" >Blanco</option>
+								<option value="skin-black-light" >Blanco / Menú claro</option>
+								<option value="skin-purple" >Morado</option>
+								<option value="skin-purple-light" >Morado / Menú claro</option>
+								<option value="skin-red" >Rojo</option>
+								<option value="skin-red-light" >Rojo / Menú claro</option>
+								<option value="skin-green" >Verde</option>
+								<option value="skin-green-light" >Verde / Menú claro</option>
+							</select>
 						</div>
 					</div>
 				</div>
