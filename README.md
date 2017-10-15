@@ -8,9 +8,8 @@
 - MySQL, Postgres, SQL Server, or SQLite
 
 ## Install
-```
 - [composer](https://getcomposer.org/) install
-```
+
 ## License
 
 DeSeRP is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
