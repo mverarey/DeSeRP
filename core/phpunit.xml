@@ -1,10 +1,12 @@
-<phpunit backupGlobals="true" bootstrap="./bootstrap.php">
+<phpunit backupGlobals="true" bootstrap="phpunit/bootstrap.php" colors="true">
 	<filter>
 		<whitelist>
 			<directory>./</directory>
 		</whitelist>
 	</filter>
 	<testsuite>
-		<directory>./</directory>
+		 <testsuite name="DeSeRP">
+		            <directory>./phpunit/</directory>
+		</testsuite>
 	</testsuite>
 </phpunit>

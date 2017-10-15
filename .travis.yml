@@ -4,4 +4,4 @@ php:
   - 7.1
  env: DB=mysql
  before-script: composer install
- script: phpunit --bootstrap classes/DeSeRP.class.php core/phpunit/DeSeRPTest.php
+ script: phpunit --configuration core/phpunit.xml
