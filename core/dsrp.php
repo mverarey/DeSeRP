@@ -9,8 +9,8 @@ error_reporting(E_ERROR | E_WARNING | E_PARSE);
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
-use DepotServer\DeSeRP;
-use DepotServer\Router;
+use \DepotServer\DeSeRP;
+use \DepotServer\Router;
 
 $uri = Router::uri();
 if($uri['a'] == "json"){

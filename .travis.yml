@@ -3,7 +3,11 @@ php:
  - 7.0
  - 7.1
 env: DB=mysql
+services:
+- mysql
 before_script:
 - npm install -g bower
 - composer install
 script: phpunit --configuration core/phpunit.xml
+before_install:
+- mysql -e 'CREATE DATABASE tipi_proto;'

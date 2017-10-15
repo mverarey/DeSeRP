@@ -6,7 +6,7 @@
 	</filter>
 	<testsuite>
 		 <testsuite name="DeSeRP">
-		            <directory>./phpunit/</directory>
+		            <directory>./phpunit</directory>
 		</testsuite>
 	</testsuite>
 </phpunit>

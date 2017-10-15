@@ -21,7 +21,8 @@
 	"autoload": {
 		"psr-4": {
 			"DepotServer\\":        "classes"
-		}
+		},
+		"exclude-from-classmap": ["/classes/Configuracion.Inicial.class.php"]
 	},
     	"scripts": {
 		"post-install-cmd": [
