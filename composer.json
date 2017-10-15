@@ -26,10 +26,11 @@
 	},
     	"scripts": {
 		"post-install-cmd": [
-			"bower install"
+			"bower install",
+			"composer dump-autoload --optimize"
 		],
 		"post-update-cmd": [
-			"bower install"
+			"composer dump-autoload --optimize"
 		]
 	},
 	"require-dev": {

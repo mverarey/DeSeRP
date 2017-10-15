@@ -1,7 +1,11 @@
-<?php namespace DepotServer;
+<?php
+require_once('vendor/autoload.php');
 
-require __DIR__ . "/../../classes/DeSeRP.class.php";
-require __DIR__ . "/../../classes/Conexion.class.php";
+use \DepotServer\DeSeRP;
+use \DepotServer\Conexion;
+use \DepotServer\FileManager;
+//require __DIR__ . "/../../classes/DeSeRP.class.php";
+//require __DIR__ . "/../../classes/Conexion.class.php";
 
 use  \PHPUnit\Framework\TestCase;
 
