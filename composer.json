@@ -7,6 +7,7 @@
 	    "email": "m.vera@depotserver.com",
 	    "homepage": "http://www.mauriciovera.com/"
 	}],
+	"license": "MIT",
 	"require": {
 	        "php": "^7.0",
 	        "ezyang/htmlpurifier": "*",
