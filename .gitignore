@@ -6,3 +6,4 @@ composer.phar
 composer.lock
 !assets/deserp
 !assets/DeSeRP.png
+classes/Configuracion.class.php

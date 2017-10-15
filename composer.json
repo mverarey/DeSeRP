@@ -22,5 +22,9 @@
 		"psr-4": {
 			"DepotServer\\":        "classes"
 		}
-	}
+	},
+	"post-install-cmd": [
+	     "bower install",
+	     "php core/instalar.php"
+	 ]
 }
