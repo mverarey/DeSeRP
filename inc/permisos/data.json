@@ -1,0 +1,7 @@
+{
+	"nombre":"Permisos",
+	"icono":"key",
+	"elementos":{
+		"Administración":"\/app\/permisos\/administrar"
+	}
+} 

@@ -1,4 +1,16 @@
-<span class="version">v. 2.7</span>
+<div class="box">
+  <div class="box-header with-border">
+    <h3 class="box-title">DSFormBuilder</h3>
+    <div class="box-tools pull-right">
+      <!-- Buttons, labels, and many other things can be placed here! -->
+      <!-- Here is a label for example -->
+      <span class="label label-primary version">v. 3.5</span>
+    </div>
+    <!-- /.box-tools -->
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body">
+
 <div class="col-xs-12 col-sm-5">
 
 	<div class="form-group">
@@ -30,3 +42,8 @@
 </div>
 
 <div class="col-xs-12 col-sm-7" style="font-size: 0.8em;" id="res"></div>
+
+</div>
+  <!-- /.box-body -->
+</div>
+<!-- /.box -->

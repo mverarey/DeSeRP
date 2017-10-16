@@ -17,7 +17,7 @@
 	        "swiftmailer/swiftmailer": "^5.4",
 	        "firebase/php-jwt": "^5.0",
 	        "illuminate/database": "*",
-	        "twig/twig": "^1.35",
+	        "twig/twig": "^2.0",
 	        "imagine/imagine":"^0.7.1"
 	},
 	"autoload": {

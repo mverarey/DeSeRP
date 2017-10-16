@@ -1,7 +1,7 @@
 <?
 $this->establecerTitulo("Generador de formularios");
 
-//$c = new Conexion();
+$c = new DepotServer\Conexion();
 
 // Depot
 //$c = new Conexion('depotserver.com', 'depot', 'eahv790802;', 'depot_cw');
@@ -30,17 +30,18 @@ $this->establecerTitulo("Generador de formularios");
 
 //$c = new Conexion("uinl.preregistros.com.mx", 'uinlprer_user',  'pgfTvGZ!Pd5T[Wgen2', "uinlprer_wp");
 
-$c = new Conexion("localhost", 'depotse1_farmasa',  '@P!t!Fe%W,uvlOhfBN', "depotse1_farmasa");
+//$c = new DepotServer\Conexion("localhost", 'depotse1_farmasa',  '@P!t!Fe%W,uvlOhfBN', "depotse1_farmasa");
 
 $oss = array($this->os(1),$this->os(2),$this->os(3),$this->os(4));
 
 switch($this->os(4)){
 
 	case "tablas":
-		$res = $c->query("SHOW TABLES");
-		while($f = mysql_fetch_row($res)){
-			foreach($f as $tbl){
-				$tbls .= "<option value='".$tbl."'>".$tbl."</option>";
+		$tables = $c->query('SHOW TABLES');
+		foreach($tables as $table)
+		{
+			foreach ($table as $key => $value){
+				$tbls .= "<option value='".$value."'>".$value."</option>";
 			}
 		}
 		echo $tbls;
@@ -95,7 +96,13 @@ switch($this->os(4)){
 			$noV = array("_", "$");
 			$val = array("", "");
 			$mod = str_replace($noV, $val, strtolower($tabla));
-			$ruta = dirname(__FILE__)."/../../../archivos/formbuilder";
+			$ruta = dirname(__FILE__)."/../../../tmp/formbuilder";
+			$rutaTpls = dirname(__FILE__)."/../assets";
+			if(!is_dir($ruta)){
+				if(mkdir($ruta)){
+					echo "<li><i class='glyphicon glyphicon-ok'></i> Carpeta principal creada: ".$carpeta."</li>";
+				}
+			}
 			if(is_dir($ruta)){
 				echo "<li>Creando carpetas...<ul>";
 				if(is_dir($ruta."/".$mod)){
@@ -114,12 +121,10 @@ switch($this->os(4)){
 				}
 				echo "</ul></li><li>Generando archivos...<ul>";
 
-
-
 				$exportartpl = "";
 				if($exportar){
 					$frms = array("{TABLA}");
-					$plantillaexptpl = file_get_contents($ruta."/plantillaexpctl.txt");
+					$plantillaexptpl = file_get_contents($rutaTpls."/plantillaexpctl.txt");
 					echo "<li><i class='glyphicon glyphicon-ok'></i> Plantilla exportar cargada</li>";
 					$plantillaexptpl = str_replace($frms, array($tabla), $plantillaexptpl );
 					echo "<li><i class='glyphicon glyphicon-ok'></i> Campos establecidos</li>";
@@ -148,7 +153,8 @@ switch($this->os(4)){
 				 */ 
 				$res = $c->query("SHOW COLUMNS FROM ".$tabla);
 				if($c->cantidad($res) > 0){
-					while($f = mysql_fetch_assoc($res)){
+					foreach ($res as $f) {
+						$f = get_object_vars($f);
 						if($f['Field'] == "id" || ($f['Key'] == "PRI" && $f['Extra'] == "auto_increment") ){ 
 							$camposi .= " NULL, ";
 							$camposo .= " \$(\"#idObjeto\").val(data.id); \n";
@@ -187,7 +193,7 @@ switch($this->os(4)){
 				}
 
 
-				$plantillatpl = file_get_contents($ruta."/plantillatpl.txt");
+				$plantillatpl = file_get_contents($rutaTpls."/plantillatpl.txt");
 				echo "<li><i class='glyphicon glyphicon-ok'></i> Plantilla TPL cargada</li>";
 				$plantillatpl = str_replace($frms, array(md5($tabla),$_REQUEST['objeto'], $camposc, $camposm, $columnas, $exportartpl), $plantillatpl );
 				echo "<li><i class='glyphicon glyphicon-ok'></i> Campos establecidos</li>";
@@ -214,7 +220,7 @@ switch($this->os(4)){
 					$("#dtxtclave option[value='"+data.idObjeto+"']").attr("selected", "selected");
 				 *				  
 				 */				
-				$plantillactl = file_get_contents($ruta."/plantillactl.txt");
+				$plantillactl = file_get_contents($rutaTpls."/plantillactl.txt");
 				echo "<li><i class='glyphicon glyphicon-ok'></i> Plantilla CTL cargada</li>";
 				$plantillactl = str_replace($frms, array($tabla, md5($tabla), $_REQUEST['objeto'], $_REQUEST['objetos'], $campost, $camposi, $camposa, $camposo, $camposun, $camposuv), $plantillactl );
 				echo "<li><i class='glyphicon glyphicon-ok'></i> Campos establecidos</li>";
@@ -225,7 +231,7 @@ switch($this->os(4)){
 				
 
 				$frms = array("{TABLA}","{HASH}","{OBJETO}", "{OBJETOS}", "{CAMPOS}", "{INSERTAR}", "{ACTUALIZAR}", "{MODIFICAR}", "{CAMPOSUN}", "{CAMPOSUV}");
-				$plantillactl = file_get_contents($ruta."/plantillacontrolador.txt");
+				$plantillactl = file_get_contents($rutaTpls."/plantillacontrolador.txt");
 				echo "<li><i class='glyphicon glyphicon-ok'></i> Plantilla Controlador cargada</li>";
 				$plantillactl = str_replace($frms, array($tabla, md5($tabla), $_REQUEST['objeto'], $_REQUEST['objetos'], $campost, $camposi, $camposa, $camposo, $camposun, $camposuv), $plantillactl );
 				echo "<li><i class='glyphicon glyphicon-ok'></i> Campos establecidos</li>";
@@ -238,7 +244,7 @@ switch($this->os(4)){
 
 
 				$frms = array("{TABLA}","{OBJETO}", "{OBJETOS}", "{CAMPOS}", "{INSERTAR}", "{ACTUALIZAR}", "{MODIFICAR}");
-				$plantillaobt = file_get_contents($ruta."/plantillaobt.txt");
+				$plantillaobt = file_get_contents($rutaTpls."/plantillaobt.txt");
 				$plantillaobt = str_replace($frms, array($tabla, $_REQUEST['objeto'], $_REQUEST['objetos'], $campost, $camposi, $camposa, $camposo), $plantillaobt );
 				echo "<li><i class='glyphicon glyphicon-ok'></i> Plantilla OBT cargada</li>";
 				$plantillaobt = str_replace($frms, array($tabla), $plantillaobt);
@@ -247,7 +253,7 @@ switch($this->os(4)){
 				unset($plantillaobt);
 
 				$frms = array("{TABLA}","{HASH}","{WHERE}");
-				$plantillaobttab = file_get_contents($ruta."/plantillaobttab.txt");
+				$plantillaobttab = file_get_contents($rutaTpls."/plantillaobttab.txt");
 				echo "<li><i class='glyphicon glyphicon-ok'></i> Plantilla OBTTAB cargada</li>";
 				$plantillaobttab = str_replace($frms, array($tabla, md5($tabla), $where), $plantillaobttab );
 				file_put_contents($ruta."/".$mod."/ctl/obtenertabla.ctl.php", $plantillaobttab);
@@ -280,7 +286,7 @@ switch($this->os(4)){
 			}
 			echo "</ul>";
 			
-			echo "<a class='btnDescargar btn btn-success' href='/archivos/formbuilder/".$mod.".zip?v=".date("Ymdhis")."'><i class='glyphicon glyphicon-save'></i> Descargar</a>";
+			echo "<a class='btnDescargar btn btn-success' href='/tmp/formbuilder/".$mod.".zip?v=".date("Ymdhis")."'><i class='glyphicon glyphicon-save'></i> Descargar</a>";
 			echo "<p style='font-size:8px; text-align:right;'>versi&oacute;n: 2017</p>";
 		}
 	break;

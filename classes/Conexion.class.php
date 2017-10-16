@@ -606,7 +606,7 @@ class Conexion{
 	public function obtenerPermisos(){
 		//$sql = "SELECT * FROM Usuarios_Permisos WHERE idUsuario = ".$_SESSION['usuario']['id']. " UNION SELECT ".$_SESSION['usuario']['id'].", 'principal', '3' ORDER BY `modulo` ASC";
 		//return $this->res = $this->query($sql);
-		return $this->con::table('usuarios_permisos')->where([ ['idUsuario', '=', $_SESSION['usuario']['id'] ] ])->get();
+		return $this->con::table('usuarios_permisos')->where([ ['idUsuario', '=', $_SESSION['usuario']['id'] ] ])->get()->all();
 	}
 	
 	/*
@@ -625,11 +625,14 @@ class Conexion{
 	 * @param	mysql_result $res Resultado de la consulta
 	 */
 	public function cantidad($res){
+		return sizeof($res);
+		/*
 		if($res && mysql_num_rows($res)>0){
 			return mysql_num_rows($res);
 		}else{
 			return 0 ;
 		}
+		*/
 	}
 	
 	/*

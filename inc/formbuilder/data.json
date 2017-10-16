@@ -1,0 +1,7 @@
+{
+	"nombre":"Form builder",
+	"icono":"database",
+	"elementos":{
+		"Generador":"\/app\/formbuilder\/principal"
+	}
+} 

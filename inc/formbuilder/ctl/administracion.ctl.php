@@ -1,7 +1,7 @@
 <?
 $this->establecerTitulo("Administrador de campos");
 
-$c = new Conexion();
+$c = new DepotServer\Conexion();
 switch( $_REQUEST['acc'] ){
 	case "crear":
 		$res = $c->insertar("test_formbuilder",

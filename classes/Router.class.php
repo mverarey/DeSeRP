@@ -23,6 +23,6 @@ class Router{
 		$letras = array_slice($alfabeto, 0, sizeof($argsUri));
 		$args = array_combine($letras, $argsUri);
 
-		return array_merge($req, $args);
+		return array_merge($req, $args, array("uri" => $uri) );
 	}
 }

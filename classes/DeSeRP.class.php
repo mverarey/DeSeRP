@@ -22,92 +22,92 @@ class DeSeRP{
 	protected $filesystem;
 
 	public function __construct($req){
-	try{
+		try{
+			$this->req = $req;
+
+			$this->iniciarSistema();
+			if( isset( $_SESSION['activa']) ){
+
+				if($_SESSION['activa'] == true AND ($_SESSION['usuario']['area'][$req['b']] > 0 OR strlen($req['b'])==0 OR $req['b'] == 'principal')){
+					$this->contenido = "";
+					$req['b'] = strtolower($req['b']);
+					$req['c'] = strtolower($req['c']);
+
+					if($req['a']=='app' && file_exists("inc/".$req['b']."/tpl/".$req['c'].".tpl.php")){
+						$this->modo="deserp";
+						$this->menu = $this->obtenerArchivo("inc/principal/tpl/menu.tpl.php", true, array("urlActual" => $req['uri'],"menu" => $_SESSION['usuario']['menu']));
+						//$this->menuizq = $this->obtenerArchivo("inc/principal/tpl/menuizq.tpl.php");
+						if(file_exists("inc/".$req['b']."/ctl/".$req['c'].".ctl.php")){
+							$this->contenido = $this->obtenerArchivo("inc/".$req['b']."/ctl/".$req['c'].".ctl.php");
+						}
+						$this->contenido .= $this->obtenerArchivo("inc/".$req['b']."/tpl/".$req['c'].".tpl.php", true);
+
+					}else if($req['a']=='wsdl'){
+						$this->modo = "wsdl";
+						if(file_exists("inc/".$req['b']."/ctl/".$req['c'].".ctl.php")){
+							$this->contenido = $this->obtenerArchivo("inc/".$req['b']."/ctl/".$req['c'].".ctl.php");
+						}else{
+							$this->contenido = "";
+						}
+					}else{
+						$this->menu = $this->obtenerArchivo("inc/principal/tpl/menu.tpl.php", true, array("urlActual" => $req['uri'],"menu" => $_SESSION['usuario']['menu']) );
+						$this->contenido = $this->obtenerArchivo("inc/principal/ctl/principal.ctl.php");
+						$this->contenido .= $this->obtenerArchivo("inc/principal/tpl/principal.tpl.php", true);
+					}
+				}else if($_SESSION['activa'] == true){
+					throw new \Exception("Usted no tiene permiso para entrar a esta &aacute;rea.");
+				}
+			}else{
+				$this->establecerTitulo("Ingreso a DeSeRP");
+				$this->contenido = $this->obtenerArchivo("inc/principal/ctl/login.ctl.php");
+				$this->contenido .= $this->obtenerArchivo("inc/principal/tpl/login.tpl.php");
+
+				$this->agregarScript('$("body").addClass("layout-top-nav"); $(".main-sidebar").remove(); $(".sidebar-toggle").replaceWith(\'<a href="/" class="navbar-brand">DeSeRP</a>\'); $(".logo").hide();');
+			}
+		}catch(\Exception $e){
+			$this->establecerTitulo("Excepci&oacute;n");
+			$this->contenido= $this->msgError("<p>".$e->getMessage()."</p><p><a href='javascript:history.back(1)'>Regresar</a></p><textarea class='hidden'>".print_r(debug_backtrace(),true)."</textarea>");
+		}catch(Exception $e){
+			$this->establecerTitulo("Excepci&oacute;n");
+			$this->contenido= $this->msgError("<p>".$e->getMessage()."</p><p><a href='javascript:history.back(1)'>Regresar</a></p><textarea class='hidden'>".print_r(debug_backtrace(),true)."</textarea>");
+		}  
+
+	}
+
+	private function iniciarSistema(){
 		$this->filesystem = new FileManager('../');
+		$this->loader = new \Twig\Loader\FilesystemLoader('/');
+		$this->twig = new \Twig\Environment($this->loader, array( 'cache' => 'tmp/cache', 'debug' => true ));
 
 		$this->detectarBrowser();
 		$this->cargarVariables();
-		$this->req = $req;
 		$config = new Configuracion();
 		setlocale(LC_MONETARY, $config->locale);
+	}
 
-		if( isset( $_SESSION['activa']) ){
-
-			if($_SESSION['activa'] == true AND ($_SESSION['usuario']['area'][$req['b']] > 0 OR strlen($req['b'])==0 OR $req['b'] == 'principal')){
-				$this->contenido = "";
-				$req['b'] = strtolower($req['b']);
-				$req['c'] = strtolower($req['c']);
-				if( $this->browser == "mobile" && $req['a']=='app' && false){
-					$this->menu = $this->obtenerArchivo("inc/principal/tpl/menu.mob.tpl.php");
-					if(file_exists("inc/".$req['b']."/ctl/".$req['c'].".mob.ctl.php")){
-						$this->contenido = $this->obtenerArchivo("inc/".$req['b']."/ctl/".$req['c'].".mob.ctl.php");
-					}else if(file_exists("inc/".$req['b']."/ctl/".$req['c'].".ctl.php")){
-						$this->contenido = $this->obtenerArchivo("inc/".$req['b']."/ctl/".$req['c'].".ctl.php");
-					}
-					if(file_exists("inc/".$req['b']."/tpl/".$req['c'].".mob.tpl.php")){
-						$this->contenido .= $this->obtenerArchivo("inc/".$req['b']."/tpl/".$req['c'].".mob.tpl.php");
-					}else{
-						$this->contenido .= $this->obtenerArchivo("inc/".$req['b']."/tpl/".$req['c'].".tpl.php");
-					}
-				}else if($req['a']=='app' && file_exists("inc/".$req['b']."/tpl/".$req['c'].".tpl.php")){
-					$this->modo="deserp";
-					$this->menu = $this->obtenerArchivo("inc/principal/tpl/menu.tpl.php");
-					//$this->menuizq = $this->obtenerArchivo("inc/principal/tpl/menuizq.tpl.php");				
-					if(file_exists("inc/".$req['b']."/ctl/".$req['c'].".ctl.php")){
-						$this->contenido = $this->obtenerArchivo("inc/".$req['b']."/ctl/".$req['c'].".ctl.php");
-					}
-					$this->contenido .= $this->obtenerArchivo("inc/".$req['b']."/tpl/".$req['c'].".tpl.php");
-				}else if($req['a']=='wsdl'){
-					$this->modo = "wsdl";
-					if(file_exists("inc/".$req['b']."/ctl/".$req['c'].".ctl.php")){
-						$this->contenido = $this->obtenerArchivo("inc/".$req['b']."/ctl/".$req['c'].".ctl.php");
-					}else{
-						$this->contenido = "";
-					}
-				}else{
-					$this->menu = $this->obtenerArchivo("inc/principal/tpl/menu.tpl.php");
-					$this->contenido = $this->obtenerArchivo("inc/principal/ctl/principal.ctl.php");
-					$this->contenido .= $this->obtenerArchivo("inc/principal/tpl/principal.tpl.php");
-				}
-			}else if($_SESSION['activa'] == true){
-				throw new \Exception("Usted no tiene permiso para entrar a esta &aacute;rea.");
-			}
+	public function obtenerArchivo($archivo, $cache = false, $vars = array() ){
+		if(!$cache){
+			ob_start();
+			require_once($archivo);
+			$info = ob_get_contents();
+			ob_end_clean();
+			return $info;
 		}else{
-			$this->establecerTitulo("Ingreso a DeSeRP");
-			$this->contenido = $this->obtenerArchivo("inc/principal/ctl/login.ctl.php");
-			$this->contenido .= $this->obtenerArchivo("inc/principal/tpl/login.tpl.php");
-
-			$this->agregarScript('$("body").addClass("layout-top-nav"); $(".main-sidebar").remove(); $(".sidebar-toggle").replaceWith(\'<a href="/" class="navbar-brand">DeSeRP</a>\'); $(".logo").hide();');
+			return $this->obtenerTemplate($archivo, $vars);
 		}
-	}catch(\Exception $e){
-		$this->establecerTitulo("Excepci&oacute;n");
-		$this->contenido= $this->msgError("<p>".$e->getMessage()."</p><p><a href='javascript:history.back(1)'>Regresar</a></p><textarea class='hidden'>".print_r(debug_backtrace(),true)."</textarea>");
-	}catch(Exception $e){
-		$this->establecerTitulo("Excepci&oacute;n");
-		$this->contenido= $this->msgError("<p>".$e->getMessage()."</p><p><a href='javascript:history.back(1)'>Regresar</a></p><textarea class='hidden'>".print_r(debug_backtrace(),true)."</textarea>");
-	}  
-
 	}
 	
-	public function obtenerArchivo($archivo){
-		ob_start();
-		require_once($archivo);
-		$info = ob_get_contents();
-		ob_end_clean();
-		return $info;
-	}
-	
-	private function obtenerTemplate($archivo){
-		$info = $this->filesystem->leerArchivo($archivo);
-		return $info;
+	private function obtenerTemplate($archivo, $vars = array() ){
+		return $this->twig->load($archivo)->render( $vars );
 	}
 	
 	private function prepararPagina(){
+
 		$config = new Configuracion();
 		$this->debug($config->debug);
 		$this->contenido .= $this->cargarPlugins();	
 		if($this->modo != "wsdl"){
-			$this->pagina = $this->obtenerArchivo("inc/principal/tpl/index.tpl.php");
+			$this->pagina = $this->obtenerArchivo("inc/principal/tpl/index.tpl.php", true, array("session" => $_SESSION));
 		}else{
 			$this->pagina = $this->contenido;
 		}
@@ -163,13 +163,9 @@ class DeSeRP{
 		}
 	}
 	
-	public function establecerTitulo($titulo){
-		$this->d['pag']['titulo'] = $titulo;
-	}
+	public function establecerTitulo($titulo){ $this->d['pag']['titulo'] = $titulo; }
 	
-	public function establecerVariable($nombre,$valor){
-		$this->d['pag'][$nombre] = $valor;
-	}
+	public function establecerVariable($nombre,$valor){ $this->d['pag'][$nombre] = $valor; }
 	public function ev($n,$v){$this->establecerVariable($n,$v);}
 	
 	public function msgError($msg, $btnCerrar = true){ return  "<div class='error alert alert-danger'>".$msg.($btnCerrar?"<button type='button' class='close' data-dismiss='alert' aria-label='Cerrar'><span aria-hidden='true'>&times;</span></button>":"")."</div>";}
@@ -177,7 +173,6 @@ class DeSeRP{
 	public function msgInfo($msg, $btnCerrar = true){ return  "<div class='info alert alert-info'>".$msg.($btnCerrar?"<button type='button' class='close' data-dismiss='alert' aria-label='Cerrar'><span aria-hidden='true'>&times;</span></button>":"")."</div>";}
 	public function msgOk($msg, $btnCerrar = true){ return  "<div class='ok alert alert-success'>".$msg.($btnCerrar?"<button type='button' class='close' data-dismiss='alert' aria-label='Cerrar'><span aria-hidden='true'>&times;</span></button>":"")."</div>";}
 	
-
 	private function debug($habilitado){
 		if($habilitado){
 			ob_start();
@@ -224,7 +219,6 @@ class DeSeRP{
 			$vars .= ob_get_contents();
 			ob_end_clean();
 			$this->contenido .= $this->msgInfo($vars);
-			
 		} 
 	}
 	
@@ -277,4 +271,32 @@ class DeSeRP{
 			//$this->browser = "mobile";
 		}
 	}
+
+	public function generarMenu($modulos){
+		$menu = array();
+		foreach ($modulos as $modulo) {
+			$archivo = "inc/".$modulo."/data.json";
+			if ( $this->filesystem->existeArchivo($archivo) ){
+				$menu[] = json_decode($this->filesystem->leerArchivo($archivo), true);
+			}
+		}
+		return $menu;
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

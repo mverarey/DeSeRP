@@ -33,21 +33,16 @@ if($_REQUEST['validacion'] == md5(date("dmY"))){
 
 			$_SESSION['usuario']['ultimaActualizacion'] = date("d/m/y H:i");
 			
-			$res = $c->obtenerPermisos();
-			//while($fila = mysql_fetch_assoc($res)){
-			foreach ($res as $modulo => $nivel) {
-				$_SESSION['usuario']['area'][$modulo] = $nivel;
+			$modulosDisponibles = $c->obtenerPermisos();
+			foreach ($modulosDisponibles as $modulo) {
+				$_SESSION['usuario']['area'][$modulo->modulo] = $modulo->nivel;
 			}
 			$_SESSION['usuario']['area']['principal'] = 3;
+			$_SESSION['usuario']['menu'] = $this->generarMenu( array_keys($_SESSION['usuario']['area']) );
 
-			$archivo = 'perfil_'.md5('perfil_'.$_SESSION['usuario']['id']).'_thumb.jpg';
-			$path = 'tmp/imgs/';
-			if( $this->filesystem->existeArchivo($path.$archivo) ){
-				$_SESSION['usuario']['imagen'] = '/'.$path.$archivo;
-			}else{
-				$_SESSION['usuario']['imagen'] = '/assets/admin-lte/dist/img/avatar5.png';
-			}
-			//echo strlen($_REQUEST['ruta']);
+			$archivo = 'perfil_'.md5('perfil_'.$_SESSION['usuario']['id']).'_thumb.jpg'; $path = 'tmp/imgs/';
+			$this->filesystem->existeArchivo($path.$archivo)  ? $_SESSION['usuario']['imagen'] = '/'.$path.$archivo : $_SESSION['usuario']['imagen'] = '/assets/admin-lte/dist/img/avatar5.png'; 
+
 			if(strlen($_REQUEST['ruta']) > 0){
 				header("Location: /".$_REQUEST['ruta']);
 				exit;

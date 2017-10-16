@@ -6,7 +6,7 @@ $this->establecerTitulo("Datos de mi usuario");
 $c = new Conexion();
 
 if(strlen($this->req['nombre']) > 0){
-	
+
 	$id = $this->req['id'];
 	$nombre = $this->req['nombre'];
 	$email = $this->req['email'];

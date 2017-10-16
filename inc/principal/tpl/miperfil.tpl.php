@@ -170,7 +170,7 @@
 							<select id="txttema" name="tema" class="form-control">
 								<option value="skin-yellow" >Amarillo</option>
 								<option value="skin-yellow-light" >Amarillo / Menú claro</option>
-								<option value="skin-blue" {@pag->temaPred}>Azul</option>
+								<option value="skin-blue" {@pag->temaPred}>Azul [Predeterminado]</option>
 								<option value="skin-blue-light" >Azul / Menú claro</option>
 								<option value="skin-black" >Blanco</option>
 								<option value="skin-black-light" >Blanco / Menú claro</option>

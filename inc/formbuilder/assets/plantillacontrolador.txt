@@ -1,0 +1,60 @@
+<?
+$response = array();
+$response["ack"] = 0;
+
+$c = new DepotServer\Conexion();
+switch( $_REQUEST['acc'] ){
+	case "crear":
+		$res = $c->insertar("{TABLA}",
+					array( {INSERTAR} )
+				);
+		if($res){
+			$response['ack'] = 200;
+			$response['msg'] = "Se registro el objeto correctamente con el id ".$res.".";
+		}else{
+			$response['msg'] = "Ocurrió un error, inténtelo nuevamente.";
+		}
+	break;
+	
+	case "actualizar":
+		$res = $c->actualizar("{TABLA}",
+				array(
+					 {ACTUALIZAR}
+				),
+				$_REQUEST['idObjeto']
+			);
+		if($res > 0){
+			$response['ack'] = 200;
+			$response['msg'] = "Se ha actualizado exitosamente.";
+		}else if($res == 0){
+			$response['ack'] = 201;
+			$response['msg'] = "No se realizaron cambios.";
+		}else{
+			$response['msg'] = "Ocurrió un error, inténtelo nuevamente.";
+		}
+	break;
+	
+	case "eliminar":
+		$res = $c->borrar("{TABLA}",
+				array(
+					"id", $_REQUEST['idObjeto']
+				)
+			);
+		if($res > 0){
+			$response['ack'] = 200;
+			$response['msg'] = "Se ha eliminado exitosamente.";
+		}else if($res == 0){
+			$response['ack'] = 201;
+			$response['msg'] = "No se realizaron cambios.";
+		}else{
+			$response['msg'] = "Ocurrió un error, inténtelo nuevamente.";
+		}
+	break;
+
+	default:
+		$response['ack'] = 200;
+		$response['req'] = print_r($_REQUEST);
+	break;
+}
+echo json_encode($response);
+?>
