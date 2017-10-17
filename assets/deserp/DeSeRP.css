@@ -3,3 +3,5 @@ body{font-weight: 400;}
 
 .profile-user-img { margin:0 auto; width:100px; padding:3px; border:3px solid #d2d6de}
 .profile-username { font-size:21px; margin-top:5px }
+
+.table.table-hover.table-striped{ font-size: 0.9em;}

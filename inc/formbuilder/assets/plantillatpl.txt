@@ -1,13 +1,21 @@
-<div id="administrar">
+<div class="box">
+  <div class="box-header with-border">
+    <h3 class="box-title">{OBJETO}</h3>
+    <!-- /.box-tools -->
+  </div>
+  <!-- /.box-header -->
+  <div class="box-body">
+
+    <div id="administrar">
 	<p>Seleccione {OBJETO} y despu&eacute;s d&eacute; click sobre la acci&oacute;n que desee realizar.</p>
-	<table id="tbldatab{HASH}" data-toggle="table" data-url="/wsdl/<?=$this->os(2)?>/obtenertabla" data-pagination="true"
+	<table id="tbldatab{HASH}" data-toggle="table" data-url="/wsdl/{TABLA}/obtenertabla" data-pagination="true"
 	   data-method="post" data-side-pagination="server" data-page-list="[5, 10, 20, 50, 100, 200, 300, 400, 500, 1000, 5000, 10000]" data-toolbar="#toolbar-bootstrapTable"
 	   data-search="true" data-striped="true" data-height="500" data-cache="true" data-show-refresh="true"
 	   data-click-to-select="true" data-select-item-name="id" data-show-toggle="true" data-show-columns="true" >
 	<thead>
 	<tr>
 		<th data-field="null" data-radio="true"></th>
-		{COLUMNAS}
+{COLUMNAS}
 	</tr>
 	</thead>
 	</table>
@@ -17,7 +25,12 @@
 		<button type="button" class="btn btn-default" data-toggle="modal" data-target="#frmEliminar"><i class="fa fa-trash"></i> Eliminar</button>
 		{EXPORTAR}
 	</div>
+    </div>
+
+  </div>
+  <!-- /.box-body -->
 </div>
+<!-- /.box -->
 
 <div class="modal fade" id="crear" tabindex="-1" role="dialog" aria-labelledby="crearLabel">
 	<form method="post">
@@ -25,13 +38,13 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="crearLabel"><?php echo _("Nuevo {OBJETO}")?></h4>
+					<h4 class="modal-title" id="crearLabel">Nuevo {OBJETO}</h4>
 				</div>
 				<div class="modal-body">
 					<div class="col-xs-12 caja_mediana">
-						<h2><?php echo _("Instrucciones")?></h2>
+						<h2>Instrucciones</h2>
 						<ul class="nostyle">
-							<li>* <?php echo _("Campos requeridos")?></li>
+							<li>* Campos requeridos</li>
 						</ul>
 					</div>
 					<div class="col-xs-12">
@@ -45,8 +58,8 @@
 					<br style="clear:both" />
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal"><?php echo _("Cancelar")?></button>
-					<button type="submit" class="btn btn-primary"><?php echo _("Crear {OBJETO}")?></button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+					<button type="submit" class="btn btn-primary">Crear {OBJETO}</button>
 				</div>
 			</div>
 		</div>
@@ -59,10 +72,10 @@
 			<div class="modal-content">
 				<div class="modal-header">
 					<button type="button" class="close" data-dismiss="modal" aria-label="Cerrar"><span aria-hidden="true">&times;</span></button>
-					<h4 class="modal-title" id="frmActualizarLabel"><?php echo _("Modificar {OBJETO}")?></h4>
+					<h4 class="modal-title" id="frmActualizarLabel">Modificar {OBJETO}</h4>
 				</div>
 				<div class="modal-body">
-					<div id="camposobjeto" class="form-horizontal" title="<?php echo _("Modificar {OBJETO}")?>">
+					<div id="camposobjeto" class="form-horizontal" title="Modificar {OBJETO}">
 						{CAMPOSM}
 						<br style="clear:both"/>
 						<input type="hidden" name="acc" value="actualizar" />
@@ -70,8 +83,8 @@
 					</div>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-default" data-dismiss="modal"><?php echo _("Cancelar")?></button>
-					<button type="button" id="btnActualizar" class="btn btn-primary"><?php echo _("Modificar {OBJETO}")?></button>
+					<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+					<button type="button" id="btnActualizar" class="btn btn-primary">Modificar {OBJETO}</button>
 				</div>
 			</div>
 		</div>
@@ -84,16 +97,16 @@
 		<div class="modal-content">
 		  <div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<p class="modal-title" id="frmEliminarLabel"><?php echo _("Eliminar {OBJETO}")?></p>
+			<p class="modal-title" id="frmEliminarLabel">Eliminar {OBJETO}</p>
 		  </div>
 		  <div class="modal-body">
-			<p><?php echo _("&iquest;Est&aacute; seguro que desea eliminar {OBJETO}?")?></p>
+			<p>&iquest;Est&aacute; seguro que desea eliminar {OBJETO}?</p>
 			<input type="hidden" name="acc" value="eliminar" />
 			<input type="hidden" name="idObjeto" id="eidObjeto"/>
 		  </div>
 		  <div class="modal-footer">
-			<button type="button" class="btn btn-default" data-dismiss="modal"><?php echo _("Cancelar")?></button>
-			<button type="button" id="btnEliminar" class="btn btn-primary"><?php echo _("Eliminar")?></button>
+			<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+			<button type="button" id="btnEliminar" class="btn btn-primary">Eliminar</button>
 		  </div>
 		</div>
 	  </div>

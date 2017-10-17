@@ -10,7 +10,7 @@
  * @copyright    DepotServer 2010
  * @name         DeSeRP
  * @since		0.1_beta
- * @version		3.5
+ * @version		3.0
  */
 use DepotServer\Configuracion;
 use DepotServer\Conexion;
@@ -24,6 +24,8 @@ class DeSeRP{
 	public function __construct($req){
 		try{
 			$this->req = $req;
+
+			$_REQUEST = $req;
 
 			$this->iniciarSistema();
 			if( isset( $_SESSION['activa']) ){

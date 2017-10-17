@@ -131,7 +131,7 @@ switch($this->os(4)){
 					file_put_contents($ruta."/".$mod."/ctl/exportar.ctl.php", $plantillaexptpl);
 					echo "<li><i class='glyphicon glyphicon-ok'></i> Archivo exportar generado</li>";
 					unset($plantillaexptpl);
-					$exportartpl = "<a href='/wsdl/<?=\$this->os(2)?>/exportar' class='btn btn-default'><i class='fa fa-download'></i> Exportar</a>";
+					$exportartpl = "<a href='/wsdl/".$tabla."/exportar' class='btn btn-default'><i class='fa fa-download'></i> Exportar</a>";
 				}
 
 
@@ -141,7 +141,7 @@ switch($this->os(4)){
 
 
 
-				$frms = array("{HASH}","{OBJETO}","{CAMPOSC}", "{CAMPOSM}", "{COLUMNAS}","{EXPORTAR}");
+				$frms = array("{HASH}","{OBJETO}","{CAMPOSC}", "{CAMPOSM}", "{COLUMNAS}","{EXPORTAR}", "{TABLA}");
 				/*
 				 * CAMPOSC
 				 * <label for="txtfechater">Fecha de t&eacute;rmino *</label>
@@ -159,7 +159,7 @@ switch($this->os(4)){
 							$camposi .= " NULL, ";
 							$camposo .= " \$(\"#idObjeto\").val(data.id); \n";
 							$campost .= '"'.$f['Field'].'", ';
-							$columnas .= "\t".'<th data-field="'.$f['Field'].'" data-sortable="true">No</th>'."\n";
+							$columnas .= "\t\t".'<th data-field="'.$f['Field'].'" data-sortable="true">No</th>'."\n";
 							$where .= " ".$f['Field']." LIKE \"'.\$search.'\" ";
 						}else{
 							$camposc .= '<div class="form-group">'."\n\t".'<label for="txt'.$f['Field'].'" class="col-sm-2 control-label">'.$f['Field'].'</label>'."\n";
@@ -179,8 +179,9 @@ switch($this->os(4)){
 							$camposun[] = '"'.$f['Field'].'"';
 							$camposuv[] = '"dtxt'.$f['Field'].'"';
 
-							$columnas .= "\t".'<th data-field="'.$f['Field'].'" data-sortable="true" data-visible="true">'.$f['Field'].'</th>'."\n";
+							$columnas .= "\t\t".'<th data-field="'.$f['Field'].'" data-sortable="true" data-visible="true">'.ucwords($f['Field']).'</th>'."\n";
 							$where .= " OR ".$f['Field']." LIKE \"%'.str_replace(' ','%',\$search).'%\" ";
+							$where3 .= "->orWhere('".$f['Field']."', 'like', \$search)";
 						}
 					}
 					$camposun = implode(",", $camposun);
@@ -195,7 +196,7 @@ switch($this->os(4)){
 
 				$plantillatpl = file_get_contents($rutaTpls."/plantillatpl.txt");
 				echo "<li><i class='glyphicon glyphicon-ok'></i> Plantilla TPL cargada</li>";
-				$plantillatpl = str_replace($frms, array(md5($tabla),$_REQUEST['objeto'], $camposc, $camposm, $columnas, $exportartpl), $plantillatpl );
+				$plantillatpl = str_replace($frms, array(md5($tabla),$_REQUEST['objeto'], $camposc, $camposm, $columnas, $exportartpl, $tabla), $plantillatpl );
 				echo "<li><i class='glyphicon glyphicon-ok'></i> Campos establecidos</li>";
 				file_put_contents($ruta."/".$mod."/tpl/administracion.tpl.php", $plantillatpl);
 				echo "<li><i class='glyphicon glyphicon-ok'></i> Archivo TPL generado</li>";
@@ -255,10 +256,18 @@ switch($this->os(4)){
 				$frms = array("{TABLA}","{HASH}","{WHERE}");
 				$plantillaobttab = file_get_contents($rutaTpls."/plantillaobttab.txt");
 				echo "<li><i class='glyphicon glyphicon-ok'></i> Plantilla OBTTAB cargada</li>";
-				$plantillaobttab = str_replace($frms, array($tabla, md5($tabla), $where), $plantillaobttab );
+				$plantillaobttab = str_replace($frms, array($tabla, md5($tabla), $where3), $plantillaobttab );
 				file_put_contents($ruta."/".$mod."/ctl/obtenertabla.ctl.php", $plantillaobttab);
 				echo "<li><i class='glyphicon glyphicon-ok'></i> Archivo OBTTAB generado</li>";
 				unset($plantillaobttab);
+
+				$plantillamenu = array( "nombre" => $mod, "icono" => "archive", "elementos" => array("Administración" => "/app/".$mod."/administracion") );
+				file_put_contents($ruta."/".$mod."/data.json", json_encode($plantillamenu));
+				echo "<li><i class='glyphicon glyphicon-ok'></i> Archivo data generado</li>";
+				unset($plantillaobttab);
+
+
+
 				
 				echo "</ul></li>";
 				

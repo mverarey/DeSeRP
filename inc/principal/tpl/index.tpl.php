@@ -400,6 +400,7 @@
 <!-- FastClick --><script src="/assets/admin-lte/plugins/fastclick/fastclick.min.js"></script>
 <!-- AdminLTE App --><script src="/assets/admin-lte/dist/js/app.min.js"></script>
 <!-- Bootstrap Table --><script src="/assets/bootstrap-table/dist/bootstrap-table.min.js"></script>
+<!-- Bootstrap Table es-MX --><script src="/assets/bootstrap-table/dist/locale/bootstrap-table-es-MX.min.js"></script>
 <!-- DeSeRP --><script src="/assets/deserp/DeSeRP.js"></script>
 <script src="/assets/notifyjs/dist/notify.js"></script>
 <script src="/assets/notifyjs/dist/styles/metro/notify-metro.js"></script>

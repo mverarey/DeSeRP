@@ -24,6 +24,12 @@ class Configuracion{
 	var $password = "";
 	var $db = "tipi_proto";
 
+	// + v. 3.0
+	var $driver = "mysql";
+	var $charset = "utf8";
+	var $collation = "utf8_unicode_ci";
+	var $prefix = "";
+
 	// SMTP
 	var $smtp_host = "smtp.server.com";
 	var $smtp_port = "26";

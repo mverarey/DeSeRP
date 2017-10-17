@@ -43,7 +43,7 @@ switch( $_REQUEST['acc'] ){
 }
 
 $script = <<<EOM
-	$('#tbldatab{HASH}').bootstrapTable( 'resetView' , {height: $( document ).height() - 280 } );
+	$('#tbldatab{HASH}').bootstrapTable( 'resetView' , {height: $( document ).height() - 120 } );
 
 	$('#frmActualizar').on('show.bs.modal', function (event) {    $("#cargando").show();    $("#cargandodiv").show();    var ids = $.map($("#tbldatab{HASH}").bootstrapTable('getSelections'), function (row) {	return row.id });    var opc=ids[0];     if(opc>0){	$.ajax({ method: 'POST', dataType:'json', url: '/wsdl/{$this->os(2)}/obtenerobjetos/'+opc }).done(function( data ) { $("#cargando").hide(); $("#cargandodiv").hide(); {MODIFICAR} });  }else{ 	alert("Debe seleccionar {OBJETO} primero.");	$("#cargando").hide(); $("#cargandodiv").hide(); return false; } });
 	$("#btnActualizar").click(function(){

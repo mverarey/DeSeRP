@@ -1,68 +1,27 @@
-<?
+<?php
 header('Access-Control-Allow-Origin: *');
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
-
 $tabla = "{TABLA}";
-
-$c = new DepotServer\Conexion();
-
+$c = new DepotServer\BaseDatos();
 $input = json_decode(file_get_contents('php://input'), true);
-$sort = "";
 
-if(isset($input["limit"])) {
-	$limit = $input["limit"];
-} else {
-	$limit = 10;
-}
+$limit = 10; if(isset($input["limit"])) { $limit = $input["limit"]; }
+$offset = 0; if(isset($input["offset"])) { $offset = $input["offset"]; }
 
-if(isset($input["offset"])) {
-	$offset = $input["offset"];
-} else {
-	$offset = 0;
-}
-
-if(isset($input["sort"])) {
-	$sort = "ORDER BY ".$input["sort"];
-	if(isset($input["order"])) {
-		$order = $input["order"];
-	} else {
-		$order = "";
-	}
-} else {
-	$sort = "";
-	$order = "";
-}
-
+$res = $c::table($tabla)->select( array($c::raw( 'SQL_CALC_FOUND_ROWS *' ) ) );
 if(isset($input["search"])) {
-	$search = $input["search"];
-} else {
-	$search = ""; 
+	$search = '%'.$input["search"].'%';
+	$res = $res->where('id', 'like', $search){WHERE};
 }
 
-if($search == "") {
-	$where = "";
-} else {
-	$where = ' WHERE {WHERE}';
-}
-
-$sql = "SELECT SQL_CALC_FOUND_ROWS * FROM ".$tabla." ".$where." ".$sort." ".$order." LIMIT ".$limit." OFFSET ".$offset;
-$res = $c->query($sql);
-$count = reset(mysql_fetch_row($c->query("SELECT FOUND_ROWS()")));
-
-$result = array();
-if($c->cantidad($res) > 0){
-	while($f = mysql_fetch_assoc($res)){
-		$datos = array();
-		foreach($f as $col => $val){
-			$datos[$col] = $val; //utf8_encode($val);
-		}
-		$result[] = $datos;
-	}
-}
+if( isset($input["sort"]) ){ $res = $res->orderBy($input["sort"], $input["order"]); }
+$res = $res->take($limit);
+if($offset > 0){ $res = $res->skip($offset); }
+$res = $res->get()->all();
+$cuenta  = reset($c::select( $c::raw("SELECT FOUND_ROWS() as 'total' ") ) );
 
 echo "{";
-echo '"total": ' . $count . ',';
+echo '"total": ' . $cuenta ->total. ',';
 echo '"rows": ';
-echo json_encode($result);
+echo json_encode($res);
 echo "}";
-?>

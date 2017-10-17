@@ -1,4 +1,4 @@
-<?
+<?php
 function cleanData(&$str) 
 { 
  $str = utf8_decode($str);
@@ -14,16 +14,17 @@ header("Content-Disposition: attachment; filename=\"$filename\"");
 header("Content-Type: application/vnd.ms-excel; charset=utf-8"); 
 
 $flag = false;
-$c = new DepotServer\Conexion();
-$result = $c->query('SELECT * FROM {TABLA}'); 
-while(false !== ($row = mysql_fetch_assoc($result))) {
+$c = new DepotServer\BaseDatos();
+$result = $c::table('{TABLA}')->get()->all(); 
+
+foreach ($result as $row) {
+	$row = get_object_vars($row);
 	if(!$flag) { 
-		// display field/column names as first row 
 		echo implode("\t", array_keys($row)) . "\r\n"; 
 		$flag = true; 
 	} 
 	array_walk($row, 'cleanData'); 
 	echo implode("\t", array_values($row))  . "\r\n"; 
 }
-exit; 
+exit;
 ?>

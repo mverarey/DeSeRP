@@ -343,6 +343,15 @@ class Conexion{
 	 * @param	array|string $campos Arreglo con los campos especificos a insertar
 	 * @param	bool $permiso Ignorar los permisos asignados y realizar la acci�n
 	 */
+	public function agregar($tabla, $datos, $permiso = false){
+		if( $_SESSION['usuario']['area'][$_REQUEST['b']] >= 2 || $permiso){
+			return $this->con::table($tabla)->insert( $datos );
+		}else{
+			echo "<div class='error'>Usted no tiene los permisos necesarios para poder guardar datos.</div>";
+			return false;
+		}
+	}
+
 	public function insertar($tabla,$arr_datos,$campos = array(""), $permiso = false, $imprimir = false){
 	
 		$esp = "";
@@ -357,9 +366,9 @@ class Conexion{
 			}
 			$dats = "(";
 				foreach($arr_datos as $dato){
-                    if(is_array($dato)){
-                        $dato = implode("|", $dato);
-                    }
+					if(is_array($dato)){
+						$dato = implode("|", $dato);
+					}
 					$dato = str_replace("\"", "\\\"", $dato);
 					$dats.= "\"".$dato."\",";
 				}
@@ -371,7 +380,9 @@ class Conexion{
 			}else{
 				$res = $this->query($sql);
 			}
-			return mysql_insert_id($this->con)>0?mysql_insert_id($this->con):$res;
+			print_r($res);
+			echo $res;
+			//return mysql_insert_id($this->con)>0?mysql_insert_id($this->con):$res;
 		}else{
 			echo "<div class='error'>Usted no tiene los permisos necesarios para poder guardar datos.</div>";
 			return false;

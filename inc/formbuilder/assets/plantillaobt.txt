@@ -1,15 +1,8 @@
-<?
+<?php
 if($_REQUEST['d'] > 0){
-	$c = new DepotServer\Conexion();
+	$c = new DepotServer\BaseDatos();
 	$campos = array();
-	$res = $c->query("SELECT * FROM {TABLA} WHERE id = ".$_REQUEST['d']." LIMIT 1");
-	if($c->cantidad($res) > 0){
-		$fila = mysql_fetch_assoc($res);
-		/*foreach($fila as $col => $campo){
-			$campos[$col] = utf8_encode($campo);
-		}*/
-		$campos = $fila;
-	}
-	echo json_encode($campos);
+	$res = $c::table("{TABLA}")->select()->where( array("id" => $_REQUEST['d']) )->get()->first();
+	echo json_encode($res);
 }
 ?>
