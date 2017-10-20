@@ -14,6 +14,11 @@
 ## Install
 - [composer](https://getcomposer.org/) install
 
+## Clone
+- git clone https://github.com/mverarey/DeSeRP.git && cd DeSeRP && composer install && bower install
+
 ## License
 
 DeSeRP is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
+
+git clone https://github.com/mverarey/DeSeRP.git && cd DeSeRP && ../../../bin/php-7.1.9 ../../dsrp/composer.phar install && bower install
