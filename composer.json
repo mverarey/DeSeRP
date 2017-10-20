@@ -20,6 +20,7 @@
 	        "twig/twig": "^2.0",
 	        "imagine/imagine":"^0.7.1"
 	},
+	"minimum-stability": "dev",
 	"autoload": {
 		"psr-4": {
 			"DepotServer\\":        "classes"
