@@ -13,6 +13,8 @@
   <link rel="stylesheet" href="/assets/bootstrap-table/dist/bootstrap-table.min.css">
   <link rel="stylesheet" href="/assets/deserp/DeSeRP.css">
   <link rel="stylesheet" href="/assets/notifyjs/dist/styles/metro/notify-metro.css" />
+  <link rel="stylesheet" href="/assets/select2/dist/css/select2.min.css" />
+  <link rel="stylesheet" href="/assets/animate.css/animate.min.css" />
 {@pag->css}
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -142,7 +144,6 @@
                 <img src="{{ session.usuario.imagen }}" class="img-circle" alt="User Image">
                 <p>
                   {{ session.usuario.nombre }}
-                  <small><span id="sesion"></span></small>
                 </p>
               </li>
               <!-- Menu Footer-->
@@ -169,7 +170,7 @@
   <!-- Left side column. contains the sidebar -->
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">
+    <div class="sidebar">
         {% if session.activa %}
       <!-- Sidebar user panel -->
       <div class="user-panel">
@@ -178,12 +179,12 @@
         </div>
         <div class="pull-left info">
           <p>{{ session.usuario.nombre }}</p>
-          <a href="#"><i class="fa fa-circle text-success"></i> Conectado</a>
+          <div id="sesion">&nbsp;</div>
         </div>
       </div>
         {@_menu}
         {% endif %}
-    </section>
+    </div>
     <!-- /.sidebar -->
   </aside>
   <!-- =============================================== -->
@@ -404,6 +405,8 @@
 <!-- DeSeRP --><script src="/assets/deserp/DeSeRP.js"></script>
 <script src="/assets/notifyjs/dist/notify.js"></script>
 <script src="/assets/notifyjs/dist/styles/metro/notify-metro.js"></script>
+<script src="/assets/select2/dist/js/select2.full.min.js"></script>
+<script src="/assets/select2/dist/js/i18n/es.js"></script>
 {@pag->js}
 <script> $(document).ready(function (){ $(this).DeSeRP(); {@pag->script} }); </script>
 </body>

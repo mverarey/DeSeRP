@@ -1,7 +1,16 @@
 body{font-weight: 400;}
 .main-header .logo{ font-family: Quicksand; font-weight: 300;}
 
+.user-panel > .info > div > a { text-decoration: none; padding-right: 5px; margin-top: 3px; font-size: 11px; }
 .profile-user-img { margin:0 auto; width:100px; padding:3px; border:3px solid #d2d6de}
 .profile-username { font-size:21px; margin-top:5px }
 
 .table.table-hover.table-striped{ font-size: 0.9em;}
+.skin-blue-light .table thead, .skin-blue .table thead{ background-color: #3c8dbc; color: #fff;}
+.skin-yellow-light .table thead, .skin-yellow .table thead{ background-color: #f39c12; color: #fff;}
+.skin-black-light .table thead, .skin-black .table thead{ background-color: #fff; color: #000;}
+.skin-purple-light .table thead, .skin-purple .table thead{ background-color: #605ca8; color: #fff;}
+.skin-red-light .table thead, .skin-red .table thead{ background-color: #dd4b39; color: #fff;}
+.skin-green-light .table thead, .skin-green .table thead{ background-color: #00a65a; color: #fff;}
+
+.modal-body h2{ display: inline-block; font-size: 18px; margin: 0 10px; line-height: 1;}

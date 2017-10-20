@@ -93,5 +93,43 @@ $scr = <<<Script
 	$("#txttema").val("{$_SESSION['usuario']['tema']}");
 Script;
 $this->agregarScript($scr);
+?>
 
+<?
+
+
+function time_elapsed_string($ptime)
+{
+    $etime = time() - $ptime;
+
+    if ($etime < 1)
+    {
+        return '0 segundos';
+    }
+
+    $a = array( 365 * 24 * 60 * 60  =>  'año',
+                 30 * 24 * 60 * 60  =>  'mes',
+                      24 * 60 * 60  =>  'día',
+                           60 * 60  =>  'hora',
+                                60  =>  'minuto',
+                                 1  =>  'segundo'
+                );
+    $a_plural = array( 'año'   => 'años',
+                       'mes'  => 'meses',
+                       'día'    => 'días',
+                       'hora'   => 'horas',
+                       'minuto' => 'minutos',
+                       'segundo' => 'segundos'
+                );
+
+    foreach ($a as $secs => $str)
+    {
+        $d = $etime / $secs;
+        if ($d >= 1)
+        {
+            $r = round($d);
+            return $r . ' ' . ($r > 1 ? ' hace' . $a_plural[$str] : $str);
+        }
+    }
+}
 ?>

@@ -2,27 +2,13 @@
 $response = array();
 $response["ack"] = 0;
 
-$c = new DepotServer\Conexion();
+$db = new DepotServer\BaseDatos();
+
+if( $_REQUEST['d'] == "fk" ){ $_REQUEST['acc'] = $_REQUEST['e']; }
 switch( $_REQUEST['acc'] ){
-	case "crear":
-		$res = $c->insertar("{TABLA}",
-					array( {INSERTAR} )
-				);
-		if($res){
-			$response['ack'] = 200;
-			$response['msg'] = "Se registro el objeto correctamente con el id ".$res.".";
-		}else{
-			$response['msg'] = "Ocurrió un error, inténtelo nuevamente.";
-		}
-	break;
 	
 	case "actualizar":
-		$res = $c->actualizar("{TABLA}",
-				array(
-					 {ACTUALIZAR}
-				),
-				$_REQUEST['idObjeto']
-			);
+		$res = $db::table("{TABLA}")->where("id", $_REQUEST['idObjeto'])->update([ {ACTUALIZAR} ]);
 		if($res > 0){
 			$response['ack'] = 200;
 			$response['msg'] = "Se ha actualizado exitosamente.";
@@ -35,11 +21,7 @@ switch( $_REQUEST['acc'] ){
 	break;
 	
 	case "eliminar":
-		$res = $c->borrar("{TABLA}",
-				array(
-					"id", $_REQUEST['idObjeto']
-				)
-			);
+		$res = $db::table('{TABLA}')->where("id", $_REQUEST['idObjeto'] )->delete();
 		if($res > 0){
 			$response['ack'] = 200;
 			$response['msg'] = "Se ha eliminado exitosamente.";
@@ -51,10 +33,12 @@ switch( $_REQUEST['acc'] ){
 		}
 	break;
 
+{FKCASES}
+
 	default:
 		$response['ack'] = 200;
-		$response['req'] = print_r($_REQUEST);
 	break;
 }
+header('Content-Type: application/json');
 echo json_encode($response);
 ?>

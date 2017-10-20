@@ -20,6 +20,8 @@
     "dropzonejs":"*",
     "font-awesome":">4.3",
     "ionicons":"~2.0.1",
-    "notifyjs":"~0.4.1"
+    "notifyjs":"~0.4.1",
+    "select2": "~4.0",
+    "animate.css": "~3.5.2"
   }
 }

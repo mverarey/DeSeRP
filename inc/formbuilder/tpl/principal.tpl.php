@@ -19,6 +19,8 @@
 		<span>No discrimina entre Tablas y Vistas</span>
 	</div>
 
+	<h3>Administrador</h3>
+
 	<div class="form-group">
 		<label>Nombre del OBJETO:</label>
 		<input type="text" id="txtObjeto" class="form-control" />
@@ -29,10 +31,34 @@
 		<input type="text" id="txtObjetos" class="form-control" />
 		<span class="help-block">Por ejemplo: Administrador de {OBJETOS}</span>
 	</div>
-	<p class="lead">Plugins</p>
+
+	<h3>Menú</h3>
+
+	<div class="form-group has-feedback">
+		<label>Ícono</label>
+		<div class="input-group">
+			<span class="input-group-addon"><i class="fa fa-archive" id="iconovisual"></i></span>
+			<input type="text" id="txtIcono" class="form-control" value="archive" />
+			<a href="http://fontawesome.io/icons/" target="_blank" class="input-group-addon btn btn-default">Lista <i class="fa fa-share"></i></a>
+		</div>
+	</div>
+
+	<div class="form-group">
+		<label>Nombre a mostrar:</label>
+		<span class="help-block pull-right" style="font-size: 0.8em">opcional</span>
+		<input type="text" id="txtNombre" class="form-control" />
+	</div>
+
+
+	<h3>Plugins</h3>
 	<div class="checkbox">
 	    <label>
 	      <input type="checkbox" name="exportarExcel" id="txtexportarExcel" value="1"> Exportador a excel
+	    </label>
+	  </div>
+	  <div class="checkbox">
+	    <label>
+	      <input type="checkbox" name="instalar" id="txtinstalar" value="1"> Instalar automaticamente <div style="font-size:0.8em; color:#F00;">Esto reemplazara el módulo actual.</div>
 	    </label>
 	  </div>
 	

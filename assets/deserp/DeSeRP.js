@@ -6,6 +6,9 @@
  */  
 function EsNumero(texto){var ValidChars="0123456789.";var EsNumero=true;var Char;for(i=0;i<texto.length&&EsNumero==true;i++){Char=texto.charAt(i);if(ValidChars.indexOf(Char)==-1){EsNumero=false}}return EsNumero}
 
+// Configuraciones de corrección
+$.fn.modal.Constructor.prototype.enforceFocus = function () {};
+
 /*
  * Jquery Plugin : Cargador
  * @author Mauricio Vera
@@ -26,8 +29,7 @@ function EsNumero(texto){var ValidChars="0123456789.";var EsNumero=true;var Char
  $.fn.extend({   
       DeSeRP: function() { 
           $("textarea").addClass('ui-state-default ui-corner-all');$("textarea").bind({focusin: function() {$(this).toggleClass('ui-state-focus');},focusout: function() {$(this).toggleClass('ui-state-focus');}});
-          $(".btncerrar").click(function(){$(this).parent().parent().slideUp();});$("input[type='submit']").addClass("ui-button");$("input[type='button']").addClass("ui-button");$("input[type='reset']").addClass("ui-button");
-
+          $(".btncerrar").click(function(){$(this).parent().parent().slideUp();});
           /*$(".ui-widget-content").addClass("ui-corner-left").addClass("ui-corner-right");*//*$("input[type='text']").css("text-transform","uppercase");*/
           /*$("form").each(function (i) { $(this).validate(); });
           $(".date").datepicker({showOn: 'both',  buttonImage: 'imagenes/calendar16.png', buttonImageOnly: true, changeMonth: true, changeYear: true, dateFormat: 'yy-mm-dd'});var ahora = new Date();
@@ -45,22 +47,23 @@ function EsNumero(texto){var ValidChars="0123456789.";var EsNumero=true;var Char
           $(document).scrollTop(0); $("#cargando").height($(window).height()); $("#msgflo").desplegar();$(".divcargador").cargador();$(".btncerrar").click(function(){$(this).parent().parent().slideUp();});
           $("#btnAbrirCerrar").click(function(){if( $(this).hasClass('abierto') ){$(this).removeClass('abierto');$(this).addClass('cerrado');$( "#aside" ).show( "slide", {direction:'left'}, 500);$( "#imgLogo").slideUp();
           $( "#content" ).css("margin", "0");}else{$(this).removeClass('cerrado');$(this).addClass('abierto');$( "#aside" ).hide();$( "#imgLogo" ).slideDown();$( "#content" ).css("margin", "0px 0px 0px 20px");}});
+
+          $.ajaxSetup({ type: "POST" });
           return true;  
       }
  });     
 })(jQuery);
 
 function actualizarSesion(){
-    $.ajax({ url: "/wsdl/principal/sesion", cache: false, dataType:"json" }).done(function( data ) {
+    $.ajax({ url: "/wsdl/principal/sesion/", cache: false, dataType:"json" }).done(function( data ) {
         try {
-            $.parseJSON(data);
             if(data.ack == 200){
-                $( "#sesion" ).html( data.ultimaActualizacion );
+                $( "#sesion" ).html( '<a href="#Conectado" title="Ultima actualización: '+ data.ultimaActualizacion +'"><i class="fa fa-circle text-success"></i> Conectado</a>' );
             }else{
-                $( "#sesion" ).html( "<a target='_blank' href='/' class='btn btn-danger'>Debe actualizar su sesi&oacute;n antes de realizar cualquier solicitud</a>" );
+                $( "#sesion" ).html( '<a target="_blank" href="/" title="De click aquí para actualizar" class="animated flash infinite"><i class="fa fa-circle text-danger"></i> Desconectado</a>' );
             }
         } catch(e) {
-           $( "#sesion" ).html( "<a target='_blank' href='/' class='btn btn-danger'>Debe actualizar su sesi&oacute;n antes de realizar cualquier solicitud</a>" );
+           $( "#sesion" ).html( '<a target="_blank" href="/" title="De click aquí para actualizar" class="animated flash infinite"><i class="fa fa-circle text-danger"></i> Desconectado</a>' );
         }
             setTimeout(function(){ actualizarSesion(); }, 60000);
     });
