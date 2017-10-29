@@ -2,6 +2,7 @@
 assets/*
 vendor/*
 tmp/*
+!tmp/README
 composer.phar
 composer.lock
 !assets/deserp

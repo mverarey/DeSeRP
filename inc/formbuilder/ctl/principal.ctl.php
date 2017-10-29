@@ -1,39 +1,8 @@
 <?
 use DepotServer\BaseDatos;
-
-$this->establecerTitulo("Generador de formularios");
-
-$c = new DepotServer\Conexion();
 $bd = new BaseDatos();
 
-// Depot
-//$c = new Conexion('depotserver.com', 'depot', 'eahv790802;', 'depot_cw');
-
-// CNNM
-//$c = new Conexion('vps.depotserver.com', 'depotser_annm', '1o]k4&f_T~de16Fb7h', 'depotser_annm');
-
-// Fovissste
-//$c = new Conexion('depotserver.com', 'depot', 'eahv790802', 'depot_fovissste');
-
-// Human 360
-//$c = new Conexion('gruporuz.human360.depotserver.com', 'human360_ruz', '#SmsP=O%thJOticD0(', 'human360_ruz');
-
-// Probiomed
-//$c = new Conexion('cap-probiomed.com.mx', 'capacita_ds', 'w+-%dTtA*D2B1(D{-5', 'capacita_probiomed2008');
-
-// CNNM
-//$c = new Conexion('vps.depotserver.com', 'depotser_annm', '1o]k4&f_T~de16Fb7h', 'depotser_annm');
-
-// BADGES
-//$c = new Conexion('badges.mauriciovera.com', 'badgesma_DeSeRPu', 'W,iZpmG~y@BBIKp@e8', 'badgesma_DeSeRP');
-
-//$c = new Conexion('dep.depotserver.com', 'concurso_wp_user', '_t?=8H2Qu;G#[M}T#$', 'concurso_wp');
-
-//$c = new Conexion('dep.depotserver.com', 'depot', 'eahv790802;', 'depot_annm');
-
-//$c = new Conexion("uinl.preregistros.com.mx", 'uinlprer_user',  'pgfTvGZ!Pd5T[Wgen2', "uinlprer_wp");
-
-//$c = new DepotServer\Conexion("localhost", 'depotse1_farmasa',  '@P!t!Fe%W,uvlOhfBN', "depotse1_farmasa");
+$this->establecerTitulo("Generador de formularios");
 
 $oss = array($this->os(1),$this->os(2),$this->os(3),$this->os(4));
 
@@ -245,6 +214,8 @@ EOM;
 					$camposun = implode(",", $camposun);
 					$camposuv = implode(",", $camposuv);
 
+					$campost = substr($campost, 0, -2);
+
 					echo "<li><i class='glyphicon glyphicon-ok'></i> Campos generados</li>";
 				}else{
 					$this->msgError("No cuenta con columnas la tabla.");
@@ -324,6 +295,14 @@ EOM;
 				echo "<li><i class='glyphicon glyphicon-ok'></i> Archivo OBTTAB generado</li>";
 				unset($plantillaobttab);
 
+				$frms = array("{TABLA}","{CAMPOS}");
+				$plantillajson = file_get_contents($rutaTpls."/plantillajson.txt");
+				echo "<li><i class='glyphicon glyphicon-ok'></i> Plantilla OBTJSON cargada</li>";
+				$plantillajson = str_replace($frms, array($tabla, $campost), $plantillajson );
+				file_put_contents($ruta."/".$mod."/ctl/json.ctl.php", $plantillajson);
+				echo "<li><i class='glyphicon glyphicon-ok'></i> Archivo OBTJSON generado</li>";
+				unset($plantillajson);
+
 				$nombre = strlen($_REQUEST['nombre']) > 0 ? $_REQUEST['nombre'] : $mod;
 				$plantillamenu = array( "nombre" => $nombre, "icono" => $icono, "elementos" => array("Administración" => "/app/".$mod."/administracion") );
 				file_put_contents($ruta."/".$mod."/data.json", json_encode($plantillamenu));
@@ -337,6 +316,7 @@ EOM;
 					  $mod.'/ctl/obtenerobjetos.ctl.php',
 					  $mod.'/ctl/obtenertabla.ctl.php',
 					  $mod.'/ctl/controlador.ctl.php',
+					  $mod.'/ctl/json.ctl.php',
 					  $mod.'/tpl/administracion.tpl.php',
 					  $mod.'/data.json',
 					);

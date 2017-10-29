@@ -18,6 +18,8 @@ $configuration = [ 'settings' => [ 'displayErrorDetails' => true, ], ];
 $c = new SlimCont($configuration);
 $app = new Slim($c);
 
+$app->get('[/json/{params:.*}]', RoutesController::class . ':main');
+/*
 $app->group('/json', function () {
 
 	$this->get('/hello/{name}', function (Request $request, Response $response) {
@@ -28,7 +30,6 @@ $app->group('/json', function () {
 	$this->get('/ds', function(Request $request, Response $response){	
 		return "Hola";
 	});
-
-	$this->get('[/{params:.*}]', RoutesController::class . ':main');
 });
+*/
 $app->run();

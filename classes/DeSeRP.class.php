@@ -230,16 +230,18 @@ class DeSeRP{
 	}
 	
 	private function cargarPlugins(){
-		if ($handle = opendir('classes/plugins')) {
-			while (false !== ($file = readdir($handle))) {
-				if ($file != "." && $file != ".." && substr($file, -10, 10) == ".class.php") {
-					$m = substr($file, 0, (strlen($file)-10));
-					$this->mod[] = $m;
-					require_once("classes/plugins/".$m.".class.php");
-					eval("\$cm = new $m();");
+		if(is_dir('classes/plugins')){
+			if ($handle = opendir('classes/plugins')) {
+				while (false !== ($file = readdir($handle))) {
+					if ($file != "." && $file != ".." && substr($file, -10, 10) == ".class.php") {
+						$m = substr($file, 0, (strlen($file)-10));
+						$this->mod[] = $m;
+						require_once("classes/plugins/".$m.".class.php");
+						eval("\$cm = new $m();");
+					}
 				}
+				closedir($handle);
 			}
-			closedir($handle);
 		}
 	}
 		

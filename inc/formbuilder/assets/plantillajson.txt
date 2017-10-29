@@ -1,0 +1,4 @@
+<?php
+$publica = false;
+$tabla = "{TABLA}";
+$campos = [{CAMPOS}];
