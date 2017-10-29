@@ -1,6 +1,6 @@
 ![DeSeRP](https://raw.githubusercontent.com/mverarey/DeSeRP/master/assets/DeSeRP.png)
 
-[![Build Status](https://api.travis-ci.org/mverarey/dsrp.svg?branch=master)](https://travis-ci.org/mverarey/dsrp)
+[![Build Status](https://api.travis-ci.org/mverarey/DeSeRP.svg?branch=master)](https://travis-ci.org/mverarey/DeSeRP)
 [![Twitter](https://img.shields.io/badge/twitter-@mverarey-blue.svg?style=flat)](http://twitter.com/mverarey)
 [![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/mverarey/DeSeRP/blob/master/LICENSE)
 
@@ -20,5 +20,3 @@
 ## License
 
 DeSeRP is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT).
-
-git clone https://github.com/mverarey/DeSeRP.git && cd DeSeRP && ../../../bin/php-7.1.9 ../../dsrp/composer.phar install && bower install
