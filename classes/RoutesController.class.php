@@ -60,6 +60,14 @@ class RoutesController
             }
           }
 
+          // Skip / Take
+          if( isset($params[2]) && isset($params[3])){
+            if( is_numeric($params[2]) && is_numeric($params[3])){
+              $res = $res->offset($params[2])->limit($params[3]);
+            }
+          }
+          
+
           $r['items'] = $res->get();
 
           $cuenta  = reset($c::select( $c::raw("SELECT FOUND_ROWS() as 'total' ") ) );

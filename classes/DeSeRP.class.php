@@ -85,6 +85,7 @@ class DeSeRP{
 		$this->cargarVariables();
 		$config = new Configuracion();
 		setlocale(LC_MONETARY, $config->locale);
+		date_default_timezone_set($config->timezone);
 	}
 
 	public function obtenerArchivo($archivo, $cache = false, $vars = array() ){

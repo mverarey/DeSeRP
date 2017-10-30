@@ -1,0 +1,29 @@
+CREATE TABLE `accesos` (
+  `idUsuario` int(11) NOT NULL,
+  `area` text COLLATE utf8_unicode_ci NOT NULL,
+  `fecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT;
+
+CREATE TABLE `usuarios` (
+  `id` int(11) NOT NULL,
+  `usuario` varchar(10) COLLATE utf8_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `nombre` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `email` varchar(50) COLLATE utf8_unicode_ci NOT NULL,
+  `servidorSMTP` varchar(255) COLLATE utf8_unicode_ci NOT NULL DEFAULT '',
+  `passwordSMTP` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `tema` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `fecha_creacion` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `activo` tinyint(1) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT;
+
+INSERT INTO `usuarios` (`id`, `usuario`, `password`, `nombre`, `email`, `servidorSMTP`, `passwordSMTP`, `tema`, `fecha_creacion`, `activo`) VALUES (1, 'MAURICIO', '81dc9bdb52d04dc20036dbd8313ed055', 'MAURICIO VERA', 'm.vera@depotserver.com', 'depotserver.com', 'YW5uYTAyNDA=', '', '2017-08-24 19:08:29', 1);
+
+CREATE TABLE `usuarios_permisos` (
+  `idUsuario` int(11) NOT NULL,
+  `modulo` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
+  `nivel` enum('0','1','2','3') COLLATE utf8_unicode_ci NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci ROW_FORMAT=COMPACT;
+
+INSERT INTO `Usuarios_Permisos` (`idUsuario`, `modulo`, `nivel`) VALUES
+(1, 'usuarios', '3'),(1, 'permisos', '3'),(1, 'formbuilder', '3');

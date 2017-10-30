@@ -42,5 +42,6 @@ class Configuracion{
 	var $url_absoluta = "https://localhost";
 	var $locale = "es_MX";
 	var $debug = false;
+	var $timezone = "America/Mexico_City";
 }
 ?>
