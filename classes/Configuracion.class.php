@@ -21,7 +21,7 @@ class Configuracion{
 	// Base de Datos	
 	var $servidor = "localhost";
 	var $usuario = "root";
-	var $password = "";
+	var $password = '';
 	var $db = "tipi_proto";
 
 	// + v. 3.0
