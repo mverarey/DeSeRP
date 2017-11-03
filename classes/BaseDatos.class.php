@@ -20,7 +20,7 @@ class BaseDatos extends Manager{
 
 	/*
 	 * Constructor
-	 * 
+	 *
 	 * Inicializa la conexión a la base de datos.
 	 *
 	 * @access	public
@@ -35,7 +35,7 @@ class BaseDatos extends Manager{
 	 * @param	string $password Contraseña de ingreso
 	 * @param	string $db Nombre de la base de datos
 	 */
-	public function __construct($servidor = '', $usuario = '', $password = '', $db = '', 
+	public function __construct($servidor = '', $usuario = '', $password = '', $db = '',
 		$driver = '', $prefix ='', $charset = '', $collation =''){
 
 		parent::__construct();
@@ -43,7 +43,7 @@ class BaseDatos extends Manager{
 		$c = new Configuracion;
 
 		if(strlen($servidor)>0 && strlen($usuario)>0){
-			
+
 			$this->addConnection([
 			    'driver'    => strlen($driver) > 0 ? $driver : $c->driver,
 			    'host'      => strlen($servidor) > 0 ? $servidor : $c->servidor,
@@ -56,7 +56,7 @@ class BaseDatos extends Manager{
 			]);
 
 		}else{
-			
+
 			$this->addConnection([
 			    'driver'    => $c->driver,
 			    'host'      => $c->servidor,
@@ -71,5 +71,26 @@ class BaseDatos extends Manager{
 		}
 
 		$this->setAsGlobal();
-	}	
+	}
+
+
+	/*
+	 * login
+	 *
+	 * Esta function realiza, de manera segura, la validaci�n de ingreso al sistema.
+	 *
+	 * @access	public
+	 * @since	0.1_beta
+	 * @author	Mauricio Vera <m.vera@depotserver.com>
+	 * @name	login
+	 * @package	DeSeRP
+	 * @return	mysql_result
+	 * @version	0.1
+	 * @since	0.1
+	 * @param	string $usuario Nombre del usuario
+	 * @param 	string $password Contrase�a del usuario
+	 */
+	public function login($usuario,$password){
+		return $this::table('usuarios')->where([ ['usuario', 'like', strtoupper($usuario)], ['password', 'like', md5($password)] ])->first();
+	}
 }?>

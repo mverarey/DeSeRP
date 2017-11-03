@@ -4,7 +4,7 @@
 [![Twitter](https://img.shields.io/badge/twitter-@mverarey-blue.svg?style=flat)](http://twitter.com/mverarey)
 [![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/mverarey/DeSeRP/blob/master/LICENSE)
 
-> This version is not compatible with previos versions of DeSeRP
+> This version is not compatible with previous versions of DeSeRP
 
 - [Requirements](#requirements)
 - [Install](#install)

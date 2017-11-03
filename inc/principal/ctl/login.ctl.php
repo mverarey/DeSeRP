@@ -1,5 +1,5 @@
 <?php
-use DepotServer\{Configuracion, Conexion};
+use DepotServer\{Configuracion, Conexion, BaseDatos};
 if( strlen($this->req['a']) > 0 && strlen($this->req['b']) > 0 && strlen($this->req['c']) > 0){
 	$reqs = array("a","b","c","d","e","f","g","h");
 	foreach($reqs as $req){
@@ -15,9 +15,15 @@ $script = <<<EOM
 EOM;
 $this->agregarScript($script);
 if($_REQUEST['validacion'] == md5(date("dmY"))){
-	$c = new Conexion(); 
+	$c = new Conexion();
+	$bd = new BaseDatos();
 	$_SESSION['usuario'] = array();
-	$res = $c->login($_REQUEST['usuario'],$_REQUEST['password']);
+	try{
+		$res = $bd->login($_REQUEST['usuario'],$_REQUEST['password']);
+	}catch(\Exception $e){
+		echo $this->msgError("Debe instalar DeSeRP para poder continuar.");
+		echo "<p class='lead alert alert-warning'>¿Desea instalar ahora? <a href='/instalador' class='btn btn-primary'>Instalar</a></p>";
+	}
 	if($res){
 		$fila = get_object_vars($res);
 		//$fila = mysql_fetch_assoc($res);
@@ -32,7 +38,7 @@ if($_REQUEST['validacion'] == md5(date("dmY"))){
 			unset($_SESSION['usuario']['activo']);
 
 			$_SESSION['usuario']['ultimaActualizacion'] = date("d/m/y H:i");
-			
+
 			$modulosDisponibles = $c->obtenerPermisos();
 			foreach ($modulosDisponibles as $modulo) {
 				$_SESSION['usuario']['area'][$modulo->modulo] = $modulo->nivel;
@@ -41,7 +47,7 @@ if($_REQUEST['validacion'] == md5(date("dmY"))){
 			$_SESSION['usuario']['menu'] = $this->generarMenu( array_keys($_SESSION['usuario']['area']) );
 
 			$archivo = 'perfil_'.md5('perfil_'.$_SESSION['usuario']['id']).'_thumb.jpg'; $path = 'tmp/imgs/';
-			$this->filesystem->existeArchivo($path.$archivo)  ? $_SESSION['usuario']['imagen'] = '/'.$path.$archivo : $_SESSION['usuario']['imagen'] = '/assets/admin-lte/dist/img/avatar5.png'; 
+			$this->filesystem->existeArchivo($path.$archivo)  ? $_SESSION['usuario']['imagen'] = '/'.$path.$archivo : $_SESSION['usuario']['imagen'] = '/assets/admin-lte/dist/img/avatar5.png';
 
 			if(strlen($_REQUEST['ruta']) > 0){
 				header("Location: /".$_REQUEST['ruta']);
@@ -49,7 +55,7 @@ if($_REQUEST['validacion'] == md5(date("dmY"))){
 			}else{
 				header("Location: /");
 				exit;
-			}	
+			}
 		}else{
 			$this->ev("clase","input_error");
 			$this->ev("msg",$this->msgError("Usuario o contrase&ntilde;a no v&aacute;lida"));

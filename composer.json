@@ -31,7 +31,7 @@
     	"scripts": {
 		"post-install-cmd": [
 			"bower install",
-			"composer dump-autoload --optimize --no-dev --optimize-autoloader"
+			"composer dump-autoload --optimize --no-dev"
 		],
 		"post-update-cmd": [
 			"composer dump-autoload --optimize --no-dev",
