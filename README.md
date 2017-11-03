@@ -20,7 +20,7 @@
 - [composer](https://getcomposer.org/) install
 
 ## Clone
-- git clone https://github.com/mverarey/DeSeRP.git && cd DeSeRP && composer install && bower install
+- git clone https://github.com/mverarey/DeSeRP.git && cd DeSeRP && composer install
 
 ## License
 

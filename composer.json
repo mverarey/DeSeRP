@@ -18,7 +18,8 @@
 	        "firebase/php-jwt": "^5.0",
 	        "illuminate/database": "*",
 	        "twig/twig": "^2.0",
-	        "imagine/imagine":"^0.7.1"
+	        "imagine/imagine":"^0.7.1",
+					"phpoffice/phpspreadsheet": "dev-master"
 	},
 	"minimum-stability": "dev",
 	"autoload": {
