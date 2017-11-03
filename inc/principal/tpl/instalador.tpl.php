@@ -25,6 +25,11 @@ $urlAbsoluta = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP
   <![endif]-->
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+  <!-- jQuery 3 --><script src="/assets/jquery/dist/jquery.min.js"></script>
+  <!-- Bootstrap 3.3.7 --><script src="/assets/admin-lte/bootstrap/js/bootstrap.min.js"></script>
+  <!-- SlimScroll --><script src="/assets/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
+  <!-- FastClick --><script src="/assets/admin-lte/plugins/fastclick/fastclick.min.js"></script>
+  <!-- AdminLTE App --><script src="/assets/admin-lte/dist/js/app.min.js"></script>
 </head>
 <body class="hold-transition sidebar-mini fixed  skin-blue ">
   <!-- Site wrapper -->
@@ -64,9 +69,30 @@ $urlAbsoluta = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP
       </section>
       <!-- Main content -->
       <section class="content">
+
+<?
+if($_REQUEST['acc'] == "instalar"){
+?>
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+    <ul class="list-group animated bounceInLeft">
+      <li class="list-group-item list-group-item-success">Resultado de instalación</li>
+      <li class="list-group-item"><span class="badge list-group-item-success"><i class="fa fa-check"></i></span> Generando archivo de Configuración</li>
+      <li class="list-group-item"><span class="badge list-group-item-success"><i class="fa fa-check"></i></span> Conectando a base de datos</li>
+      <li class="list-group-item"><span class="badge list-group-item-success"><i class="fa fa-check"></i></span> Instalando tablas</li>
+      <li class="list-group-item"><span class="badge list-group-item-success"><i class="fa fa-check"></i></span> Eliminado archivo de instalación</li>
+    </ul>
+  </div>
+</div>
+<?
+  echo "<pre>";
+  print_r($_REQUEST);
+  echo "</pre>";
+}else{
+?>
         <p>Ingrese los detalles de la conexión que se le solicitan.</p>
         <fieldset class="login">
-          <form action="/app/principal/login" method="POST">
+          <form action="/instalador" method="POST">
             <div class="row">
               <div class="col-md-6">
                 <div class="box">
@@ -105,6 +131,11 @@ $urlAbsoluta = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP
                     <div class="form-group">
                       <label for="txtprefix">prefix</label>
                       <input type="text" class="form-control" id="txtprefix" name="prefix" placeholder="Ingrese el prefix" value="">
+                    </div>
+                    <div class="checkbox">
+                      <label>
+                        <input type="checkbox" name="reemplazar" value="true" checked> ¿Desea reemplazar/instalar la información actual?
+                      </label>
                     </div>
 
                   </div>
@@ -174,13 +205,17 @@ $urlAbsoluta = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP
 
             <div class="alert alert-danger">
               <p>Precaución: Esto reemplazara el documento de configuración actual.</p>
+
+              <div class="row">
+                <button class="btn btn-warning col-md-8 col-md-offset-2"><i class="fa fa-floppy-o"></i> Instalar</button>
+              </div>
             </div>
 
-
+            <input type="hdden" name="acc" value="instalar" />
           </form>
 
         </fieldset>
-
+<? } ?>
       </div>
       <!-- /.box-body -->
     </div>    <!-- /.box -->
@@ -197,12 +232,5 @@ $urlAbsoluta = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP
 <!-- Control Sidebar -->
 </div>
 <!-- ./wrapper -->
-
-<!-- jQuery 3 --><script src="/assets/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap 3.3.7 --><script src="/assets/admin-lte/bootstrap/js/bootstrap.min.js"></script>
-<!-- SlimScroll --><script src="/assets/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick --><script src="/assets/admin-lte/plugins/fastclick/fastclick.min.js"></script>
-<!-- AdminLTE App --><script src="/assets/admin-lte/dist/js/app.min.js"></script>
-
 </body>
 </html>
