@@ -1,5 +1,7 @@
 <?php
 require_once("../../../vendor/autoload.php");
+use DepotServer\Migracion;
+
 $urlAbsoluta = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP_HOST]";
 ?><!DOCTYPE html>
 <html>
@@ -72,6 +74,13 @@ $urlAbsoluta = (isset($_SERVER['HTTPS']) ? "https" : "http") . "://$_SERVER[HTTP
 
 <?
 if($_REQUEST['acc'] == "instalar"){
+
+echo  Migracion::probarConexion();
+echo  Migracion::crearTablas();
+
+$usuario = "test".date("YmdHis");
+echo  Migracion::crearUsuario($usuario, $password);
+
 ?>
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
@@ -88,7 +97,11 @@ if($_REQUEST['acc'] == "instalar"){
   echo "<pre>";
   print_r($_REQUEST);
   echo "</pre>";
+
+
+
 }else{
+
 ?>
         <p>Ingrese los detalles de la conexión que se le solicitan.</p>
         <fieldset class="login">
@@ -101,43 +114,57 @@ if($_REQUEST['acc'] == "instalar"){
                   </div>
                   <div class="box-body">
                     <div class="form-group">
-                      <label for="txtservidor">servidor</label>
+                      <label for="txtservidor">Servidor</label>
                       <input type="text" class="form-control" id="txtservidor" name="servidor" placeholder="Ingrese el servidor" value="localhost">
                     </div>
                     <div class="form-group">
-                      <label for="txtusuario">usuario</label>
+                      <label for="txtusuario">Usuario</label>
                       <input type="text" class="form-control" id="txtusuario" name="usuario" placeholder="Ingrese el usuario" value="root">
                     </div>
                     <div class="form-group">
-                      <label for="txtpassword">password</label>
+                      <label for="txtpassword">Password</label>
                       <input type="text" class="form-control" id="txtpassword" name="password" placeholder="Ingrese el password" value="">
                     </div>
                     <div class="form-group">
-                      <label for="txtdb">db</label>
+                      <label for="txtdb">Base de datos</label>
                       <input type="text" class="form-control" id="txtdb" name="db" placeholder="Ingrese el db" value="tipi_proto">
                     </div>
                     <div class="form-group">
-                      <label for="txtdriver">driver</label>
+                      <label for="txtdriver">Driver</label>
                       <input type="text" class="form-control" id="txtdriver" name="driver" placeholder="Ingrese el driver" value="mysql">
                     </div>
                     <div class="form-group">
-                      <label for="txtcharset">charset</label>
+                      <label for="txtcharset">Charset</label>
                       <input type="text" class="form-control" id="txtcharset" name="charset" placeholder="Ingrese el charset" value="utf8">
                     </div>
                     <div class="form-group">
-                      <label for="txtcollation">collation</label>
+                      <label for="txtcollation">Collation</label>
                       <input type="text" class="form-control" id="txtcollation" name="collation" placeholder="Ingrese el collation" value="utf8_unicode_ci">
                     </div>
                     <div class="form-group">
-                      <label for="txtprefix">prefix</label>
+                      <label for="txtprefix">Prefix</label>
                       <input type="text" class="form-control" id="txtprefix" name="prefix" placeholder="Ingrese el prefix" value="">
+                    </div>
+                  </div>
+                </div>
+                <div class="box">
+                  <div class="box-header">
+                    <h3>Acceso a sistema</h3>
+                  </div>
+                  <div class="box-body">
+                    <div class="form-group">
+                      <label for="txtusuario">Usuario</label>
+                      <input type="text" class="form-control" id="txtusuario" name="usuariousr" placeholder="Ingrese el usuario" value="administrador">
+                    </div>
+                    <div class="form-group">
+                      <label for="txtpasswordusr">Contrase&ntilde;a</label>
+                      <input type="password" class="form-control" id="txtpasswordusr" name="passwordusr" value="">
                     </div>
                     <div class="checkbox">
                       <label>
                         <input type="checkbox" name="reemplazar" value="true" checked> ¿Desea reemplazar/instalar la información actual?
                       </label>
                     </div>
-
                   </div>
                 </div>
               </div>
@@ -149,27 +176,27 @@ if($_REQUEST['acc'] == "instalar"){
                   <div class="box-body">
 
                     <div class="form-group">
-                      <label for="txtsmtp_host">smtp_host</label>
+                      <label for="txtsmtp_host">Host</label>
                       <input type="text" class="form-control" id="txtsmtp_host" name="smtp_host" placeholder="Ingrese el smtp_host" value="smtp.depotserver.com">
                     </div>
                     <div class="form-group">
-                      <label for="txtsmtp_port">smtp_port</label>
+                      <label for="txtsmtp_port">Puerto</label>
                       <input type="text" class="form-control" id="txtsmtp_port" name="smtp_port" placeholder="Ingrese el smtp_port" value="26">
                     </div>
                     <div class="form-group">
-                      <label for="txtsmtp_auth">smtp_auth</label>
+                      <label for="txtsmtp_auth">Auth</label>
                       <input type="text" class="form-control" id="txtsmtp_auth" name="smtp_auth" placeholder="Ingrese el smtp_auth" value="true">
                     </div>
                     <div class="form-group">
-                      <label for="txtsmtp_usuario">smtp_usuario</label>
+                      <label for="txtsmtp_usuario">Usuario</label>
                       <input type="text" class="form-control" id="txtsmtp_usuario" name="smtp_usuario" placeholder="Ingrese el smtp_usuario" value="">
                     </div>
                     <div class="form-group">
-                      <label for="txtsmtp_password">smtp_password</label>
+                      <label for="txtsmtp_password">Password</label>
                       <input type="text" class="form-control" id="txtsmtp_password" name="smtp_password" placeholder="Ingrese el smtp_password" value="">
                     </div>
                     <div class="form-group">
-                      <label for="txtsmtp_persist">smtp_persist</label>
+                      <label for="txtsmtp_persist">Persist</label>
                       <input type="text" class="form-control" id="txtsmtp_persist" name="smtp_persist" placeholder="Ingrese el smtp_persist" value="false">
                     </div>
 
@@ -182,19 +209,19 @@ if($_REQUEST['acc'] == "instalar"){
                   <div class="box-body">
 
                     <div class="form-group">
-                      <label for="txturl_absoluta">url_absoluta</label>
+                      <label for="txturl_absoluta">Url absoluta</label>
                       <input type="text" class="form-control" id="txturl_absoluta" name="url_absoluta" placeholder="Ingrese el url_absoluta" value="<?=$urlAbsoluta?>">
                     </div>
                     <div class="form-group">
-                      <label for="txtlocale">locale</label>
+                      <label for="txtlocale">Locale</label>
                       <input type="text" class="form-control" id="txtlocale" name="locale" placeholder="Ingrese el locale" value="es_MX">
                     </div>
                     <div class="form-group">
-                      <label for="txtdebug">debug</label>
+                      <label for="txtdebug">Debug</label>
                       <input type="text" class="form-control" id="txtdebug" name="debug" placeholder="Ingrese el debug" value="false">
                     </div>
                     <div class="form-group">
-                      <label for="txttimezone">timezone</label>
+                      <label for="txttimezone">Timezone</label>
                       <input type="text" class="form-control" id="txttimezone" name="timezone" placeholder="Ingrese el timezone" value="America/Mexico_City">
                     </div>
 
@@ -211,7 +238,7 @@ if($_REQUEST['acc'] == "instalar"){
               </div>
             </div>
 
-            <input type="hdden" name="acc" value="instalar" />
+            <input type="hidden" name="acc" value="instalar" />
           </form>
 
         </fieldset>
