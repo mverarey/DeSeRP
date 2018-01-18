@@ -9,3 +9,4 @@ composer.lock
 !assets/DeSeRP.png
 classes/Configuracion.class.php
 inc/accesos
+._*

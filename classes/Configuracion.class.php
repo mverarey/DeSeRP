@@ -4,7 +4,7 @@
  * Configuración
  *
  * NOTA IMPORTANTE:
- * Este archivo deberá ser configurado como SOLO-LECTURA durante la 
+ * Este archivo deberá ser configurado como SOLO-LECTURA durante la
  * instalación. Si hace cambios en el archivo, asegurese de protegerlo
  * nuevamente despues de hacer los cambios.
  *
@@ -18,7 +18,7 @@
  */
 class Configuracion{
 
-	// Base de Datos	
+	// Base de Datos
 	var $servidor = "localhost";
 	var $usuario = "root";
 	var $password = '';
@@ -37,7 +37,7 @@ class Configuracion{
 	var $smtp_usuario = "";
 	var $smtp_password = "";
 	var $smtp_persist = FALSE;
-	
+
 	// Generales
 	var $url_absoluta = "https://localhost";
 	var $locale = "es_MX";

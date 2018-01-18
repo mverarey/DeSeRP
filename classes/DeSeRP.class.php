@@ -72,7 +72,7 @@ class DeSeRP{
 		}catch(Exception $e){
 			$this->establecerTitulo("Excepci&oacute;n");
 			$this->contenido= $this->msgError("<p>".$e->getMessage()."</p><p><a href='javascript:history.back(1)'>Regresar</a></p><textarea class='hidden'>".print_r(debug_backtrace(),true)."</textarea>");
-		}  
+		}
 
 	}
 
@@ -84,6 +84,7 @@ class DeSeRP{
 		$this->detectarBrowser();
 		$this->cargarVariables();
 		$config = new Configuracion();
+		setlocale(LC_ALL, $config->locale);
 		setlocale(LC_MONETARY, $config->locale);
 		date_default_timezone_set($config->timezone);
 	}
@@ -99,16 +100,16 @@ class DeSeRP{
 			return $this->obtenerTemplate($archivo, $vars);
 		}
 	}
-	
+
 	private function obtenerTemplate($archivo, $vars = array() ){
 		return $this->twig->load($archivo)->render( $vars );
 	}
-	
+
 	private function prepararPagina(){
 
 		$config = new Configuracion();
 		$this->debug($config->debug);
-		$this->contenido .= $this->cargarPlugins();	
+		$this->contenido .= $this->cargarPlugins();
 		if($this->modo != "wsdl"){
 			$this->pagina = $this->obtenerArchivo("inc/principal/tpl/index.tpl.php", true, array("session" => $_SESSION));
 		}else{
@@ -118,17 +119,17 @@ class DeSeRP{
 		$this->pagina = preg_replace_callback( '/{@_([a-zA-Z0-9]+)}/', function ($s) { return $this->{$s[1]}; }, $this->pagina);
 		$this->pagina = preg_replace_callback("/{@([a-zA-Z]+)\->([a-zA-Z0-9]+)}/", array( &$this, 'traducirD'), $this->pagina);
 		$this->pagina = preg_replace_callback("/{@([a-zA-Z]+)\->([a-zA-Z0-9]+)}/", array( &$this, 'traducirD'), $this->pagina);
-		
+
 	}
-	
+
 	private function traducirD($m){
 		return $this->d[$m[1]][$m[2]];
 	}
-	
+
 	private function traducirS($m){
 		return $this->{$m[1]};
 	}
-	
+
 	public function __toString(){
 		$this->prepararPagina();
 		return $this->pagina;
@@ -142,40 +143,40 @@ class DeSeRP{
 		$js = '<script type="text/javascript" src="'.$archivo.'"></script>';
 		$this->d['pag']['js'] .= $js;
 	}
-	
+
 	public function agregarCSS($archivo){
 		$css = '<link rel="stylesheet" type="text/css" href="'.$archivo.'" />';
 		$this->d['pag']['css'] .= $css;
 	}
-	
+
 	public function formato($tipo, $valor){
 		$tipo = strtoupper($tipo);
 		switch($tipo){
 			case "MONEDA":
 				return money_format('%(#10n', $valor);
 			break;
-		
+
 			case "FECHA":
 				if($valor=="0000-00-00"){return "";}
 				return date("d / m / Y",strtotime($valor));
 			break;
-		
+
 			default:
 				return $valor;
 			break;
 		}
 	}
-	
+
 	public function establecerTitulo($titulo){ $this->d['pag']['titulo'] = $titulo; }
-	
+
 	public function establecerVariable($nombre,$valor){ $this->d['pag'][$nombre] = $valor; }
 	public function ev($n,$v){$this->establecerVariable($n,$v);}
-	
+
 	public function msgError($msg, $btnCerrar = true){ return  "<div class='error alert alert-danger'>".$msg.($btnCerrar?"<button type='button' class='close' data-dismiss='alert' aria-label='Cerrar'><span aria-hidden='true'>&times;</span></button>":"")."</div>";}
 	public function msgAlerta($msg, $btnCerrar = true){return  "<div class='alerta alert alert-warning'>".$msg.($btnCerrar?"<button type='button' class='close' data-dismiss='alert' aria-label='Cerrar'><span aria-hidden='true'>&times;</span></button>":"")."</div>";}
 	public function msgInfo($msg, $btnCerrar = true){ return  "<div class='info alert alert-info'>".$msg.($btnCerrar?"<button type='button' class='close' data-dismiss='alert' aria-label='Cerrar'><span aria-hidden='true'>&times;</span></button>":"")."</div>";}
 	public function msgOk($msg, $btnCerrar = true){ return  "<div class='ok alert alert-success'>".$msg.($btnCerrar?"<button type='button' class='close' data-dismiss='alert' aria-label='Cerrar'><span aria-hidden='true'>&times;</span></button>":"")."</div>";}
-	
+
 	private function debug($habilitado){
 		if($habilitado){
 			ob_start();
@@ -218,18 +219,18 @@ class DeSeRP{
 			}
 			echo '</table>';
 			echo "URL : <br />a : ".$_REQUEST['a'].", b : ".$_REQUEST['b'].", c : ".$_REQUEST['c'];
-			
+
 			$vars .= ob_get_contents();
 			ob_end_clean();
 			$this->contenido .= $this->msgInfo($vars);
-		} 
+		}
 	}
-	
-	private function cargarVariables(){	
+
+	private function cargarVariables(){
 		$this->obtenerArchivo("inc/principal/idm/comun.idm.php");
 		$_SESSION['d'] = $this->d;
 	}
-	
+
 	private function cargarPlugins(){
 		if(is_dir('classes/plugins')){
 			if ($handle = opendir('classes/plugins')) {
@@ -245,7 +246,7 @@ class DeSeRP{
 			}
 		}
 	}
-		
+
 	public function os($var){
 		return $this->obtenerSolicitud($var);
 	}
@@ -266,7 +267,7 @@ class DeSeRP{
 		}
 		return $this->req[$v];
 	}
-	
+
 	private function detectarBrowser(){
 		if(preg_match('/(alcatel|amoi|android|avantgo|blackberry|benq|cell|cricket|docomo|elaine|htc|iemobile|iphone|ipad|ipaq|ipod|j2me|java|midp|mini|mmp|mobi|motorola|nec-|nokia|palm|panasonic|philips|phone|sagem|sharp|sie-|smartphone|sony|symbian|t-mobile|telus|up\.browser|up\.link|vodafone|wap|webos|wireless|xda|xoom|zte)/i', $_SERVER['HTTP_USER_AGENT'])){
 			//$this->browser = "mobile";
@@ -288,20 +289,3 @@ class DeSeRP{
 		return $menu;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -56,7 +56,7 @@
               <span class="label label-success">4</span>
             </a>
             <ul class="dropdown-menu">
-              <li class="header">Usted tiene 4 mensajes</li>
+              <li class="header">Usted tiene 1 mensaje</li>
               <li>
                 <!-- inner menu: contains the actual data -->
                 <ul class="menu">
@@ -66,10 +66,10 @@
                         <img src="/assets/admin-lte/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
                       </div>
                       <h4>
-                        Support Team
+                        Emisor
                         <small><i class="fa fa-clock-o"></i> 5 mins</small>
                       </h4>
-                      <p>Why not buy a new awesome theme?</p>
+                      <p>Título del mensaje. ¿Alguna pregunta?</p>
                     </a>
                   </li>
                   <!-- end message -->
@@ -212,7 +212,7 @@
     <div class="pull-right hidden-xs">
       <b>Version</b> D:  {@sistema->version} {@sistema->subversion} | T:2.4.0
     </div>
-    <strong>DeSeRP: Copyright &copy; 2014-2017 <a href="http://depotserver.com">Depot Server</a>. | Theme: Copyright &copy; 2014-2017 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
+    <strong>DeSeRP: Copyright &copy; 2014-2018 <a href="http://depotserver.com">Depot Server</a>. | Theme: Copyright &copy; 2014-2018 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
     reserved.
   </footer>
   <!-- Control Sidebar -->
