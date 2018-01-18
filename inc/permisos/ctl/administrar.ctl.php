@@ -3,7 +3,7 @@ $this->establecerTitulo("Administrar permisos");
 
 //$c = new \DepotServer\Conexion();
 $db = new \DepotServer\BaseDatos();
-$usuarios = $db::table('usuarios')->select('id', 'usuario', 'nombre')->where('activo', '=', '1')->get()->all();
+$usuarios = $db::table('usuarios')->select('id', 'usuario', 'nombre')->where('activo', '=', '1')->orderBy('nombre', 'asc')->get()->all();
 
 $mod2 = $this->os(2);
 

@@ -10,15 +10,22 @@ if(isset($this->req['m'])){
 			$i++;
 		}
 	}
+	if($_SESSION['usuario']['id'] == $this->os(4)){
+		header("Location: /wsdl/principal/logout");
+		exit;
+	}
+
 	echo $this->msgInfo($msg."<br/>Nuevos permisos a&ntilde;adidos exit&oacute;samente.<br/><span style='font-size:90%;'>Total: ".abs($reg_aft-$i)."</span></p>");
 }
 
 $sql = $db::table("usuarios")->join('usuarios_permisos', 'usuarios_permisos.idUsuario', '=', 'usuarios.id')->select()->where("usuarios.id", $this->os(4))->get()->all();
-$fila = get_object_vars($sql[0]);
+if(sizeof($sql) > 0){	
+	$fila = get_object_vars($sql[0]);
+}
 $this->establecerTitulo("Modificar permisos de ".$fila['nombre']." ");
 $this->ev("usuario",$fila['nombre']);
 if ($handle = opendir('inc/')) {
-    while (false !== ($file = readdir($handle))) {	
+    while (false !== ($file = readdir($handle))) {
         if (!preg_match("/\./", $file)) {
             $modulos_usuario[$file] = array(0,0);
         }

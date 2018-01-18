@@ -66,7 +66,7 @@
 						<div class="form-group">
 							<label for="usuario" class="col-sm-2 control-label">Usuario</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control required" id="usuario" placeholder="Usuario" name="usuario" value="{@pag->usuario}">
+								<input type="text" class="form-control required" id="usuario" placeholder="Usuario" name="usuario" value="{@pag->usuario}" readonly>
 							</div>
 						</div>
 						<div class="form-group">

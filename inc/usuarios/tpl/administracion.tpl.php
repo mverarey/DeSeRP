@@ -1,4 +1,8 @@
 <div class="box">
+  <div class="box-header with-border">
+    <h3 class="box-title">usuario</h3>
+    <!-- /.box-tools -->
+  </div>
   <!-- /.box-header -->
   <div class="box-body with-border">
 
@@ -15,15 +19,19 @@
 		<th data-field="usuario" data-sortable="true" data-visible="true">Usuario</th>
 		<th data-field="nombre" data-sortable="true" data-visible="true">Nombre</th>
 		<th data-field="email" data-sortable="true" data-visible="true">Email</th>
+		<th data-field="servidorSMTP" data-sortable="true" data-visible="false">ServidorSMTP</th>
+		<th data-field="tema" data-sortable="true" data-visible="false">Tema</th>
+		<th data-field="fecha_creacion" data-sortable="true" data-visible="false">Fecha de creación</th>
 		<th data-field="activo" data-sortable="true" data-visible="true">Activo</th>
+
 	</tr>
 	</thead>
 	</table>
 	<div id="toolbar-bootstrapTable" class="btn-group">
 		<button type="button" class="btn btn-default" data-toggle="modal" data-target="#crear"><i class="fa fa-plus"></i> Nuevo registro</button>
 		<button type="button" class="btn btn-default" data-toggle="modal" data-target="#frmActualizar"><i class="fa fa-pencil"></i> Modificar</button>
-		<button type="button" class="btn btn-default" data-toggle="modal" data-target="#frmEliminar"><i class="fa fa-trash"></i> Eliminar</button>
-		
+		<button type="button" class="btn btn-default" data-toggle="modal" data-target="#frmEliminar"><i class="fa fa-trash"></i> Cambiar estado</button>
+
 	</div>
     </div>
 
@@ -49,28 +57,28 @@
 					</div>
 					<div class="col-xs-12">
 						<div class="form-horizontal">
-						
-						<div class="form-group">
-							<h2>Datos de acceso</h2>
-						</div>	
+
+            <div class="form-group">
+              <h2>Datos de acceso</h2>
+            </div>
 
 						<div class="form-group">
 							<label for="txtusuario" class="col-sm-2 control-label">Usuario</label>
 							<div class="col-sm-10">
-								<input id="txtusuario" name="txtusuario" type="text" class="form-control" placeholder="usuario" />
+								<input id="txtusuario" name="txtusuario" type="text" class="form-control" placeholder="usuario" maxlength="10" />
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label for="txtpassword" class="col-sm-2 control-label">Password</label>
 							<div class="col-sm-10">
-								<input id="txtpassword" name="txtpassword" type="text" class="form-control" placeholder="password" />
+								<input id="txtpassword" name="txtpassword" type="password" class="form-control" placeholder="password" />
 							</div>
 						</div>
 
-						<div class="form-group">
-							<h2>Datos Generales</h2>
-						</div>	
+            <div class="form-group">
+							<h2>Datos generales</h2>
+						</div>
 
 						<div class="form-group">
 							<label for="txtnombre" class="col-sm-2 control-label">Nombre</label>
@@ -86,9 +94,9 @@
 							</div>
 						</div>
 
-						<div class="form-group">
+            <div class="form-group">
 							<h2>Servidor SMTP</h2>
-						</div>						
+						</div>
 
 						<div class="form-group">
 							<label for="txtservidorSMTP" class="col-sm-2 control-label">Servidor</label>
@@ -98,20 +106,20 @@
 						</div>
 
 						<div class="form-group">
-							<label for="txtpasswordSMTP" class="col-sm-2 control-label">PasswordSMTP</label>
+							<label for="txtpasswordSMTP" class="col-sm-2 control-label">Password</label>
 							<div class="col-sm-10">
-								<input id="txtpasswordSMTP" name="txtpasswordSMTP" type="text" class="form-control" placeholder="passwordSMTP" />
+								<input id="txtpasswordSMTP" name="txtpasswordSMTP" type="password" class="form-control" placeholder="passwordSMTP" />
 							</div>
 						</div>
 
-						<div class="form-group">
-							<h2>Personalización</h2>
-						</div>	
+            <div class="form-group">
+              <h2>Personalización</h2>
+            </div>
 
 						<div class="form-group">
 							<label for="txttema" class="col-sm-2 control-label">Tema</label>
 							<div class="col-sm-10">
-								<select id="txttema" name="txttema" class="form-control">
+                <select id="txttema" name="txttema" class="form-control">
 									<option value="skin-yellow">Amarillo</option>
 									<option value="skin-yellow-light">Amarillo / Menú claro</option>
 									<option value="skin-blue" selected="">Azul [Predeterminado]</option>
@@ -154,8 +162,8 @@
 				</div>
 				<div class="modal-body">
 					<div id="camposobjeto" class="form-horizontal" title="Modificar usuario">
-						
-						<input id="dtxtfecha_creacion" type="text" class="form-control" name="txtfecha_creacion" disabled />
+
+            <input id="dtxtfecha_creacion" type="text" class="form-control" name="txtfecha_creacion" disabled />
 
 						<div class="form-group">
 							<h2>Datos de acceso</h2>
@@ -175,7 +183,7 @@
 							</div>
 						</div>
 
-						<div class="form-group">
+            <div class="form-group">
 							<h2>Datos generales</h2>
 						</div>
 
@@ -193,7 +201,7 @@
 							</div>
 						</div>
 
-						<div class="form-group">
+            <div class="form-group">
 							<h2>Servidor SMTP</h2>
 						</div>
 
@@ -211,14 +219,14 @@
 							</div>
 						</div>
 
-						<div class="form-group">
+            <div class="form-group">
 							<h2>Personalización</h2>
 						</div>
 
 						<div class="form-group">
 							<label for="dtxttema" class="col-sm-2 control-label">Tema</label>
 							<div class="col-sm-10">
-								<select id="dtxttema" name="txttema" class="form-control">
+                <select id="dtxttema" name="txttema" class="form-control">
 									<option value="skin-yellow">Amarillo</option>
 									<option value="skin-yellow-light">Amarillo / Menú claro</option>
 									<option value="skin-blue" selected="">Azul [Predeterminado]</option>
@@ -232,13 +240,6 @@
 									<option value="skin-green">Verde</option>
 									<option value="skin-green-light">Verde / Menú claro</option>
 								</select>
-							</div>
-						</div>
-
-						<div class="form-group">
-							<label for="dtxtactivo" class="col-sm-2 control-label">Activo</label>
-							<div class="col-sm-10">
-								<input id="dtxtactivo" type="text" class="form-control" name="txtactivo" />
 							</div>
 						</div>
 
@@ -262,16 +263,16 @@
 		<div class="modal-content">
 		  <div class="modal-header bg-light-blue">
 			<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-			<p class="modal-title" id="frmEliminarLabel">Eliminar usuario</p>
+			<p class="modal-title" id="frmEliminarLabel">Cambiar estado</p>
 		  </div>
 		  <div class="modal-body">
-			<p>&iquest;Est&aacute; seguro que desea eliminar usuario?</p>
+			<p>&iquest;Est&aacute; seguro que desea cambiar el estado del usuario?</p>
 			<input type="hidden" name="acc" value="eliminar" />
 			<input type="hidden" name="idObjeto" id="eidObjeto"/>
 		  </div>
 		  <div class="modal-footer bg-gray">
 			<button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
-			<button type="button" id="btnEliminar" class="btn btn-primary">Eliminar</button>
+			<button type="button" id="btnEliminar" class="btn btn-primary">Cambiar</button>
 		  </div>
 		</div>
 	  </div>
