@@ -14,6 +14,7 @@ foreach ($usuarios as $key => $usuario) {
     <div class="info-box">
       <span class="info-box-icon bg-aqua"><i class="fa fa-user"></i></span>
       <div class="info-box-content">
+        <div class="pull-right"><i class="fa fa-share"></i></div>
         <span class="info-box-text">{$usuario->usuario}</span>
         <span class="info-box-number">{$usuario->nombre}</span>
       </div>

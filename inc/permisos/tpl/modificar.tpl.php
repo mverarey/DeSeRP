@@ -17,14 +17,14 @@
 					{@pag->permisos}
 					</tbody>
 					</table>
-					
+
 					<div class="text-center">
-						<input class="btn btn-default btn-lg" type="submit" value="Guardar cambios" />
+						<button class="btn btn-default btn-lg" type="submit"><i class="fa fa-save"></i> Guardar cambios</button>
 					</div>
 				</form>
-				
+
 			</div>
 		</div>
-		<p><a class="Regresar" href="../administrar">Regresar</a></p>
+		<p><a class="Regresar btn btn-default" href="../administrar"><i class="fa fa-arrow-left"></i> Regresar</a></p>
 	</div><!-- /.box-body -->
 </div>
