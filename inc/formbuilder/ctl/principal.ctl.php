@@ -19,8 +19,8 @@ switch($this->os(4)){
 		echo $tbls;
 	break;
 
-	case "generar":	
-	
+	case "generar":
+
 		function reemplazarModulo($manager, $modulo, $files){
 			if( $manager->has("fs://inc/".$modulo) ){
 				echo "<li><i class='glyphicon glyphicon-ok'></i> Sobreescribiendo el módulo actual</li>";
@@ -45,7 +45,7 @@ switch($this->os(4)){
 			 rmdir($dir);
 		   }
 		}
-		
+
 		function crear_zip($files = array(),$destination = '',$rutaRemplazar = '',$overwrite = true) {
 		  if(file_exists($destination) && !$overwrite) { return false; }
 		  $valid_files = array();
@@ -73,7 +73,7 @@ switch($this->os(4)){
 			return false;
 		  }
 		}
-		
+
 		$exportar = $_REQUEST['exportar'] == "true";
 		$instalar = $_REQUEST['instalar'] == "true";
 		$icono = strlen($_REQUEST['icono']) == 0 ? "archive": $_REQUEST['icono'];
@@ -122,9 +122,9 @@ switch($this->os(4)){
 					$exportartpl = "<a href='/wsdl/".$tabla."/exportar' class='btn btn-default'><i class='fa fa-download'></i> Exportar</a>";
 				}
 
-				
+
 				$res = $bd::select("SELECT `COLUMN_NAME` 'col_origen', `REFERENCED_TABLE_NAME` 'tbl_destino', `REFERENCED_COLUMN_NAME` 'col_destino' FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` WHERE `TABLE_SCHEMA` = SCHEMA() AND `REFERENCED_TABLE_NAME` IS NOT NULL AND TABLE_NAME = '".$tabla. "';");
-				
+
 				$ctl_scripts = "";
 				$controladorFK = "";
 				$fks = array();
@@ -155,7 +155,7 @@ EOM;
 
 					$camposo .= <<<EOM
 	\$.ajax({ url: '/wsdl/{\$this->os(2)}/controlador/fk/fk_{$pos}/'+ data.{$relacion['col_origen']} }).then(function (datos) {
-	    	var option = new Option(datos.results[0].text, datos.results[0].id, true, true); $('#dtxt{$relacion['col_origen']}').append(option).trigger('change'); $('#dtxt{$relacion['col_origen']}').trigger({ type: 'select2:select', params: { data: data } }); });	
+	    	var option = new Option(datos.results[0].text, datos.results[0].id, true, true); $('#dtxt{$relacion['col_origen']}').append(option).trigger('change'); $('#dtxt{$relacion['col_origen']}').trigger({ type: 'select2:select', params: { data: data } }); });
 EOM;
 				}
 
@@ -175,7 +175,7 @@ EOM;
 					foreach ($columnasBD as $f) {
 						$f = get_object_vars($f);
 
-						if($f['Field'] == "id" || ($f['Key'] == "PRI" && $f['Extra'] == "auto_increment") ){ 
+						if($f['Field'] == "id" || ($f['Key'] == "PRI" && $f['Extra'] == "auto_increment") ){
 							// $camposi .= " NULL, ";
 							$camposo .= " \$(\"#idObjeto\").val(data.id); \n";
 							$campost .= '"'.$f['Field'].'", ';
@@ -185,7 +185,7 @@ EOM;
 							$camposc .= "\n\t\t\t\t\t\t".'<div class="form-group">'."\n\t\t\t\t\t\t\t".'<label for="txt'.$f['Field'].'" class="col-sm-2 control-label">'.ucwords($f['Field']).'</label>'."\n";
 							$camposm .= "\n\t\t\t\t\t\t".'<div class="form-group">'."\n\t\t\t\t\t\t\t".'<label for="dtxt'.$f['Field'].'" class="col-sm-2 control-label">'.ucwords($f['Field']).'</label>'."\n";
 
-							if( ($f['Key'] == "MUL") || in_array($f['Field'], $fks) ){ 
+							if( ($f['Key'] == "MUL") || in_array($f['Field'], $fks) ){
 
 								$camposc .= "\t\t\t\t\t\t\t".'<div class="col-sm-10">'."\n\t\t\t\t\t\t\t\t".'<select id="txt'.$f['Field'].'" name="txt'.$f['Field'].'" class="form-control" placeholder="'.$f['Field'].'" style="width:100%"></select>'."\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n";
 								$camposm .= "\t\t\t\t\t\t\t".'<div class="col-sm-10">'."\n\t\t\t\t\t\t\t\t".'<select id="dtxt'.$f['Field'].'" type="text" class="form-control" name="txt'.$f['Field'].'" style="width:100%"></select>'."\n\t\t\t\t\t\t\t".'</div>'."\n\t\t\t\t\t\t".'</div>'."\n";
@@ -199,7 +199,7 @@ EOM;
 							//$camposc .= '<input id="txt'.$f['Field'].'" type="text" class="" name="txt'.$f['Field'].'" />'."\n";
 							//$camposm .= '<label for="dtxt'.$f['Field'].'">'.$f['Field'].'</label>'."\n";
 							//$camposm .= '<input id="dtxt'.$f['Field'].'" type="text" class="" name="txt'.$f['Field'].'" />'."\n";
-							
+
 							$campost .= '"'.$f['Field'].'", ';
 							$camposi .= "'".$f['Field']."' => \$_REQUEST['txt".$f['Field']."'], ";
 							$camposa .= " \"".$f['Field']."\" => \$_REQUEST['".$f['Field']."'], ";
@@ -230,7 +230,7 @@ EOM;
 				file_put_contents($ruta."/".$mod."/tpl/administracion.tpl.php", $plantillatpl);
 				echo "<li><i class='glyphicon glyphicon-ok'></i> Archivo TPL generado</li>";
 				unset($plantillatpl);
-				
+
 
 
 
@@ -245,16 +245,16 @@ EOM;
 				 * "idObjeto" => $_REQUEST['idObjeto'],
 					"nombre" => $_REQUEST['txtnombre'],
 					"fecha_inicio" => $_REQUEST['txtfechaini'],
-					"fecha_termino" => $_REQUEST['txtfechater'] 
-					
+					"fecha_termino" => $_REQUEST['txtfechater']
+
 				 * MODIFICAR
 				 * $("#idObjeto").val(data.id);
 					$("#dtxtnombre").val(data.nombre);
 					$("#dtxtfechaini").val(data.fecha_inicio);
 					$("#dtxtfechater").val(data.fecha_termino);
 					$("#dtxtclave option[value='"+data.idObjeto+"']").attr("selected", "selected");
-				 *				  
-				 */				
+				 *
+				 */
 				$plantillactl = file_get_contents($rutaTpls."/plantillactl.txt");
 				echo "<li><i class='glyphicon glyphicon-ok'></i> Plantilla CTL cargada</li>";
 				$plantillactl = str_replace($frms, array($tabla, md5($tabla), $_REQUEST['objeto'], $_REQUEST['objetos'], $campost, $camposi, $camposa, $camposo, $camposun, $camposuv, $ctl_scripts), $plantillactl );
@@ -262,8 +262,8 @@ EOM;
 				file_put_contents($ruta."/".$mod."/ctl/administracion.ctl.php", $plantillactl);
 				echo "<li><i class='glyphicon glyphicon-ok'></i> Archivo CTL generado</li>";
 				unset($plantillactl);
-				
-				
+
+
 
 				$frms = array("{TABLA}","{HASH}","{OBJETO}", "{OBJETOS}", "{CAMPOS}", "{INSERTAR}", "{ACTUALIZAR}", "{MODIFICAR}", "{CAMPOSUN}", "{CAMPOSUV}", "{FKCASES}");
 				$plantillactl = file_get_contents($rutaTpls."/plantillacontrolador.txt");
@@ -310,7 +310,7 @@ EOM;
 				unset($plantillaobttab);
 
 				echo "</ul></li>";
-				
+
 				$files = array(
 					  $mod.'/ctl/administracion.ctl.php',
 					  $mod.'/ctl/obtenerobjetos.ctl.php',
@@ -327,6 +327,7 @@ EOM;
 					reemplazarModulo($this->filesystem->manager, $mod, $files);
 					echo "</ul></li>";
 					echo "</ul>";
+					$this->agregarRegistro("Instalaste el módulo   <strong>".$mod."</strong>.");
 				}else{
 
 					$zip = crear_zip($files,$ruta.'/'.$mod.'.zip', $ruta);
@@ -340,7 +341,8 @@ EOM;
 					echo "<li><i class='glyphicon glyphicon-ok'></i> Zip Generado</li>";
 					echo "</ul>";
 					echo "<a class='btnDescargar btn btn-success col-sm-8' href='/tmp/formbuilder/".$mod.".zip?v=".date("Ymdhis")."'><i class='glyphicon glyphicon-save'></i> Descargar</a>";
-			
+					$this->agregarRegistro("Generaste el módulo <strong>".$mod."</strong>.");
+
 				}
 
 
@@ -353,13 +355,13 @@ EOM;
 			}else{
 				throw new Exception("No hay carpeta destino configurada.");
 			}
-			
+
 			echo "<p style='font-size:8px; text-align:right;'>versi&oacute;n: 2017 - 3.0</p>";
 		}
 	break;
 
 	default:
-		
+
 	break;
 }
 

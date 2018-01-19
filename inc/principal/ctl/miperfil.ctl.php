@@ -4,17 +4,19 @@ use \Imagine\Image\Box;
 $this->establecerTitulo("Datos de mi usuario");
 
 $c = new Conexion();
+$db = new BaseDatos();
 
 if(strlen($this->req['nombre']) > 0){
 
-	$id = $this->req['id'];
+	$id = $_SESSION['usuario']['id'];
 	$nombre = $this->req['nombre'];
 	$email = $this->req['email'];
 	$servidor = $this->req['servidor'];
 	$password = base64_encode($this->req['passmail']);
 	$tema = $this->req['tema'];
 
-	$res = $c->actualizar("usuarios", array( "nombre" => $nombre, "email" => $email, "servidorSMTP" => $servidor, "passwordSMTP" => $password, "tema" => $tema), $id, true);
+	$res = $db::table("usuarios")->where('id', $id)->update(["nombre" => $nombre, "email" => $email, "servidorSMTP" => $servidor, "passwordSMTP" => $password, "tema" => $tema]);
+
 	if($res){
 
 		$_SESSION['usuario']['nombre'] = $nombre;
@@ -22,12 +24,14 @@ if(strlen($this->req['nombre']) > 0){
 		$_SESSION['usuario']['tema'] = $tema;
 
 		echo $this->msgOK("Cambios realizados exitosamente!");
+		$this->agregarRegistro("Modificaste tu perfíl.");
 	}
-	
+
 	if(strlen($this->req['password']) > 0){
 		$res = $c->actualizar("usuarios", array( "password" => md5($this->req['password']) ), $id, true);
 		if($res){
 			echo $this->msgOK("Cambio de contrase&ntilde;a realizado exitosamente!");
+			$this->agregarRegistro("Modificaste tu contrase&ntilde;a.");
 		}else{
 			echo $this->msgError("No se realizó el cambio de contrase&ntilde;a!");
 		}
@@ -43,8 +47,8 @@ if(strlen($_FILES['file']['name']) > 0){
 	$imagine = new \Imagine\Gd\Imagine();
 	try{
 		$img = $imagine->open($_FILES['file']['tmp_name']);
-		$this->filesystem->escribirArchivo( $archivo.'_thumb.jpg', $img->thumbnail(new Box(140, 140), \Imagine\Image\ImageInterface::THUMBNAIL_OUTBOUND)->get('jpg'),  $path, true); 
-		$this->filesystem->escribirArchivo( $archivo.'.jpg', $img->get('jpg'), $path, true); 
+		$this->filesystem->escribirArchivo( $archivo.'_thumb.jpg', $img->thumbnail(new Box(140, 140), \Imagine\Image\ImageInterface::THUMBNAIL_OUTBOUND)->get('jpg'),  $path, true);
+		$this->filesystem->escribirArchivo( $archivo.'.jpg', $img->get('jpg'), $path, true);
 		if( $this->filesystem->existeArchivo($path.$archivo.'.jpg') ){
 			$_SESSION['usuario']['imagen'] = '/'.$path.$archivo.'_thumb.jpg';
 			http_response_code (200);
@@ -93,6 +97,39 @@ $scr = <<<Script
 	$("#txttema").val("{$_SESSION['usuario']['tema']}");
 Script;
 $this->agregarScript($scr);
+
+$historial = "";
+$accesos = $db::table("accesos")->select("area", "fecha")->where('idUsuario', $_SESSION['usuario']['id'])->orderBy('fecha', 'desc')->get()->all();
+
+$ultimaFecha = "";
+foreach ($accesos as $key => $acceso) {
+	$dia = date("d/m/Y", strtotime($acceso->fecha));
+	if($ultimaFecha <> $dia){
+		$historial .= '<!-- timeline time label -->
+		<li class="time-label">
+					<span class="bg-red">
+						'.$dia.'
+					</span>
+		</li>
+		<!-- /.timeline-label -->';
+		$ultimaFecha = $dia;
+	}
+	$hora = date("H:i", strtotime($acceso->fecha));
+	$historial .= <<<EOM
+	<!-- timeline item -->
+	<li>
+		<i class="fa fa-star bg-blue"></i>
+		<div class="timeline-item">
+			<span class="time"><i class="fa fa-clock-o"></i> {$hora}</span>
+			<h3 class="timeline-header no-border">{$acceso->area}</h3>
+		</div>
+	</li>
+	<!-- END timeline item -->
+EOM;
+
+}
+$this->ev("historial", $historial);
+
 ?>
 
 <?

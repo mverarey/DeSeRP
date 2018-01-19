@@ -288,4 +288,12 @@ class DeSeRP{
 		}
 		return $menu;
 	}
+
+	public function agregarRegistro($accion, $idUsuario = 0){
+		if($idUsuario == 0){
+			$idUsuario = $_SESSION['usuario']['id'];
+		}
+		$db = new BaseDatos();
+		$db::table("accesos")->insert( [ 'idUsuario' => $idUsuario, 'area' => $accion, 'fecha' => date("Y-m-d H:i:s") ] );
+	}
 }

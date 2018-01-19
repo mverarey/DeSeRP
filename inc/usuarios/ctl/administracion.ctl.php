@@ -6,6 +6,8 @@ switch( $_REQUEST['acc'] ){
 	case "crear":
 		$res = $bd::table("usuarios")->insertGetId([ 'usuario' => strtoupper($_REQUEST['txtusuario']), 'password' => md5($_REQUEST['txtpassword']), 'nombre' => $_REQUEST['txtnombre'], 'email' => $_REQUEST['txtemail'], 'servidorSMTP' => $_REQUEST['txtservidorSMTP'], 'passwordSMTP' => $_REQUEST['txtpasswordSMTP'], 'tema' => $_REQUEST['txttema'], 'fecha_creacion' => date("Y-m-d H:i:s"), 'activo' => 1  ]);
 		if($res){
+			$this->agregarRegistro("Diste de alta en el sistema a <strong>".$_REQUEST['txtnombre']."</strong>.");
+			$this->agregarRegistro("Su usuario fue dado de alta en el sistema.", $res);
 			echo $this->msgOK("Se registro el usuario correctamente con el id ".$res.".");
 			header("Location: /app/permisos/modificar/".$res );
 		}else{

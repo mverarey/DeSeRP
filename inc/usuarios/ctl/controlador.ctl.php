@@ -31,10 +31,13 @@ switch( $_REQUEST['acc'] ){
 		if($res > 0){
 			$response['ack'] = 200;
 			$response['msg'] = "Se ha desactivado exitosamente.";
+			$this->agregarRegistro("Diste de baja en el sistema al id de usuario  <strong>".$_REQUEST['idObjeto']."</strong>.");
+
 		}else if($res == 0){
 			$response['ack'] = 200;
 			$res = $db::table('usuarios')->where("id", $_REQUEST['idObjeto'] )->update(['activo'=>1]);
 			$response['msg'] = "Se ha activado exitosamente.";
+			$this->agregarRegistro("Reactivaste en el sistema al id de usuario  <strong>".$_REQUEST['idObjeto']."</strong>.");
 		}else{
 			$response['msg'] = "Ocurrió un error, inténtelo nuevamente.";
 		}
