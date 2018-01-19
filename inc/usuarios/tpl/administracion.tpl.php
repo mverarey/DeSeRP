@@ -1,6 +1,6 @@
 <div class="box">
   <div class="box-header with-border">
-    <h3 class="box-title">usuario</h3>
+    <h3 class="box-title">Administador de Usuario</h3>
     <!-- /.box-tools -->
   </div>
   <!-- /.box-header -->
@@ -172,14 +172,14 @@
 						<div class="form-group">
 							<label for="dtxtusuario" class="col-sm-2 control-label">Usuario</label>
 							<div class="col-sm-10">
-								<input id="dtxtusuario" type="text" class="form-control" name="txtusuario" />
+								<input id="dtxtusuario" readonly type="text" class="form-control" name="txtusuario" />
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label for="dtxtpassword" class="col-sm-2 control-label">Password</label>
 							<div class="col-sm-10">
-								<input id="dtxtpassword" type="text" class="form-control" name="txtpassword" />
+								<input id="dtxtpassword" type="password" class="form-control" name="txtpassword" placeholder="Ingrese una nueva contraseña" />
 							</div>
 						</div>
 
@@ -215,7 +215,7 @@
 						<div class="form-group">
 							<label for="dtxtpasswordSMTP" class="col-sm-2 control-label">Password</label>
 							<div class="col-sm-10">
-								<input id="dtxtpasswordSMTP" type="text" class="form-control" name="txtpasswordSMTP" />
+								<input id="dtxtpasswordSMTP" type="password" class="form-control" name="txtpasswordSMTP" />
 							</div>
 						</div>
 
