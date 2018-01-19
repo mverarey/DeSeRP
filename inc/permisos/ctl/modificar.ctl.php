@@ -18,8 +18,16 @@ if(isset($this->req['m'])){
 	echo $this->msgInfo($msg."<br/>Nuevos permisos a&ntilde;adidos exit&oacute;samente.<br/><span style='font-size:90%;'>Total: ".abs($reg_aft-$i)."</span></p>");
 }
 
+if(strlen($this->os(4)) == 0){
+	throw new \Exception("Debe seleccionar un usuario", 1);
+}
+
+if( $db::table("usuarios")->select()->where("id", $this->os(4))->get()->first() == null){
+	throw new \Exception("Debe seleccionar un usuario válido", 1);
+}
+
 $sql = $db::table("usuarios")->join('usuarios_permisos', 'usuarios_permisos.idUsuario', '=', 'usuarios.id')->select()->where("usuarios.id", $this->os(4))->get()->all();
-if(sizeof($sql) > 0){	
+if(sizeof($sql) > 0){
 	$fila = get_object_vars($sql[0]);
 }
 $this->establecerTitulo("Modificar permisos de ".$fila['nombre']." ");
