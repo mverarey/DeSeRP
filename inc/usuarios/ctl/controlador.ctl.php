@@ -8,7 +8,7 @@ if( $_REQUEST['d'] == "fk" ){ $_REQUEST['acc'] = $_REQUEST['e']; }
 switch( $_REQUEST['acc'] ){
 
 	case "actualizar":
-		$res = $db::table("usuarios")->where("id", $_REQUEST['idObjeto'])->update([ "nombre" => $_REQUEST['nombre'],  "email" => $_REQUEST['email'],  "servidorSMTP" => $_REQUEST['servidorSMTP'],  "passwordSMTP" => $_REQUEST['passwordSMTP'],  "tema" => $_REQUEST['tema']  ]);
+		$res = $db::table("usuarios")->where("id", $_REQUEST['idObjeto'])->update([ "nombre" => $_REQUEST['nombre'],  "email" => $_REQUEST['email'],  "servidorSMTP" => $_REQUEST['servidorSMTP'],  "passwordSMTP" => base64_encode($_REQUEST['passwordSMTP']),  "tema" => $_REQUEST['tema']  ]);
 		if($res > 0){
 			$response['ack'] = 200;
 			$response['msg'] = "Se ha actualizado exitosamente.";

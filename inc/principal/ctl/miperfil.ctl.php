@@ -75,7 +75,7 @@ $this->ev("nombre", $fila['nombre']);
 $this->ev("usuario", $fila['usuario']);
 $this->ev("email", $fila['email']);
 $this->ev("servidor", $fila['servidorSMTP']);
-$this->ev("passmail", $fila['passwordSMTP']);
+$this->ev("passmail", base64_decode($fila['passwordSMTP']));
 $this->ev("temaPred", "selected");
 $this->ev("fotoperfil", $_SESSION['usuario']['imagen']);
 

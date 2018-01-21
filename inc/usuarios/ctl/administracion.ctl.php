@@ -20,7 +20,7 @@ $script = <<<EOM
 	$('#tbldatab03f996214fba4a1d05a68b18fece8e71').bootstrapTable( 'resetView' , {height: $( document ).height() - 120 } );
 
 	$('#frmActualizar').on('show.bs.modal', function (event) {    $("#cargando").show(); $("#cargandodiv").show(); $('#frmActualizar form')[0].reset(); var ids = $.map($("#tbldatab03f996214fba4a1d05a68b18fece8e71").bootstrapTable('getSelections'), function (row) {	return row.id });    var opc=ids[0];     if(opc>0){	$.ajax({ method: 'POST', dataType:'json', url: '/wsdl/{$this->os(2)}/obtenerobjetos/'+opc }).done(function( data ) { $("#cargando").hide(); $("#cargandodiv").hide();  $("#idObjeto").val(data.id);
-     $("#dtxtnombre").val(data.nombre); $("#dtxtusuario").val(data.usuario);  $("#dtxtemail").val(data.email);  $("#dtxtservidorSMTP").val(data.servidorSMTP);  $("#dtxtpasswordSMTP").val(data.passwordSMTP);  $("#dtxttema").val(data.tema); });  }else{ 	alert("Debe seleccionar usuario primero.");	$("#cargando").hide(); $("#cargandodiv").hide(); return false; } });
+     $("#dtxtnombre").val(data.nombre); $("#dtxtusuario").val(data.usuario);  $("#dtxtemail").val(data.email);  $("#dtxtservidorSMTP").val(data.servidorSMTP);  $("#dtxtpasswordSMTP").val(atob(data.passwordSMTP));  $("#dtxttema").val(data.tema); });  }else{ 	alert("Debe seleccionar usuario primero.");	$("#cargando").hide(); $("#cargandodiv").hide(); return false; } });
 
 		 /* $("#dtxtpassword").val(data.password); */
 	$("#btnActualizar").click(function(){
