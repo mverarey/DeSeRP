@@ -1,5 +1,5 @@
 <?php
-error_reporting(E_ERROR | E_WARNING | E_PARSE);
+//error_reporting(E_ERROR | E_WARNING | E_PARSE);
 //ini_set('display_errors', 1);
 /*
  * This file is part of DeSeRP.
@@ -13,7 +13,7 @@ use \DepotServer\DeSeRP;
 use \DepotServer\Router;
 
 $uri = Router::uri();
-if($uri['a'] == "json"){
+if($uri['a'] == "json" || $uri['a'] == "xlsx"){
 	/* Start JSON API */
 	require_once("jsonapi.php");
 }else{

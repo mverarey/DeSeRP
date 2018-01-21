@@ -53,7 +53,8 @@ $container['url'] = function ($container) {
     return Router::uri();
 };
 
-$app->any('[/json/{params:.*}]', RoutesController::class . ':main');
+$app->any('/json/{params:.*}', RoutesController::class . ':json');
+$app->any('/xlsx/{params:.*}', RoutesController::class . ':xlsx');
 
 /*
 $app->group('/json', function () {

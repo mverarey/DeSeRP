@@ -158,20 +158,6 @@ switch($this->os(4)){
 				}
 				echo "</ul></li><li>Generando archivos...<ul>";
 
-				$exportartpl = "";
-				if($exportar){
-					$frms = array("{TABLA}");
-					$plantillaexptpl = file_get_contents($rutaTpls."/plantillaexpctl.txt");
-					echo "<li><i class='glyphicon glyphicon-ok'></i> Plantilla exportar cargada</li>";
-					$plantillaexptpl = str_replace($frms, array($tabla), $plantillaexptpl );
-					echo "<li><i class='glyphicon glyphicon-ok'></i> Campos establecidos</li>";
-					file_put_contents($ruta."/".$mod."/ctl/exportar.ctl.php", $plantillaexptpl);
-					echo "<li><i class='glyphicon glyphicon-ok'></i> Archivo exportar generado</li>";
-					unset($plantillaexptpl);
-					$exportartpl = "<a href='/wsdl/".$tabla."/exportar' class='btn btn-default'><i class='fa fa-download'></i> Exportar</a>";
-				}
-
-
 				$res = $bd::select("SELECT `COLUMN_NAME` 'col_origen', `REFERENCED_TABLE_NAME` 'tbl_destino', `REFERENCED_COLUMN_NAME` 'col_destino' FROM `INFORMATION_SCHEMA`.`KEY_COLUMN_USAGE` WHERE `TABLE_SCHEMA` = SCHEMA() AND `REFERENCED_TABLE_NAME` IS NOT NULL AND TABLE_NAME = '".$tabla. "';");
 
 				$ctl_scripts = "";
@@ -187,9 +173,24 @@ switch($this->os(4)){
 
 					$fks[] = $relacion['col_origen'];
 
+					$exportartpl = "";
+					if($exportar){
+						/*
+						$frms = array("{TABLA}");
+						$plantillaexptpl = file_get_contents($rutaTpls."/plantillaexpctl.txt");
+						echo "<li><i class='glyphicon glyphicon-ok'></i> Plantilla exportar cargada</li>";
+						$plantillaexptpl = str_replace($frms, array($tabla), $plantillaexptpl );
+						echo "<li><i class='glyphicon glyphicon-ok'></i> Campos establecidos</li>";
+						file_put_contents($ruta."/".$mod."/ctl/exportar.ctl.php", $plantillaexptpl);
+						echo "<li><i class='glyphicon glyphicon-ok'></i> Archivo exportar generado</li>";
+						unset($plantillaexptpl);
+						*/
+						//$exportartpl = "<a href='/wsdl/".$tabla."/exportar' class='btn btn-default'><i class='fa fa-download'></i> Exportar</a>";
+						$exportartpl = "<a href='/xlsx/".$tabla."/?joins=".$uriTabla."' class='btn btn-default'><i class='fa fa-download'></i> Exportar</a>";
+					}
+
 					$ctl_scripts .= <<<EOM
 	$("#dtxt{$relacion['col_origen']},#txt{$relacion['col_origen']}").select2({ ajax: { url: '/wsdl/{\$this->os(2)}/controlador', type: 'POST', dataType: 'json', delay:250, cache:true, minimumInputLength: 1, data: function (params) { var query = { "q": params.term, "acc":"fk_{$pos}" }; return query; } }, language: "es" });
-
 EOM;
 					$controladorFK .= <<<EOM
 	case "fk_{$pos}":
