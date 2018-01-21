@@ -53,6 +53,15 @@ class RoutesController
          $campos[0] = $db::raw('SQL_CALC_FOUND_ROWS '.$campos[0]);
          $info = $db::table($tabla)->select($campos);
 
+         // JOIN
+         if( isset($url['joins']) ){
+           $joins = unserialize(base64_decode($url['joins']));
+           foreach($joins as $join){
+             $info = $info->addSelect($join['col_mostrar']." as FK".$join['col_origen']);
+             $info = $info->leftJoin($join['tabla'], $tabla.'.'.$join['col_origen'], '=', $join['tabla'].'.'.$join['col_destino']);
+           }
+         }
+
          if( $url['c'] == 'obtenerobjetos' ){
            $info = $info->Where("id", $url['d']);
          }

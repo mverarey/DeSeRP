@@ -22,22 +22,38 @@ switch($this->os(4)){
 
 	case "detalle":
 		$tabla = $this->os(5);
-		$columns = $bd::select('SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = "'.$tabla.'"');
-		$columnsKey = $bd::select('SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME <> "'.$tabla.'" AND TABLE_SCHEMA = "'.$columns[0]->TABLE_SCHEMA.'" AND COLUMN_KEY = "PRI"');
-		//echo "<pre>".print_r($columnsKey, true)."</pre>";
+		$columns = $bd::select('SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = "'.$tabla.'" AND COLUMN_KEY IN ("PRI", "MUL") ');
+
+		$rel = [];
+		$columnsKey = $bd::select('SELECT COLUMN_NAME, REFERENCED_TABLE_NAME FROM INFORMATION_SCHEMA.KEY_COLUMN_USAGE WHERE TABLE_NAME = "'.$tabla.'" AND REFERENCED_COLUMN_NAME IS NOT NULL');
+		foreach ($columnsKey as $relacion) {
+			$rel[$relacion->COLUMN_NAME] = $relacion->REFERENCED_TABLE_NAME;
+		}
+
 		foreach ($columns as $column) {
 			if($column->COLUMN_KEY == "PRI"){
 				echo '<div class="form-group"><label>'.$column->COLUMN_NAME.'</label><p>Primary Key</p></div>';
+			}else if($column->COLUMN_KEY == "MUL"){
+				echo '<div class="form-group"><label>'.$column->COLUMN_NAME.'</label>';
+				$tabla = $rel[$column->COLUMN_NAME];
+				$columnsTable = $bd::select('SELECT TABLE_NAME, COLUMN_NAME FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = "'.$tabla.'" AND COLUMN_KEY <> "PRI" ');
+				$columnas = "";
+				foreach ($columnsTable as $columna) {
+					$columnas .= "<option value='".$column->COLUMN_NAME."|".$columna->TABLE_NAME."|".$columna->COLUMN_NAME."'>".$columna->TABLE_NAME." => ".$columna->COLUMN_NAME."</option>";
+				}
+				echo '<select id="'.$column->COLUMN_NAME.'_rel'.'" class="form-control relaciones" >'.$columnas.'</select></div>';
 			}else{
+				/*
 				echo '<div class="form-group">
 					<label>'.$column->COLUMN_NAME.'</label>
-					<select id="'.$column->COLUMN_NAME.'_rel'.'" name="relaciones[]" class="form-control" ><option>Sin relación externa</option>';
+					<select id="'.$column->COLUMN_NAME.'_rel'.'" class="form-control relaciones" ><option value="">Sin relación externa</option>';
 				foreach ($columnsKey as $relacion) {
-					echo "<option value=''>".$relacion->TABLE_NAME.' -> '.$relacion->COLUMN_NAME."</option>";
+					echo "<option value='".$column->COLUMN_NAME."|".$relacion->TABLE_NAME."|".$relacion->COLUMN_NAME."'>".$relacion->TABLE_NAME.' -> '.$relacion->COLUMN_NAME."</option>";
 				}
 				echo '</select>
 						<span class="help-block">'.$column->COLUMN_COMMENT.'</span>
 				</div>';
+				*/
 			}
 		}
 
@@ -102,6 +118,15 @@ switch($this->os(4)){
 		$instalar = $_REQUEST['instalar'] == "true";
 		$icono = strlen($_REQUEST['icono']) == 0 ? "archive": $_REQUEST['icono'];
 
+		$relacionesReq = explode("/",$_REQUEST['relaciones']);
+		$relaciones = [];
+		foreach($relacionesReq as $relacion){
+			if(strlen($relacion) > 0){
+				$rel = explode("|", $relacion);
+				$relaciones[$rel[0]] = ["tabla" => $rel[1], "columna" => $rel[2]];
+			}
+		}
+
 		$tabla = $this->os(5);
 		if($tabla != ""){
 			echo "<ul class='nostyle'>";
@@ -156,7 +181,10 @@ switch($this->os(4)){
 				foreach ( $res as $pos => $relacion ) {
 					$relacion = get_object_vars($relacion);
 
-					//print_r($relacion);
+					//print_r([['tabla' => $relacion['tbl_destino'], 'col_origen' => $relacion['col_origen'], 'col_destino' => $relacion['col_destino'], 'col_mostrar' => $relaciones[$relacion['col_origen']]['tabla'].'.'.$relaciones[$relacion['col_origen']]['columna'] ]]);
+
+					$uriTabla = base64_encode(serialize([['tabla' => $relacion['tbl_destino'], 'col_origen' => $relacion['col_origen'], 'col_destino' => $relacion['col_destino'], 'col_mostrar' => $relaciones[$relacion['col_origen']]['tabla'].'.'.$relaciones[$relacion['col_origen']]['columna'] ]]));
+
 					$fks[] = $relacion['col_origen'];
 
 					$ctl_scripts .= <<<EOM
@@ -166,7 +194,7 @@ EOM;
 					$controladorFK .= <<<EOM
 	case "fk_{$pos}":
 
-		\$valor = "{$relacion['col_destino']}"; /* CAMBIAR POR CAMPO DE TEXTO */
+		\$valor = "{$relaciones[$relacion['col_origen']]['tabla']}.{$relaciones[$relacion['col_origen']]['columna']}"; /* CAMBIAR POR CAMPO DE TEXTO */
 		\$tabla = "{$relacion['tbl_destino']}"; \$columna = "{$relacion['col_destino']}"; \$idfk = \$_REQUEST['fk'];
 		\$objs = \$db::table(\$tabla)->select(\$columna.' as id', \$db::raw(\$valor.' as text'));
 		if(strlen(\$_REQUEST['q']) >0 ){ \$objs = \$objs->where( \$db::raw(\$valor), 'like', '%'.\$_REQUEST['q'].'%');
@@ -202,7 +230,7 @@ EOM;
 						if($f['Field'] == "id" || ($f['Key'] == "PRI" && $f['Extra'] == "auto_increment") ){
 							// $camposi .= " NULL, ";
 							$camposo .= " \$(\"#idObjeto\").val(data.id); \n";
-							$campost .= '"'.$f['Field'].'", ';
+							$campost .= '"'.$tabla.'.'.$f['Field'].'", ';
 							$columnas .= "\t\t".'<th data-field="'.$f['Field'].'" data-sortable="true">No</th>'."\n";
 							$where .= " ".$f['Field']." LIKE \"'.\$search.'\" ";
 						}else{
@@ -214,10 +242,13 @@ EOM;
 								$camposc .= "\t\t\t\t\t\t\t".'<div class="col-sm-10">'."\n\t\t\t\t\t\t\t\t".'<select id="txt'.$f['Field'].'" name="txt'.$f['Field'].'" class="form-control" placeholder="'.$f['Field'].'" style="width:100%"></select>'."\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n";
 								$camposm .= "\t\t\t\t\t\t\t".'<div class="col-sm-10">'."\n\t\t\t\t\t\t\t\t".'<select id="dtxt'.$f['Field'].'" type="text" class="form-control" name="txt'.$f['Field'].'" style="width:100%"></select>'."\n\t\t\t\t\t\t\t".'</div>'."\n\t\t\t\t\t\t".'</div>'."\n";
 
+								$columnas .= "\t\t".'<th data-field="FK'.$f['Field'].'" data-sortable="true" data-visible="true">'.ucwords($f['Field']).'</th>'."\n";
 							}else{
 								$camposc .= "\t\t\t\t\t\t\t".'<div class="col-sm-10">'."\n\t\t\t\t\t\t\t\t".'<input id="txt'.$f['Field'].'" name="txt'.$f['Field'].'" type="text" class="form-control" placeholder="'.$f['Field'].'" />'."\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n";
 								$camposm .= "\t\t\t\t\t\t\t".'<div class="col-sm-10">'."\n\t\t\t\t\t\t\t\t".'<input id="dtxt'.$f['Field'].'" type="text" class="form-control" name="txt'.$f['Field'].'" />'."\n\t\t\t\t\t\t\t".'</div>'."\n\t\t\t\t\t\t".'</div>'."\n";
 								$camposo .= " \$(\"#dtxt".$f['Field']."\").val(data.".$f['Field']."); ";
+
+								$columnas .= "\t\t".'<th data-field="'.$f['Field'].'" data-sortable="true" data-visible="true">'.ucwords($f['Field']).'</th>'."\n";
 							}
 							//$camposc .= '<label for="txt'.$f['Field'].'">'.$f['Field'].'</label>'."\n";
 							//$camposc .= '<input id="txt'.$f['Field'].'" type="text" class="" name="txt'.$f['Field'].'" />'."\n";
@@ -230,7 +261,6 @@ EOM;
 							$camposun[] = '"'.$f['Field'].'"';
 							$camposuv[] = '"dtxt'.$f['Field'].'"';
 
-							$columnas .= "\t\t".'<th data-field="'.$f['Field'].'" data-sortable="true" data-visible="true">'.ucwords($f['Field']).'</th>'."\n";
 							$where .= " OR ".$f['Field']." LIKE \"%'.str_replace(' ','%',\$search).'%\" ";
 							$where3 .= "->orWhere('".$f['Field']."', 'like', \$search)";
 						}
@@ -246,10 +276,10 @@ EOM;
 					exit;
 				}
 
-				$frms = array("{HASH}","{OBJETO}","{CAMPOSC}", "{CAMPOSM}", "{COLUMNAS}","{EXPORTAR}", "{TABLA}");
+				$frms = array("{HASH}","{OBJETO}","{CAMPOSC}", "{CAMPOSM}", "{COLUMNAS}","{EXPORTAR}", "{TABLA}", "{QUERY}");
 				$plantillatpl = file_get_contents($rutaTpls."/plantillatpl.txt");
 				echo "<li><i class='glyphicon glyphicon-ok'></i> Plantilla TPL cargada</li>";
-				$plantillatpl = str_replace($frms, array(md5($tabla),$_REQUEST['objeto'], $camposc, $camposm, $columnas, $exportartpl, $tabla), $plantillatpl );
+				$plantillatpl = str_replace($frms, array(md5($tabla),$_REQUEST['objeto'], $camposc, $camposm, $columnas, $exportartpl, $tabla, $uriTabla), $plantillatpl );
 				echo "<li><i class='glyphicon glyphicon-ok'></i> Campos establecidos</li>";
 				file_put_contents($ruta."/".$mod."/tpl/administracion.tpl.php", $plantillatpl);
 				echo "<li><i class='glyphicon glyphicon-ok'></i> Archivo TPL generado</li>";
@@ -403,7 +433,11 @@ $("#tabla").change(function(){
 		$.ajax({
 		  url: "/wsdl/{$oss[1]}/{$oss[2]}/detalle/"+tabla,
 		  success: function(data){
-		    $("#divColumnas").html("<h3>Columnas de <strong>"+ tabla +"</strong></h3>" + data);
+				if( data.length > 0){
+		    	$("#divColumnas").html("<h3>Columnas de <strong>"+ tabla +"</strong></h3>" + data);
+				}else{
+					$("#divColumnas").html("");
+				}
 		  }
 		});
 	}else{
@@ -412,10 +446,20 @@ $("#tabla").change(function(){
 });
 
 $("#btnGenerar").click(function(){
-	$("#res").html("Generando...");
+
+var relaciones = "";
+$( ".relaciones" ).each( function( index, element ){
+		var relacion = $(this).val();
+    if( relacion.length > 0 ){
+			relaciones += relacion + "/";
+		}
+});
+
+
+	$("#res").html("<i class'fa fa-spin fa-spinner'></i> Generando módulo...");
 	$.ajax({
 	  url: "/wsdl/{$oss[1]}/{$oss[2]}/generar/"+$("#tabla").val(),
-	  data: "objeto="+$("#txtObjeto").val()+"&objetos="+$("#txtObjetos").val()+"&exportar="+$("#txtexportarExcel").is(':checked')+"&instalar="+$("#txtinstalar").is(':checked')+"&icono="+$("#txtIcono").val()+"&nombre="+$("#txtNombre").val()+"&relaciones="+$("select[name=relaciones]").val(),
+	  data: "objeto="+$("#txtObjeto").val()+"&objetos="+$("#txtObjetos").val()+"&exportar="+$("#txtexportarExcel").is(':checked')+"&instalar="+$("#txtinstalar").is(':checked')+"&icono="+$("#txtIcono").val()+"&nombre="+$("#txtNombre").val()+"&relaciones="+relaciones,
 	  type: "POST",
 	  success: function(data){
 		$("#res").html(data);
