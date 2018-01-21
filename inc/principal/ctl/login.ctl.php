@@ -15,7 +15,7 @@ $script = <<<EOM
 EOM;
 $this->agregarScript($script);
 if($_REQUEST['validacion'] == md5(date("dmY"))){
-	$c = new Conexion();
+
 	$bd = new BaseDatos();
 	$_SESSION['usuario'] = array();
 	try{
@@ -39,7 +39,7 @@ if($_REQUEST['validacion'] == md5(date("dmY"))){
 
 			$_SESSION['usuario']['ultimaActualizacion'] = date("d/m/y H:i");
 
-			$modulosDisponibles = $c->obtenerPermisos();
+			$modulosDisponibles = $this->obtenerPermisos($bd);
 			foreach ($modulosDisponibles as $modulo) {
 				$_SESSION['usuario']['area'][$modulo->modulo] = $modulo->nivel;
 			}

@@ -19,7 +19,8 @@
 	        "illuminate/database": "*",
 	        "twig/twig": "^2.0",
 	        "imagine/imagine":"^0.7.1",
-					"phpoffice/phpspreadsheet": "dev-master"
+					"phpoffice/phpspreadsheet": "dev-master",
+					"monolog/monolog": "*"
 	},
 	"minimum-stability": "dev",
 	"autoload": {
@@ -30,7 +31,7 @@
 	},
     	"scripts": {
 		"post-install-cmd": [
-			"bower install",
+			"bower install --allow-root",
 			"composer dump-autoload --optimize --no-dev"
 		],
 		"post-update-cmd": [

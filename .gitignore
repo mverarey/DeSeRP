@@ -10,3 +10,4 @@ composer.lock
 classes/Configuracion.class.php
 inc/accesos
 ._*
+inc/prueba

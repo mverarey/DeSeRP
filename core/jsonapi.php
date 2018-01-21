@@ -13,12 +13,48 @@ use Slim\{Container as SlimCont, App as Slim};
 use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use DepotServer\RoutesController;
+use DepotServer\Router;
 
-$configuration = [ 'settings' => [ 'displayErrorDetails' => true, ], ];
-$c = new SlimCont($configuration);
-$app = new Slim($c);
+$configuration = [ 'settings' => [
+                    // Monolog settings
+                    'logger' => [
+                        'name' => 'DeSeRP',
+                        'path' => isset($_ENV['docker']) ? 'php://stdout' : __DIR__ . '/../tmp/app.log',
+                        'level' => \Monolog\Logger::DEBUG,
+                    ],
+                    // Slim Settings
+                    'determineRouteBeforeAppMiddleware' => false,
+                    'displayErrorDetails' => true,
+                    ],
+                 ];
 
-$app->get('[/json/{params:.*}]', RoutesController::class . ':main');
+$app = new \Slim\App($configuration);
+
+// Set up dependencies
+$container = $app->getContainer();
+
+// monolog
+$container['logger'] = function ($c) {
+    $settings = $c->get('settings')['logger'];
+    $logger = new Monolog\Logger($settings['name']);
+    $logger->pushProcessor(new Monolog\Processor\UidProcessor());
+    $logger->pushHandler(new Monolog\Handler\StreamHandler($settings['path'], $settings['level']));
+    return $logger;
+};
+
+// Service factory for the ORM
+$container['db'] = function ($container) {
+    $capsule = new DepotServer\BaseDatos;
+    $capsule->bootEloquent();
+    return $capsule;
+};
+
+$container['url'] = function ($container) {
+    return Router::uri();
+};
+
+$app->any('[/json/{params:.*}]', RoutesController::class . ':main');
+
 /*
 $app->group('/json', function () {
 
@@ -27,9 +63,11 @@ $app->group('/json', function () {
 	    $response->getBody()->write("Hello, $name");
 	    return $response;
 	});
-	$this->get('/ds', function(Request $request, Response $response){	
+	$this->get('/ds', function(Request $request, Response $response){
 		return "Hola";
 	});
 });
 */
+
+// Run app
 $app->run();

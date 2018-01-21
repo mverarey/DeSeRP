@@ -296,4 +296,8 @@ class DeSeRP{
 		$db = new BaseDatos();
 		$db::table("accesos")->insert( [ 'idUsuario' => $idUsuario, 'area' => $accion, 'fecha' => date("Y-m-d H:i:s") ] );
 	}
+
+	public function obtenerPermisos($db){
+		return $db::table('usuarios_permisos')->where([ ['idUsuario', '=', $_SESSION['usuario']['id'] ] ])->get()->all();
+	}
 }

@@ -1,5 +1,6 @@
 ![DeSeRP](https://raw.githubusercontent.com/mverarey/DeSeRP/master/assets/DeSeRP.png)
 
+[![Downloads](https://img.shields.io/github/downloads/mverarey/DeSeRP/total.svg)](https://github.com/mverarey/DeSeRP)
 [![Build Status](https://api.travis-ci.org/mverarey/DeSeRP.svg?branch=master)](https://travis-ci.org/mverarey/DeSeRP)
 [![Twitter](https://img.shields.io/badge/twitter-@mverarey-blue.svg?style=flat)](http://twitter.com/mverarey)
 [![License](https://img.shields.io/badge/license-MIT-green.svg?style=flat)](https://github.com/mverarey/DeSeRP/blob/master/LICENSE)

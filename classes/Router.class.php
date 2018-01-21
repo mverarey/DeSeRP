@@ -14,15 +14,19 @@
  */
 class Router{
 
-	public static function URI(){
+	public static function URI($url = ""){
 		$req = $_REQUEST;
-		$uri = $_SERVER["REQUEST_URI"];
+		if( strlen($url) == 0){
+			$uri = $_SERVER["REQUEST_URI"];
+		}
 		$uri = reset(explode("?", $uri));
 		$argsUri = explode("/", $uri);
+		$inputs = json_decode(file_get_contents('php://input'), true);
+		if(sizeof($inputs) <= 0){ $inputs = []; }
 		unset($argsUri[0]);
 		$alfabeto = range("a", "z");
 		$letras = array_slice($alfabeto, 0, sizeof($argsUri));
 		$args = array_combine($letras, $argsUri);
-		return array_merge($req, $args, array("uri" => $uri) );
+		return array_merge($req, $args, $inputs, array("uri" => $uri) );
 	}
 }

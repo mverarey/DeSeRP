@@ -16,6 +16,11 @@ class Migracion{
         $table->string('area');
         $table->timestamp('fecha');
       });
+      $db::schema()->dropIfExists('preferencias_schema');
+      $db::schema()->create('preferencias_schema', function ($table) {
+        $table->string('variable');
+        $table->string('valor');
+      });
       $db::schema()->dropIfExists('usuarios_schema');
       $db::schema()->create('usuarios_schema', function ($table) {
         $table->increments('id');

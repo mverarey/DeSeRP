@@ -1,17 +1,10 @@
-<style>
-.campos input[type="text"],.campos input[type="password"]{
-	width: 180px;
-}
-</style>
-<div width="100%" style="text-align: center;">
-<div style="width:300px; margin:70px auto 70px; text-align:left;">
+<div class="col-md-4 col-md-offset-4" style="text-align: center;">
 
 	<div class="box">
 		<div class="box-header with-border">
 			<h3 class="box-title">Login</h3>
 		</div>
 		<div class="box-body">
-
 			<fieldset class="login">
 				<form action="/app/principal/login" method="POST">
 				{@pag->msg}
@@ -35,5 +28,4 @@
 		<!-- /.box-body -->
 	</div>
 
-</div>
 </div>

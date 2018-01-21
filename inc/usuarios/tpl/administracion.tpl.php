@@ -8,7 +8,7 @@
 
     <div id="administrar">
 	<p>Seleccione usuario y despu&eacute;s d&eacute; click sobre la acci&oacute;n que desee realizar.</p>
-	<table id="tbldatab03f996214fba4a1d05a68b18fece8e71" data-toggle="table" data-url="/wsdl/usuarios/obtenertabla" data-pagination="true"
+	<table id="tbldatab03f996214fba4a1d05a68b18fece8e71" data-toggle="table" data-url1="/wsdl/usuarios/obtenertabla" data-url="/json/usuarios" data-pagination="true"
 	   data-method="post" data-side-pagination="server" data-page-list="[5, 10, 20, 50, 100, 200, 300, 400, 500, 1000, 5000, 10000]" data-toolbar="#toolbar-bootstrapTable"
 	   data-search="true" data-striped="true" data-height="500" data-cache="true" data-show-refresh="true"
 	   data-click-to-select="true" data-select-item-name="id" data-show-toggle="true" data-show-columns="true" >
