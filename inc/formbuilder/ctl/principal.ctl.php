@@ -10,6 +10,7 @@ switch($this->os(4)){
 
 	case "tablas":
 		$tables  = $bd::select( "SHOW TABLES" );
+		$tbls = "<option>-- Selecciona una opción --</option>";
 		foreach($tables as $table)
 		{
 			foreach ($table as $key => $value){
@@ -17,6 +18,29 @@ switch($this->os(4)){
 			}
 		}
 		echo $tbls;
+	break;
+
+	case "detalle":
+		$tabla = $this->os(5);
+		$columns = $bd::select('SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = "'.$tabla.'"');
+		$columnsKey = $bd::select('SELECT * FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME <> "'.$tabla.'" AND TABLE_SCHEMA = "'.$columns[0]->TABLE_SCHEMA.'" AND COLUMN_KEY = "PRI"');
+		//echo "<pre>".print_r($columnsKey, true)."</pre>";
+		foreach ($columns as $column) {
+			if($column->COLUMN_KEY == "PRI"){
+				echo '<div class="form-group"><label>'.$column->COLUMN_NAME.'</label><p>Primary Key</p></div>';
+			}else{
+				echo '<div class="form-group">
+					<label>'.$column->COLUMN_NAME.'</label>
+					<select id="'.$column->COLUMN_NAME.'_rel'.'" name="relaciones[]" class="form-control" ><option>Sin relación externa</option>';
+				foreach ($columnsKey as $relacion) {
+					echo "<option value=''>".$relacion->TABLE_NAME.' -> '.$relacion->COLUMN_NAME."</option>";
+				}
+				echo '</select>
+						<span class="help-block">'.$column->COLUMN_COMMENT.'</span>
+				</div>';
+			}
+		}
+
 	break;
 
 	case "generar":
@@ -313,8 +337,8 @@ EOM;
 
 				$files = array(
 					  $mod.'/ctl/administracion.ctl.php',
-					  $mod.'/ctl/obtenerobjetos.ctl.php',
-					  $mod.'/ctl/obtenertabla.ctl.php',
+					  //$mod.'/ctl/obtenerobjetos.ctl.php',
+					  //$mod.'/ctl/obtenertabla.ctl.php',
 					  $mod.'/ctl/controlador.ctl.php',
 					  $mod.'/ctl/json.ctl.php',
 					  $mod.'/tpl/administracion.tpl.php',
@@ -356,7 +380,7 @@ EOM;
 				throw new Exception("No hay carpeta destino configurada.");
 			}
 
-			echo "<p style='font-size:8px; text-align:right;'>versi&oacute;n: 2017 - 3.0</p>";
+			echo "<p style='font-size:8px; text-align:right;'>versi&oacute;n: 2018 - 3.6</p>";
 		}
 	break;
 
@@ -373,11 +397,25 @@ $.ajax({
   }
 });
 
+$("#tabla").change(function(){
+	var tabla = $("#tabla").val();
+	if(tabla.length > 0){
+		$.ajax({
+		  url: "/wsdl/{$oss[1]}/{$oss[2]}/detalle/"+tabla,
+		  success: function(data){
+		    $("#divColumnas").html("<h3>Columnas de <strong>"+ tabla +"</strong></h3>" + data);
+		  }
+		});
+	}else{
+		$("#divColumnas").html("");
+	}
+});
+
 $("#btnGenerar").click(function(){
 	$("#res").html("Generando...");
 	$.ajax({
 	  url: "/wsdl/{$oss[1]}/{$oss[2]}/generar/"+$("#tabla").val(),
-	  data: "objeto="+$("#txtObjeto").val()+"&objetos="+$("#txtObjetos").val()+"&exportar="+$("#txtexportarExcel").is(':checked')+"&instalar="+$("#txtinstalar").is(':checked')+"&icono="+$("#txtIcono").val()+"&nombre="+$("#txtNombre").val(),
+	  data: "objeto="+$("#txtObjeto").val()+"&objetos="+$("#txtObjetos").val()+"&exportar="+$("#txtexportarExcel").is(':checked')+"&instalar="+$("#txtinstalar").is(':checked')+"&icono="+$("#txtIcono").val()+"&nombre="+$("#txtNombre").val()+"&relaciones="+$("select[name=relaciones]").val(),
 	  type: "POST",
 	  success: function(data){
 		$("#res").html(data);

@@ -4,7 +4,7 @@
     <div class="box-tools pull-right">
       <!-- Buttons, labels, and many other things can be placed here! -->
       <!-- Here is a label for example -->
-      <span class="label label-primary version">v. 3.5</span>
+      <span class="label label-primary version">v. 3.6</span>
     </div>
     <!-- /.box-tools -->
   </div>
@@ -25,12 +25,14 @@
 		<label>Nombre del OBJETO:</label>
 		<input type="text" id="txtObjeto" class="form-control" />
 		<span class="help-block">Por ejemplo: Seleccione {OBJETO} y despu&eacute;s</span>
-	</div>	
+	</div>
 	<div class="form-group">
 		<label>Nombre de los OBJETOS:</label>
 		<input type="text" id="txtObjetos" class="form-control" />
 		<span class="help-block">Por ejemplo: Administrador de {OBJETOS}</span>
 	</div>
+
+  <div id="divColumnas"></div>
 
 	<h3>Menú</h3>
 
@@ -61,10 +63,10 @@
 	      <input type="checkbox" name="instalar" id="txtinstalar" value="1"> Instalar automaticamente <div style="font-size:0.8em; color:#F00;">Esto reemplazara el módulo actual.</div>
 	    </label>
 	  </div>
-	
+
 	<br style="clear:both" />
 
-	<input type="button" value="Generar m&oacute;dulo" id="btnGenerar" style="float:right" class="btn btn-default" /> 
+	<input type="button" value="Generar m&oacute;dulo" id="btnGenerar" style="float:right" class="btn btn-default" />
 </div>
 
 <div class="col-xs-12 col-sm-7" style="font-size: 0.8em;" id="res"></div>

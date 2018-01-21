@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="/assets/deserp/DeSeRP.css">
   <link rel="stylesheet" href="/assets/notifyjs/dist/styles/metro/notify-metro.css" />
   <link rel="stylesheet" href="/assets/select2/dist/css/select2.min.css" />
+  <link rel="stylesheet" href="/assets/select2-bootstrap-theme/dist/select2-bootstrap.min.css" />
   <link rel="stylesheet" href="/assets/animate.css/animate.min.css" />
 {@pag->css}
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -399,13 +400,14 @@
 <!-- Bootstrap 3.3.7 --><script src="/assets/admin-lte/bootstrap/js/bootstrap.min.js"></script>
 <!-- SlimScroll --><script src="/assets/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick --><script src="/assets/admin-lte/plugins/fastclick/fastclick.min.js"></script>
+<!-- Pace --><script src="/assets/admin-lte/plugins/pace/pace.js"></script>
 <!-- AdminLTE App --><script src="/assets/admin-lte/dist/js/app.min.js"></script>
 <!-- Bootstrap Table --><script src="/assets/bootstrap-table/dist/bootstrap-table.min.js"></script>
 <!-- Bootstrap Table es-MX --><script src="/assets/bootstrap-table/dist/locale/bootstrap-table-es-MX.min.js"></script>
+<!-- Select2 --><script src="/assets/select2/dist/js/select2.full.min.js"></script>
 <!-- DeSeRP --><script src="/assets/deserp/DeSeRP.js"></script>
 <script src="/assets/notifyjs/dist/notify.js"></script>
 <script src="/assets/notifyjs/dist/styles/metro/notify-metro.js"></script>
-<script src="/assets/select2/dist/js/select2.full.min.js"></script>
 <script src="/assets/select2/dist/js/i18n/es.js"></script>
 {@pag->js}
 <script> $(document).ready(function (){ $(this).DeSeRP(); {@pag->script} }); </script>

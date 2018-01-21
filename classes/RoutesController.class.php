@@ -34,7 +34,7 @@ class RoutesController
    public function main( Request $request, Response $response, $args){
 
      $url = $this->container['url'];
-     $r = [ "ack" => 200, "requestedURL" => $url];
+     $r = [ "ack" => 200, "requestedURL" => $url['uri'] ];
      $archivo = "inc/".$url['b']."/ctl/json.ctl.php";
      if ( $this->filesystem->existeArchivo($archivo) ){
        require_once($archivo);
@@ -43,9 +43,19 @@ class RoutesController
 
          $db = $this->container['db'];
 
+         if(isset($url['campos'])){
+           $campos = unserialize(base64_decode($url['campos']));
+           $columnaCatalogo = $campos[0];
+           $campos = ["id", $campos[0]." AS objeto"];
+           $catalogo = true;
+         }
          $camposBusqueda = $campos;
          $campos[0] = $db::raw('SQL_CALC_FOUND_ROWS '.$campos[0]);
          $info = $db::table($tabla)->select($campos);
+
+         if( $url['c'] == 'obtenerobjetos' ){
+           $info = $info->Where("id", $url['d']);
+         }
 
          if(isset($url['search'])){
            if(sizeof($camposBusqueda) > 0){
@@ -67,6 +77,10 @@ class RoutesController
            }
          }
 
+         if(isset($url['term'])){
+           $info = $info->Where($columnaCatalogo, 'like', '%'.$url['term'].'%');
+         }
+
          $limit = 10; if(isset($url["limit"])) { $limit = $url["limit"]; }
          $offset = 0; if(isset($url["offset"])) { $offset = $url["offset"]; }
          if( isset($url["sort"]) ){ $info = $info->orderBy($url["sort"], $url["order"]); }
@@ -77,6 +91,14 @@ class RoutesController
 
          $cuenta  = reset($db::select( $db::raw("SELECT FOUND_ROWS() as 'total' ") ) );
          $r['total'] = $cuenta->total;
+
+         if($catalogo){
+           $info = [];
+           foreach($r['rows'] as $obj){
+             $info[] = ["id" => $obj->id, "text" => $obj->objeto];
+           }
+           $r = ["results" => $info, "total_count" => $cuenta->total, "incomplete_results" => false];
+         }
 
          // $r['query'] = $info->toSql();
 
@@ -89,58 +111,5 @@ class RoutesController
        $r = [ "ack" => 404, "error" => "Servicio no habilitado"];
      }
      return $response->withJson( $r );
-   }
-
-   public function mainPrototipo(Request $request, Response $response, $args){
-
-      $params = explode('/', $args['params'] );
-      $area = $params[0];
-
-      $r = array("ack" => 200, "request" => $args['params']);
-
-      $archivo = "inc/".$area."/ctl/json.ctl.php";
-      if ( $this->filesystem->existeArchivo($archivo) ){
-
-        $c = new BaseDatos();
-        require_once($archivo);
-
-        if( (!$publica && $_SESSION['usuario']['area'][$area] > 0) || $publica ){
-
-          // SELECT
-          $res = $c::table($tabla)->select( array($c::raw( 'SQL_CALC_FOUND_ROWS '.$campos[0]) ) );
-          unset($campos[0]);
-          foreach ($campos as $key) { $res->addSelect( $c::raw( $key) ); }
-
-          // WHERE
-          if( isset( $params[1] ) ){
-            if( is_numeric($params[1]) ){
-              $res = $res->where('id', '=', $params[1]);
-              /* At least [ ,1 ] */
-            }else if(strlen($params[1]) > 2){
-              list( $key, $val ) = explode(",",  $params[1]);
-              $res = $res->where($key, '=', $val );
-            }
-          }
-
-          // Skip / Take
-          if( isset($params[2]) && isset($params[3])){
-            if( is_numeric($params[2]) && is_numeric($params[3])){
-              $res = $res->offset($params[2])->limit($params[3]);
-            }
-          }
-
-          $r['items'] = $res->get();
-
-          $cuenta  = reset($c::select( $c::raw("SELECT FOUND_ROWS() as 'total' ") ) );
-          $r['total'] = $cuenta->total;
-
-        }else{
-
-          $r['ack'] = 403;
-          $r['msg'] = "Acceso denegado";
-
-        }
-      }
-      return $response->withJson( $r );
    }
 }

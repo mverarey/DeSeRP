@@ -102,7 +102,7 @@
 						<div class="form-group">
 							<label for="txtpassmail" class="col-sm-2 control-label">Contraseña POP3/SMTP</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" id="txtpassmail" placeholder="Password" name="passmail" value="{@pag->passmail}">
+								<input type="password" class="form-control" id="txtpassmail" placeholder="Password" name="passmail" value="{@pag->passmail}">
 							</div>
 						</div>
 					</div>

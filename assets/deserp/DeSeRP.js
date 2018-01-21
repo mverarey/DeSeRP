@@ -3,7 +3,7 @@
  * 0.1 beta
  *
  * @author Mauricio Vera
- */  
+ */
 function EsNumero(texto){var ValidChars="0123456789.";var EsNumero=true;var Char;for(i=0;i<texto.length&&EsNumero==true;i++){Char=texto.charAt(i);if(ValidChars.indexOf(Char)==-1){EsNumero=false}}return EsNumero}
 
 // Configuraciones de corrección
@@ -25,9 +25,9 @@ $.fn.modal.Constructor.prototype.enforceFocus = function () {};
  * Jquery Plugin : DeSeRP
  * @author Mauricio Vera
  */
-(function($){  
- $.fn.extend({   
-      DeSeRP: function() { 
+(function($){
+ $.fn.extend({
+      DeSeRP: function() {
           $("textarea").addClass('ui-state-default ui-corner-all');$("textarea").bind({focusin: function() {$(this).toggleClass('ui-state-focus');},focusout: function() {$(this).toggleClass('ui-state-focus');}});
           $(".btncerrar").click(function(){$(this).parent().parent().slideUp();});
           /*$(".ui-widget-content").addClass("ui-corner-left").addClass("ui-corner-right");*//*$("input[type='text']").css("text-transform","uppercase");*/
@@ -43,15 +43,16 @@ $.fn.modal.Constructor.prototype.enforceFocus = function () {};
           $(window).resize(function () {
                $('.tbldatos').bootstrapTable('resetView');
           });
-          
+          $(".select2").select2({theme: "bootstrap", width: '100%'});
+
           $(document).scrollTop(0); $("#cargando").height($(window).height()); $("#msgflo").desplegar();$(".divcargador").cargador();$(".btncerrar").click(function(){$(this).parent().parent().slideUp();});
           $("#btnAbrirCerrar").click(function(){if( $(this).hasClass('abierto') ){$(this).removeClass('abierto');$(this).addClass('cerrado');$( "#aside" ).show( "slide", {direction:'left'}, 500);$( "#imgLogo").slideUp();
           $( "#content" ).css("margin", "0");}else{$(this).removeClass('cerrado');$(this).addClass('abierto');$( "#aside" ).hide();$( "#imgLogo" ).slideDown();$( "#content" ).css("margin", "0px 0px 0px 20px");}});
 
           $.ajaxSetup({ type: "POST" });
-          return true;  
+          return true;
       }
- });     
+ });
 })(jQuery);
 
 function actualizarSesion(){

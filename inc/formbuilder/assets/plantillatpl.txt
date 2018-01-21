@@ -8,7 +8,7 @@
 
     <div id="administrar">
 	<p>Seleccione {OBJETO} y despu&eacute;s d&eacute; click sobre la acci&oacute;n que desee realizar.</p>
-	<table id="tbldatab{HASH}" data-toggle="table" data-url="/wsdl/{TABLA}/obtenertabla" data-pagination="true"
+	<table id="tbldatab{HASH}" data-toggle="table" data-url="/json/{TABLA}" data-pagination="true"
 	   data-method="post" data-side-pagination="server" data-page-list="[5, 10, 20, 50, 100, 200, 300, 400, 500, 1000, 5000, 10000]" data-toolbar="#toolbar-bootstrapTable"
 	   data-search="true" data-striped="true" data-height="500" data-cache="true" data-show-refresh="true"
 	   data-click-to-select="true" data-select-item-name="id" data-show-toggle="true" data-show-columns="true" >
