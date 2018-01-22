@@ -31,6 +31,8 @@
 	},
     	"scripts": {
 		"post-install-cmd": [
+			"cp bowerrc .bowerrc",
+			"cp htaccess .htaccess",
 			"bower install --allow-root",
 			"composer dump-autoload --optimize --no-dev"
 		],
