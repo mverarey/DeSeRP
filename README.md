@@ -17,6 +17,7 @@
 
 - PHP 7.1+
 - MySQL, Postgres, SQL Server, or SQLite
+- Composer & Bower
 
 ## Install
 - [composer](https://getcomposer.org/) install
