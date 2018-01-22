@@ -15,7 +15,7 @@ use League\Flysystem\Filesystem;
 use League\Flysystem\Adapter\Local;
 use League\Flysystem\MountManager;
 
-class FileManager 
+class FileManager
 {
 
   public $adapter, $filesystem, $manager;
@@ -61,6 +61,10 @@ class FileManager
     }else{
       return $path."/";
     }
+  }
+
+  public function obtenerDirectorios($path){
+    return $this->filesystem->listContents($path, false);
   }
 
 }
