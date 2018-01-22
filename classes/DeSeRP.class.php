@@ -117,8 +117,8 @@ class DeSeRP{
 		}
 
 		$this->pagina = preg_replace_callback( '/{@_([a-zA-Z0-9]+)}/', function ($s) { return $this->{$s[1]}; }, $this->pagina);
-		$this->pagina = preg_replace_callback("/{@([a-zA-Z]+)\->([a-zA-Z0-9]+)}/", array( &$this, 'traducirD'), $this->pagina);
-		$this->pagina = preg_replace_callback("/{@([a-zA-Z]+)\->([a-zA-Z0-9]+)}/", array( &$this, 'traducirD'), $this->pagina);
+		$this->pagina = preg_replace_callback("/{@([a-zA-Z]+)\->([a-zA-Z0-9_]+)}/", array( &$this, 'traducirD'), $this->pagina);
+		$this->pagina = preg_replace_callback("/{@([a-zA-Z]+)\->([a-zA-Z0-9_]+)}/", array( &$this, 'traducirD'), $this->pagina);
 
 	}
 

@@ -28,7 +28,7 @@
 </head>
 <body class="hold-transition sidebar-mini fixed {% if session.usuario.tema %} {{session.usuario.tema}} {% else %} skin-blue {% endif %}">
 <!-- Site wrapper -->
-<div class="wrapper">
+<div class="wrapper" id="dsmain">
   <header class="main-header">
     <!-- Logo -->
     <a href="/" class="logo">
@@ -51,6 +51,7 @@
           <li><a href="#">CDMX, a <strong>{@sistema->ahoraFormat}</strong></a></li>
           {% if session.activa %}
           <!-- Messages: style can be found in dropdown.less-->
+          <li><a href="#fullscreen" id="btnToggleFullscreen"><i class="fa fa-expand"></i></a></li>
           <li class="dropdown messages-menu">
             <a href="#" class="dropdown-toggle" data-toggle="dropdown">
               <i class="fa fa-envelope-o"></i>

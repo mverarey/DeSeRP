@@ -54,7 +54,14 @@ class Migracion{
     $db::table('usuarios_permisos_schema')->insert([
       ['idUsuario' => $idUsuario, 'modulo' => 'permisos', 'nivel' => '3'],
       ['idUsuario' => $idUsuario, 'modulo' => 'usuarios', 'nivel' => '3'],
+      ['idUsuario' => $idUsuario, 'modulo' => 'configuracion', 'nivel' => '3'],
       ['idUsuario' => $idUsuario, 'modulo' => 'formbuilder', 'nivel' => '3']
+    ]);
+    $db::table('preferencias_schema')->insert([
+      ['variable' => "sistema_iniciotitulo", 'valor' => "Bienvenid@ a DeSeRP"],
+      ['variable' => "sistema_iniciomensaje", 'valor' => "Modifique este mensaje de bienvenida desde la sección, Configuración > Mensaje inicio."],
+      ['variable' => "sistema_iniciobotonleyenda", 'valor' => "Leer más"],
+      ['variable' => "sistema_iniciobotonurl", 'valor' => "#"],
     ]);
   }
 }
