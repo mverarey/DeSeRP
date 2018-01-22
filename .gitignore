@@ -8,6 +8,5 @@ composer.lock
 !assets/deserp
 !assets/DeSeRP.png
 classes/Configuracion.class.php
-inc/accesos
 ._*
 inc/prueba
