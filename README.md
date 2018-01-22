@@ -10,11 +10,12 @@
 - [Requirements](#requirements)
 - [Install](#install)
 - [Clone](#clone)
+- [Plugin Documentation](#plugindocumentation)
 - [License](#license)
 
 ## Requirements
 
-- PHP 7.0+
+- PHP 7.1+
 - MySQL, Postgres, SQL Server, or SQLite
 
 ## Install
@@ -22,6 +23,11 @@
 
 ## Clone
 - git clone https://github.com/mverarey/DeSeRP.git && cd DeSeRP && composer install
+
+## Plugin Documentation
+- Flysystem https://flysystem.thephpleague.com/
+- Illuminate/Database https://github.com/illuminate/database
+- Slim Framework 3 https://www.slimframework.com/
 
 ## License
 
