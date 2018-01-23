@@ -55,7 +55,9 @@ class RoutesController
        $this->container['logger']->warning("Servicio no habilitado |".$this->container['url']['uri']."|".$_SESSION['usuario']['usuario']."\n");
        $r = [ "ack" => 404, "error" => "Servicio no habilitado"];
      }
+
      return $response->withJson( $r );
+
    }
 
    public function xlsx( Request $request, Response $response, $args){
@@ -183,5 +185,7 @@ class RoutesController
      $r['total'] = $cuenta->total;
 
      return $r;
+
    }
+
 }
