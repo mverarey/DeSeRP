@@ -64,11 +64,9 @@ class RoutesController
      $archivo = "inc/".$url['b']."/ctl/json.ctl.php";
      if ( $this->filesystem->existeArchivo($archivo) ){
        require_once($archivo);
-
        if( $this->accesoPermitido($publica, $_SESSION['usuario']['area'][$url['b']] ) ){
          if(!isset($url["limit"])) { $url["limit"] = -1; }
          $r = $this->obtenerInformacion($url, $tabla, $campos);
-
        }else{
           $this->container['logger']->warning("Acceso no permitido - ".print_r( [ 'url' => $this->container['url']['uri'], $_SESSION['usuario'], $_SESSION['accesos']] , true)."\n");
           throw new \Exception("Acceso no permitido", 405);
@@ -77,9 +75,9 @@ class RoutesController
        $this->container['logger']->warning("Servicio no habilitado |".$this->container['url']['uri']."|".$_SESSION['usuario']['usuario']."\n");
        throw new \Exception("Servicio no habilitado", 404);
      }
-     $body = $response->getBody();
-     $body->write( print_r($r, true) );
-
+     //$body = $response->getBody();
+     //$body->write( print_r($r, true) );
+     ini_set('memory_limit','256M');
      $spreadsheet = new Spreadsheet();
      $sheet = $spreadsheet->getActiveSheet();
      $sheet->setTitle($url['b']);
@@ -93,23 +91,21 @@ class RoutesController
      $primeras->setWrapText(true);
      $primeras->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
      $primeras->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
-     // $sheet->getColumnDimension('A')->setWidth(12);
+     $sheet->getColumnDimension('A')->setWidth(5);
+     for ($i=1; $i <= sizeof($campos); $i++) {
+       $sheet->getColumnDimension(Coordinate::stringFromColumnIndex($i))->setWidth(20);
+     }
      $styleArray = array(
-        'borders' => array(
-            'outline' => array(
-                'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK,
-                'color' => array('argb' => 'FFFFFF00'),
-            ),
-        ),
+        'borders' => array( 'bottom' => array( 'borderStyle' => \PhpOffice\PhpSpreadsheet\Style\Border::BORDER_THICK, 'color' => array('argb' => 'FF000000'), ) ),
+        'font' => array( 'bold' => true )
     );
-    //$sheet->getStyle('A1:'.$letra.'1')->applyFromArray($styleArray);
+    $sheet->getStyle('A1:'.$letra.'1')->applyFromArray($styleArray);
 
+    $modulo = $url['b'].'_'.date("Y-m-d_H-i-s  ");
+    $writer = new Xlsx($spreadsheet);
+    $writer->save('tmp/'.$modulo.'.xlsx');
 
-     $modulo = $url['b'].'_'.date("Y-m-d_H-i-s  ");
-     $writer = new Xlsx($spreadsheet);
-     $writer->save('tmp/'.$modulo.'.xlsx');
-
-     return $response->withRedirect('/tmp/'.$modulo.'.xlsx', 301);
+    return $response->withRedirect('/tmp/'.$modulo.'.xlsx', 301);
      //return $response->withBody( $body );
    }
 
