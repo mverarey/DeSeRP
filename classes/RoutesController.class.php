@@ -20,7 +20,7 @@ use DepotServer\FileManager;
 use DepotServer\Configuracion;
 use DepotServer\Conexion;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Cell;
+use PhpOffice\PhpSpreadsheet\Cell\Coordinate;
 use PhpOffice\PhpSpreadsheet\Writer\Xlsx;
 
 class RoutesController
@@ -71,12 +71,11 @@ class RoutesController
 
        }else{
           $this->container['logger']->warning("Acceso no permitido - ".print_r( [ 'url' => $this->container['url']['uri'], $_SESSION['usuario'], $_SESSION['accesos']] , true)."\n");
-          throw new \Exception("405 - Acceso no permitido", 1);
-
+          throw new \Exception("Acceso no permitido", 405);
        }
      }else{
        $this->container['logger']->warning("Servicio no habilitado |".$this->container['url']['uri']."|".$_SESSION['usuario']['usuario']."\n");
-       throw new \Exception("404 - Servicio no habilitado", 1);
+       throw new \Exception("Servicio no habilitado", 404);
      }
      $body = $response->getBody();
      $body->write( print_r($r, true) );
@@ -89,7 +88,7 @@ class RoutesController
      $sheet->fromArray( json_decode(json_encode($r['rows']),true) , NULL, 'A2' );
      $sheet->setCellValue('A1', 'ID');
 
-     $letra = Cell::stringFromColumnIndex(sizeof($campos));
+     $letra = Coordinate::stringFromColumnIndex(sizeof($campos));
      $primeras = $sheet->getStyle('A1:'.$letra.'1')->getAlignment();
      $primeras->setWrapText(true);
      $primeras->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
@@ -103,7 +102,7 @@ class RoutesController
             ),
         ),
     );
-    $sheet->getStyle('A1:'.$letra.'1')->applyFromArray($styleArray);
+    //$sheet->getStyle('A1:'.$letra.'1')->applyFromArray($styleArray);
 
 
      $modulo = $url['b'].'_'.date("Y-m-d_H-i-s  ");

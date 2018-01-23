@@ -14,6 +14,7 @@ use \Psr\Http\Message\ServerRequestInterface as Request;
 use \Psr\Http\Message\ResponseInterface as Response;
 use DepotServer\RoutesController;
 use DepotServer\Router;
+use DepotServer\FileManager;
 
 $configuration = [ 'settings' => [
                     // Monolog settings
@@ -33,6 +34,23 @@ $app = new \Slim\App($configuration);
 // Set up dependencies
 $container = $app->getContainer();
 
+// Error Handler
+$container['errorHandler'] = function ($container) {
+    return function ($request, $response, $exception) use ($container) {
+      $filesystem = new FileManager('../inc/principal/tpl');
+      $archivo = "error.tpl.php";
+      if($filesystem->existeArchivo($archivo)){
+        $archivo = $filesystem->leerArchivo($archivo);
+      }
+      $mensaje = $exception->getMessage();
+      $numError = $exception->getCode();
+
+      return $container['response']->withStatus($numError)
+                             ->withHeader('Content-Type', 'text/html')
+                             ->write( str_replace(["{@error}", "{@mensaje}"], [$numError, $mensaje], $archivo) );
+    };
+};
+
 // monolog
 $container['logger'] = function ($c) {
     $settings = $c->get('settings')['logger'];
@@ -49,6 +67,7 @@ $container['db'] = function ($container) {
     return $capsule;
 };
 
+// URI Controller
 $container['url'] = function ($container) {
     return Router::uri();
 };
