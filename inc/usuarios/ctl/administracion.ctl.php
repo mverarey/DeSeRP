@@ -34,9 +34,7 @@ $script = <<<EOM
 		}else{ $.notify(data.msg, "error"); } }).fail(function() { $.notify(data.msg, "error"); }).always(function(){ $("#cargando").hide();    $("#cargandodiv").hide();  });
 	});
 	$("#frmEliminar").on('show.bs.modal', function (event) {	var ids = $.map($("#tbldatab03f996214fba4a1d05a68b18fece8e71").bootstrapTable('getSelections'), function (row) { return row.id }); 		var opc=ids[0]; 		if(opc>0){ 			$("#eidObjeto").val(opc);		}else{		alert("Debe seleccionar usuario primero."); 			return false;		}	});
-
-
-
+	
 EOM;
 $this->agregarScript($script);
 ?>

@@ -17,4 +17,5 @@ while($fila = mysql_fetch_assoc($res)){
 $u .= "</tbody></table>";
 
 $this->ev("usuarios",$u);
+
 ?>
