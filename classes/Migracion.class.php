@@ -12,7 +12,7 @@ class Migracion{
       $db = new BaseDatos();
       $db::schema()->dropIfExists('accesos_schema');
       $db::schema()->create('accesos_schema', function ($table) {
-        $table->integer('idUsuario');
+        $table->unsignedInteger('idUsuario');
         $table->string('area');
         $table->timestamp('fecha');
       });
@@ -36,9 +36,15 @@ class Migracion{
       });
       $db::schema()->dropIfExists('usuarios_permisos_schema');
       $db::schema()->create('usuarios_permisos_schema', function ($table) {
-        $table->integer('idUsuario');
+        $table->unsignedInteger('idUsuario');
         $table->string('modulo');
         $table->enum('nivel', ['0','1','2','3']);
+      });
+      $db::schema()->dropIfExists('usuarios_preferencias_schema');
+      $db::schema()->create('usuarios_preferencias_schema', function ($table) {
+        $table->unsignedInteger('idUsuario');
+        $table->string('variable');
+        $table->string('valor');
       });
       return true;
     }catch(Exception $e){
