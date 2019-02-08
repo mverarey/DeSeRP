@@ -214,7 +214,7 @@
     <div class="pull-right hidden-xs">
       <b>Version</b> D:  {@sistema->version} {@sistema->subversion} | T:2.4.0
     </div>
-    <strong>DeSeRP: Copyright &copy; 2014-2018 <a href="http://depotserver.com">Depot Server</a>. | Theme: Copyright &copy; 2014-2018 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
+    <strong>DeSeRP: Copyright &copy; 2014-2019 <a href="http://depotserver.com">Depot Server</a>. | Theme: Copyright &copy; 2014-2019 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
     reserved.
   </footer>
   <!-- Control Sidebar -->
