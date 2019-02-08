@@ -23,7 +23,9 @@ class Router{
 		$argsUri = explode("/", $uri);
 		$inputs = json_decode(file_get_contents('php://input'), true);
 		if(sizeof($inputs) <= 0){ $inputs = []; }
-		unset($argsUri[0]);
+		if(sizeof($argsUri) > 0){ 
+			unset($argsUri[0]);
+		}
 		$alfabeto = range("a", "z");
 		$letras = array_slice($alfabeto, 0, sizeof($argsUri));
 		$args = array_combine($letras, $argsUri);
