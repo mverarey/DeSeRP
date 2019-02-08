@@ -6,7 +6,7 @@
   <title>{@pag->titulo} :: DeSeRP {@sistema->version} {@sistema->subversion}</title>
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <link rel="stylesheet" href="/assets/admin-lte/bootstrap/css/bootstrap.min.css">
-  <link rel="stylesheet" href="/assets/font-awesome/css/fontawesome.min.css">
+  <link rel="stylesheet" href="/assets/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="/assets/ionicons/css/ionicons.min.css">
   <link rel="stylesheet" href="/assets/admin-lte/dist/css/AdminLTE.min.css">
   <link rel="stylesheet" href="/assets/admin-lte/dist/css/skins/_all-skins.min.css">

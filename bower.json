@@ -18,7 +18,7 @@
     "jquery": ">3.0",
     "bootstrap-table": "*",
     "dropzonejs":"*",
-    "font-awesome":">4.3",
+    "font-awesome":"~4.7",
     "ionicons":"~2.0.1",
     "notifyjs":"~0.4.1",
     "select2": "~4.0",
