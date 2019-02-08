@@ -79,6 +79,7 @@ echo  Migracion::probarConexion();
 echo  Migracion::crearTablas();
 
 $usuario = "test".date("YmdHis");
+$password = $_REQUEST['passwordusr'];
 echo  Migracion::crearUsuario($usuario, $password);
 
 ?>
