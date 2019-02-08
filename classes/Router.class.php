@@ -22,7 +22,7 @@ class Router{
 		$uri = reset(explode("?", $uri));
 		$argsUri = explode("/", $uri);
 		$inputs = json_decode(file_get_contents('php://input'), true);
-		if(sizeof($inputs) <= 0){ $inputs = []; }
+		if( !empty($inputs) ){	if($sizeof($inputs) <= 0){ $inputs = []; } }else{ $inputs = []; }
 		if(sizeof($argsUri) > 0){ 
 			unset($argsUri[0]);
 		}
