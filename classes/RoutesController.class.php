@@ -60,6 +60,28 @@ class RoutesController
 
    }
 
+   public function jsonp( Request $request, Response $response, $args){
+
+     $url = $this->container['url'];
+     $archivo = "inc/".$url['b']."/ctl/controller.ctl.php";
+     if ( $this->filesystem->existeArchivo($archivo) ){
+       require_once($archivo);
+
+       if( $this->accesoPermitido($publica, $_SESSION['usuario']['area'][$url['b']] ) ){
+         $r = $this->obtenerInformacion($url, $tabla, $campos);
+       }else{
+          $this->container['logger']->warning("Acceso no permitido - ".print_r( [ 'url' => $this->container['url']['uri'], $_SESSION['usuario'], $_SESSION['accesos']] , true)."\n");
+          $r = [ "ack" => 405, "error" => "Acceso no permitido"];
+       }
+     }else{
+       $this->container['logger']->warning("Servicio no habilitado |".$this->container['url']['uri']."|".$_SESSION['usuario']['usuario']."\n");
+       $r = [ "ack" => 404, "error" => "Servicio no habilitado"];
+     }
+
+     return $response->withJson( $r );
+
+   }
+
    public function xlsx( Request $request, Response $response, $args){
 
      $url = $this->container['url'];

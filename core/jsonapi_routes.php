@@ -13,7 +13,7 @@ use DepotServer\DeSeRP;
 use DepotServer\Router;
 
 $uri = Router::uri();
-if($uri['a'] == "json" || $uri['a'] == "xlsx"){
+if($uri['a'] == "json" || $uri['a'] == "jsonp" || $uri['a'] == "xlsx"){
 	/* Start JSON API */
 	require_once("jsonapi.php");
 }else{
