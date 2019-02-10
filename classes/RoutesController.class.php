@@ -111,7 +111,7 @@ class RoutesController
      //return $response->withBody( $body );
    }
 
-   private function obtenerInformacion($url, $tabla, &$campos){
+   private function obtenerInformacion($url, $tabla, &$campos, $joins){
 
      $r = [ "ack" => 200, "requestedURL" => $url['uri'] ];
      $db = $this->container['db'];
@@ -130,7 +130,7 @@ class RoutesController
      if( isset($url['joins']) && strlen($url['joins']) > 0 ){
        $joins = unserialize(base64_decode($url['joins']));
      }
-    if(sizeof($joins) > 0){
+    if( is_array($joins) ){
       foreach($joins as $join){
         $info = $info->addSelect($join['col_mostrar']." as FK".$join['col_origen']);
         $campos[] = $join['col_mostrar'];
@@ -139,9 +139,8 @@ class RoutesController
     }
 
      // JOIN [json]
-
-//    echo $info->toSql();
-// exit;
+    // echo $info->toSql();
+    // exit;
 
 
      if( $url['c'] == 'obtenerobjetos' ){
@@ -181,7 +180,7 @@ class RoutesController
      try{
        $r['rows'] = $info->get()->all();
      }catch(\Illuminate\Database\QueryException $e){
-       throw new \Exception("Query no válido");
+       throw new \Exception("Query no válido ".$info->toSql() );
      }
      
      //$r['query'] = $info->toSql();

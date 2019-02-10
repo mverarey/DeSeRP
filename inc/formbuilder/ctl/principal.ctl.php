@@ -168,9 +168,7 @@ switch($this->os(4)){
 				foreach ( $res as $pos => $relacion ) {
 					$relacion = get_object_vars($relacion);
 
-					//print_r([['tabla' => $relacion['tbl_destino'], 'col_origen' => $relacion['col_origen'], 'col_destino' => $relacion['col_destino'], 'col_mostrar' => $relaciones[$relacion['col_origen']]['tabla'].'.'.$relaciones[$relacion['col_origen']]['columna'] ]]);
-
-					$joins .= "['tabla' => '".$relacion['tbl_destino']."', 'col_origen' => '".$relacion['col_origen']."', 'col_destino' => '".$relacion['col_destino']."', 'col_mostrar' => '".$relaciones[$relacion['col_origen']]['tabla']."'.'".$relaciones[$relacion['col_origen']]['columna']."' ],";
+					$joins .= "['tabla' => '".$relacion['tbl_destino']."', 'col_origen' => '".$relacion['col_origen']."', 'col_destino' => '".$relacion['col_destino']."', 'col_mostrar' => '".$relaciones[$relacion['col_origen']]['tabla'].".".$relaciones[$relacion['col_origen']]['columna']."' ],";
 
 					$uriTabla = base64_encode(serialize([['tabla' => $relacion['tbl_destino'], 'col_origen' => $relacion['col_origen'], 'col_destino' => $relacion['col_destino'], 'col_mostrar' => $relaciones[$relacion['col_origen']]['tabla'].'.'.$relaciones[$relacion['col_origen']]['columna'] ]]));
 
@@ -189,7 +187,7 @@ switch($this->os(4)){
 						unset($plantillaexptpl);
 						*/
 						//$exportartpl = "<a href='/wsdl/".$tabla."/exportar' class='btn btn-default'><i class='fa fa-download'></i> Exportar</a>";
-						$exportartpl = "<a href='/xlsx/".str_replace("_", "", $tabla)."/?joins=".$uriTabla."' class='btn btn-default'><i class='fa fa-download'></i> Exportar</a>";
+						$exportartpl = "<a href='/xlsx/".str_replace("_", "", $tabla)."/?joins=".$uriTablaYANO."' class='btn btn-default'><i class='fa fa-download'></i> Exportar</a>";
 					}
 
 					$ctl_scripts .= <<<EOM
@@ -259,7 +257,7 @@ EOM;
 							//$camposm .= '<label for="dtxt'.$f['Field'].'">'.$f['Field'].'</label>'."\n";
 							//$camposm .= '<input id="dtxt'.$f['Field'].'" type="text" class="" name="txt'.$f['Field'].'" />'."\n";
 
-							$campost .= '"'.$f['Field'].'", ';
+							$campost .= '"'.$tabla.'.'.$f['Field'].'", ';
 							$camposi .= "'".$f['Field']."' => \$_REQUEST['txt".$f['Field']."'], ";
 							$camposa .= " \"".$f['Field']."\" => \$_REQUEST['".$f['Field']."'], ";
 							$camposun[] = '"'.$f['Field'].'"';
@@ -283,7 +281,7 @@ EOM;
 				$frms = array("{HASH}","{OBJETO}","{CAMPOSC}", "{CAMPOSM}", "{COLUMNAS}","{EXPORTAR}", "{TABLA}", "{QUERY}");
 				$plantillatpl = file_get_contents($rutaTpls."/plantillatpl.txt");
 				echo "<li><i class='glyphicon glyphicon-ok'></i> Plantilla TPL cargada</li>";
-				$plantillatpl = str_replace($frms, array(md5($tabla),$_REQUEST['objeto'], $camposc, $camposm, $columnas, $exportartpl, $tabla, $uriTabla), $plantillatpl );
+				$plantillatpl = str_replace($frms, array(md5($tabla),$_REQUEST['objeto'], $camposc, $camposm, $columnas, $exportartpl, str_replace("_","", $tabla), $uriTablaYANO), $plantillatpl );
 				echo "<li><i class='glyphicon glyphicon-ok'></i> Campos establecidos</li>";
 				file_put_contents($ruta."/".$mod."/tpl/administracion.tpl.php", $plantillatpl);
 				echo "<li><i class='glyphicon glyphicon-ok'></i> Archivo TPL generado</li>";
