@@ -95,31 +95,31 @@
 							</div>
 						</div>
 
-						<div class="form-group">
+						<div class="form-group hidden">
 							<label for="txtfechaCreacion" class="col-sm-2 control-label">FechaCreacion</label>
 							<div class="col-sm-10">
-								<input id="txtfechaCreacion" name="txtfechaCreacion" type="text" class="form-control" placeholder="fechaCreacion" />
+								<input id="txtfechaCreacion" name="txtfechaCreacion" type="text" class="form-control" placeholder="fechaCreacion" value="{@pag->ahora}" />
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label for="txtfechaInicio" class="col-sm-2 control-label">FechaInicio</label>
 							<div class="col-sm-10">
-								<input id="txtfechaInicio" name="txtfechaInicio" type="text" class="form-control" placeholder="fechaInicio" />
+								<input id="txtfechaInicio" name="txtfechaInicio" type="text" class="form-control datetime" placeholder="fechaInicio" />
 							</div>
 						</div>
 
 						<div class="form-group">
 							<label for="txtfechaFin" class="col-sm-2 control-label">FechaFin</label>
 							<div class="col-sm-10">
-								<input id="txtfechaFin" name="txtfechaFin" type="text" class="form-control" placeholder="fechaFin" />
+								<input id="txtfechaFin" name="txtfechaFin" type="text" class="form-control datetime" placeholder="fechaFin" />
 							</div>
 						</div>
 
-						<div class="form-group">
+						<div class="form-group hidden">
 							<label for="txtestado" class="col-sm-2 control-label">Estado</label>
 							<div class="col-sm-10">
-								<input id="txtestado" name="txtestado" type="text" class="form-control" placeholder="estado" />
+								<input id="txtestado" name="txtestado" type="text" class="form-control" placeholder="estado" value="Activo" />
 							</div>
 						</div>
 
