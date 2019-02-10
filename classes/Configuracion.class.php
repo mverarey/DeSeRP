@@ -22,7 +22,7 @@ class Configuracion{
 	var $servidor = "localhost";
 	var $usuario = "root";
 	var $password = '';
-	var $db = "tipi_proto";
+	var $db = "ds_deserp";
 
 	// + v. 3.0
 	var $driver = "mysql";

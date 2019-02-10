@@ -186,7 +186,7 @@ switch($this->os(4)){
 						unset($plantillaexptpl);
 						*/
 						//$exportartpl = "<a href='/wsdl/".$tabla."/exportar' class='btn btn-default'><i class='fa fa-download'></i> Exportar</a>";
-						$exportartpl = "<a href='/xlsx/".$tabla."/?joins=".$uriTabla."' class='btn btn-default'><i class='fa fa-download'></i> Exportar</a>";
+						$exportartpl = "<a href='/xlsx/".str_replace("_", "", $tabla)."/?joins=".$uriTabla."' class='btn btn-default'><i class='fa fa-download'></i> Exportar</a>";
 					}
 
 					$ctl_scripts .= <<<EOM
@@ -451,8 +451,10 @@ $("#btnGenerar").click(function(){
 var relaciones = "";
 $( ".relaciones" ).each( function( index, element ){
 		var relacion = $(this).val();
-    if( relacion.length > 0 ){
-			relaciones += relacion + "/";
+		if(relacion != null){
+			if( relacion.length > 0 ){
+				relaciones += relacion + "/";
+			}
 		}
 });
 
