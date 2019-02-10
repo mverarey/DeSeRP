@@ -170,7 +170,7 @@ switch($this->os(4)){
 
 					//print_r([['tabla' => $relacion['tbl_destino'], 'col_origen' => $relacion['col_origen'], 'col_destino' => $relacion['col_destino'], 'col_mostrar' => $relaciones[$relacion['col_origen']]['tabla'].'.'.$relaciones[$relacion['col_origen']]['columna'] ]]);
 
-					$joins .= "['tabla' => '".$relacion['tbl_destino']."', 'col_origen' => '".$relacion['col_origen']."', 'col_destino' => '".$relacion['col_destino']."', 'col_mostrar' => '".$relaciones[$relacion['col_origen']]['tabla']."'.'.'.'".$relaciones[$relacion['col_origen']]['columna']."' ]";
+					$joins .= "['tabla' => '".$relacion['tbl_destino']."', 'col_origen' => '".$relacion['col_origen']."', 'col_destino' => '".$relacion['col_destino']."', 'col_mostrar' => '".$relaciones[$relacion['col_origen']]['tabla']."'.'".$relaciones[$relacion['col_origen']]['columna']."' ],";
 
 					$uriTabla = base64_encode(serialize([['tabla' => $relacion['tbl_destino'], 'col_origen' => $relacion['col_origen'], 'col_destino' => $relacion['col_destino'], 'col_mostrar' => $relaciones[$relacion['col_origen']]['tabla'].'.'.$relaciones[$relacion['col_origen']]['columna'] ]]));
 
