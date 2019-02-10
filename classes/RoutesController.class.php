@@ -129,12 +129,19 @@ class RoutesController
      // JOIN
      if( isset($url['joins']) ){
        $joins = unserialize(base64_decode($url['joins']));
+
+       
+
        foreach($joins as $join){
          $info = $info->addSelect($join['col_mostrar']." as FK".$join['col_origen']);
          $campos[] = $join['col_mostrar'];
          $info = $info->leftJoin($join['tabla'], $tabla.'.'.$join['col_origen'], '=', $join['tabla'].'.'.$join['col_destino']);
        }
      }
+
+//    echo $info->toSql();
+// exit;
+
 
      if( $url['c'] == 'obtenerobjetos' ){
        $info = $info->Where("id", $url['d']);
@@ -171,7 +178,7 @@ class RoutesController
      if($offset > 0){ $info = $info->skip($offset); }
 
      $r['rows'] = $info->get()->all();
-     // $r['query'] = $info->toSql();
+     //$r['query'] = $info->toSql();
 
      if($catalogo){
        $info = [];
