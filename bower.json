@@ -23,6 +23,7 @@
     "notifyjs":"~0.4.1",
     "select2": "~4.0",
     "select2-bootstrap-theme": "*",
-    "animate.css": "~3.5.2"
+    "animate.css": "~3.5.2",
+    "ContentTools": "1.6.10"
   }
 }
