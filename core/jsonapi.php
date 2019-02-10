@@ -43,7 +43,7 @@ $container['errorHandler'] = function ($container) {
         $archivo = $filesystem->leerArchivo($archivo);
       }
       $mensaje = $exception->getMessage();
-      $numError = $exception->getCode();
+      $numError = $exception->getCode() > 0 ? $exception->getCode() : 500;
 
       return $container['response']->withStatus($numError)
                              ->withHeader('Content-Type', 'text/html')
