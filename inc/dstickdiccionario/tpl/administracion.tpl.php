@@ -8,7 +8,7 @@
 
     <div id="administrar">
 	<p>Seleccione definicion y despu&eacute;s d&eacute; click sobre la acci&oacute;n que desee realizar.</p>
-	<table id="tbldatab29669ff055f1f92544a978930d2561bc" data-toggle="table" data-url="/json/dstickdiccionario/?joins=" data-pagination="true"
+	<table id="tbldatab29669ff055f1f92544a978930d2561bc" data-toggle="table" data-url="/json/dstickdiccionario" data-pagination="true"
 	   data-method="post" data-side-pagination="server" data-page-list="[5, 10, 20, 50, 100, 200, 300, 400, 500, 1000, 5000, 10000]" data-toolbar="#toolbar-bootstrapTable"
 	   data-search="true" data-striped="true" data-height="500" data-cache="true" data-show-refresh="true"
 	   data-click-to-select="true" data-select-item-name="id" data-show-toggle="true" data-show-columns="true" >
@@ -16,7 +16,7 @@
 	<tr>
 		<th data-field="null" data-radio="true"></th>
 		<th data-field="id" data-sortable="true">No</th>
-		<th data-field="FKdiccionario" data-sortable="true" data-visible="true">Diccionario</th>
+		<th data-field="diccionario" data-sortable="true" data-visible="true">Diccionario</th>
 		<th data-field="titulo" data-sortable="true" data-visible="true">Titulo</th>
 
 	</tr>
@@ -56,7 +56,7 @@
 						<div class="form-group">
 							<label for="txtdiccionario" class="col-sm-2 control-label">Diccionario</label>
 							<div class="col-sm-10">
-								<select id="txtdiccionario" name="txtdiccionario" class="form-control" placeholder="diccionario" style="width:100%"></select>
+								<input id="txtdiccionario" name="txtdiccionario" class="form-control" placeholder="diccionario" style="width:100%" type="text"></select>
 							</div>
 						</div>
 
@@ -97,7 +97,7 @@
 						<div class="form-group">
 							<label for="dtxtdiccionario" class="col-sm-2 control-label">Diccionario</label>
 							<div class="col-sm-10">
-								<select id="dtxtdiccionario" type="text" class="form-control" name="txtdiccionario" style="width:100%"></select>
+								<input id="dtxtdiccionario" type="text" class="form-control" name="txtdiccionario" style="width:100%"></select>
 							</div>
 						</div>
 
