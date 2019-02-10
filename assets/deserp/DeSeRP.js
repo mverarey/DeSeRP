@@ -52,6 +52,7 @@ $.fn.modal.Constructor.prototype.enforceFocus = function () {};
                $('.tbldatos').bootstrapTable('resetView');
           });
           $(".select2").select2({theme: "bootstrap", width: '100%'});
+          $('.datetime').datetimepicker({ locale: 'es' });
 
           $(document).scrollTop(0); $("#cargando").height($(window).height()); $("#msgflo").desplegar();$(".divcargador").cargador();$(".btncerrar").click(function(){$(this).parent().parent().slideUp();});
           $("#btnAbrirCerrar").click(function(){if( $(this).hasClass('abierto') ){$(this).removeClass('abierto');$(this).addClass('cerrado');$( "#aside" ).show( "slide", {direction:'left'}, 500);$( "#imgLogo").slideUp();
