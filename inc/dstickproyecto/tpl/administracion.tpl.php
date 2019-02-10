@@ -8,7 +8,7 @@
 
     <div id="administrar">
 	<p>Seleccione proyecto y despu&eacute;s d&eacute; click sobre la acci&oacute;n que desee realizar.</p>
-	<table id="tbldatab0d48d5325dfbacbe15be19c115a681d8" data-toggle="table" data-url="/json/dstick_proyecto/?joins=YToxOntpOjA7YTo0OntzOjU6InRhYmxhIjtzOjg6InVzdWFyaW9zIjtzOjEwOiJjb2xfb3JpZ2VuIjtzOjE1OiJpZExpZGVyUHJveWVjdG8iO3M6MTE6ImNvbF9kZXN0aW5vIjtzOjI6ImlkIjtzOjExOiJjb2xfbW9zdHJhciI7czoxNToidXN1YXJpb3Mubm9tYnJlIjt9fQ==" data-pagination="true"
+	<table id="tbldatab0d48d5325dfbacbe15be19c115a681d8" data-toggle="table" data-url="/json/dstickproyecto/?joins=YToxOntpOjA7YTo0OntzOjU6InRhYmxhIjtzOjg6InVzdWFyaW9zIjtzOjEwOiJjb2xfb3JpZ2VuIjtzOjE1OiJpZExpZGVyUHJveWVjdG8iO3M6MTE6ImNvbF9kZXN0aW5vIjtzOjI6ImlkIjtzOjExOiJjb2xfbW9zdHJhciI7czoxNToidXN1YXJpb3Mubm9tYnJlIjt9fQ==" data-pagination="true"
 	   data-method="post" data-side-pagination="server" data-page-list="[5, 10, 20, 50, 100, 200, 300, 400, 500, 1000, 5000, 10000]" data-toolbar="#toolbar-bootstrapTable"
 	   data-search="true" data-striped="true" data-height="500" data-cache="true" data-show-refresh="true"
 	   data-click-to-select="true" data-select-item-name="id" data-show-toggle="true" data-show-columns="true" >
