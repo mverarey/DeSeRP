@@ -37,7 +37,7 @@ switch( $_REQUEST['acc'] ){
 
 		$valor = "dstick_diccionario.titulo"; /* CAMBIAR POR CAMPO DE TEXTO */
 		$tabla = "dstick_diccionario"; $columna = "id"; $idfk = $_REQUEST['fk'];
-		$objs = $db::table($tabla)->select($columna.' as id', $db::raw($valor.' as text'));
+		$objs = $db::table($tabla)->select($columna.' as id', $db::raw($valor.' as text'))->where("diccionario","categoria");
 		if(strlen($_REQUEST['q']) >0 ){ $objs = $objs->where( $db::raw($valor), 'like', '%'.$_REQUEST['q'].'%');
 		}else if(strlen($_REQUEST['f']) >0 ){ $objs = $objs->where($columna, $_REQUEST['f'] ); }
 		$objs = $objs->limit(100)->get()->all();
