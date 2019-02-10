@@ -61,7 +61,7 @@ class RoutesController
    }
 
    public function jsonp( Request $request, Response $response, $args){
-
+/*
      $url = $this->container['url'];
      $archivo = "inc/".$url['b']."/ctl/controller.ctl.php";
      if ( $this->filesystem->existeArchivo($archivo) ){
@@ -77,7 +77,8 @@ class RoutesController
        $this->container['logger']->warning("Servicio no habilitado |".$this->container['url']['uri']."|".$_SESSION['usuario']['usuario']."\n");
        $r = [ "ack" => 404, "error" => "Servicio no habilitado"];
      }
-
+*/
+     $r = $_REQUEST;
      return $response->withJson( $r );
 
    }

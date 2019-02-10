@@ -2,3 +2,4 @@
 $publica = false;
 $tabla = "{TABLA}";
 $campos = [{CAMPOS}];
+$joins = [{JOINS}];
