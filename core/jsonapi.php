@@ -73,7 +73,6 @@ $container['url'] = function ($container) {
 };
 
 $app->any('/json/{params:.*}', RoutesController::class . ':json');
-$app->any('/jsonp/{params:.*}', RoutesController::class . ':jsonp');
 $app->any('/xlsx/{params:.*}', RoutesController::class . ':xlsx');
 
 /*
