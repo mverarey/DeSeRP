@@ -16,6 +16,7 @@
   <link rel="stylesheet" href="/assets/select2/dist/css/select2.min.css" />
   <link rel="stylesheet" href="/assets/select2-bootstrap-theme/dist/select2-bootstrap.min.css" />
   <link rel="stylesheet" href="/assets/animate.css/animate.min.css" />
+  <link rel="stylesheet" href="/assets/eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css" />
 {@pag->css}
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -407,6 +408,7 @@
 <!-- Bootstrap Table es-MX --><script src="/assets/bootstrap-table/dist/locale/bootstrap-table-es-MX.min.js"></script>
 <!-- Select2 --><script src="/assets/select2/dist/js/select2.full.min.js"></script>
 <!-- DeSeRP --><script src="/assets/deserp/DeSeRP.js"></script>
+<!-- Bootstrap 3 Datepicker v4 --><script src="/assets/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
 <script src="/assets/notifyjs/dist/notify.js"></script>
 <script src="/assets/notifyjs/dist/styles/metro/notify-metro.js"></script>
 <script src="/assets/select2/dist/js/i18n/es.js"></script>

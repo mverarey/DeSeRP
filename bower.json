@@ -24,6 +24,7 @@
     "select2": "~4.0",
     "select2-bootstrap-theme": "*",
     "animate.css": "~3.5.2",
-    "ContentTools": "1.6.10"
+    "ContentTools": "1.6.10",
+    "eonasdan-bootstrap-datetimepicker": "4.14.30"
   }
 }
