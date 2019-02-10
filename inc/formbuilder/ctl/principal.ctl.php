@@ -163,11 +163,14 @@ switch($this->os(4)){
 				$ctl_scripts = "";
 				$controladorFK = "";
 				$fks = array();
+				$joins = "";
 				// Iterar relaciones
 				foreach ( $res as $pos => $relacion ) {
 					$relacion = get_object_vars($relacion);
 
 					//print_r([['tabla' => $relacion['tbl_destino'], 'col_origen' => $relacion['col_origen'], 'col_destino' => $relacion['col_destino'], 'col_mostrar' => $relaciones[$relacion['col_origen']]['tabla'].'.'.$relaciones[$relacion['col_origen']]['columna'] ]]);
+
+					$joins .= "['tabla' => '".$relacion['tbl_destino']."', 'col_origen' => '".$relacion['col_origen']."', 'col_destino' => '".$relacion['col_destino']."', 'col_mostrar' => '".$relaciones[$relacion['col_origen']]['tabla']."'.'.'.'".$relaciones[$relacion['col_origen']]['columna']."' ]";
 
 					$uriTabla = base64_encode(serialize([['tabla' => $relacion['tbl_destino'], 'col_origen' => $relacion['col_origen'], 'col_destino' => $relacion['col_destino'], 'col_mostrar' => $relaciones[$relacion['col_origen']]['tabla'].'.'.$relaciones[$relacion['col_origen']]['columna'] ]]));
 
@@ -350,10 +353,10 @@ EOM;
 				echo "<li><i class='glyphicon glyphicon-ok'></i> Archivo OBTTAB generado</li>";
 				unset($plantillaobttab);
 
-				$frms = array("{TABLA}","{CAMPOS}");
+				$frms = array("{TABLA}","{CAMPOS}","{JOINS}");
 				$plantillajson = file_get_contents($rutaTpls."/plantillajson.txt");
 				echo "<li><i class='glyphicon glyphicon-ok'></i> Plantilla OBTJSON cargada</li>";
-				$plantillajson = str_replace($frms, array($tabla, $campost), $plantillajson );
+				$plantillajson = str_replace($frms, array($tabla, $campost, $joins), $plantillajson );
 				file_put_contents($ruta."/".$mod."/ctl/json.ctl.php", $plantillajson);
 				echo "<li><i class='glyphicon glyphicon-ok'></i> Archivo OBTJSON generado</li>";
 				unset($plantillajson);
