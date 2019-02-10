@@ -138,6 +138,10 @@ class RoutesController
        }
      }
 
+//    echo $info->toSql();
+// exit;
+
+
      if( $url['c'] == 'obtenerobjetos' ){
        $info = $info->Where("id", $url['d']);
      }
@@ -172,8 +176,13 @@ class RoutesController
      $info = $info->take($limit);
      if($offset > 0){ $info = $info->skip($offset); }
 
-     $r['rows'] = $info->get()->all();
-     // $r['query'] = $info->toSql();
+     try{
+       $r['rows'] = $info->get()->all();
+     }catch(\Illuminate\Database\QueryException $e){
+       throw new \Exception("Query no válido");
+     }
+     
+     //$r['query'] = $info->toSql();
 
      if($catalogo){
        $info = [];
