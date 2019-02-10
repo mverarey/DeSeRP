@@ -19,15 +19,15 @@ use DepotServer\BaseDatos;
 
 class DSTickets{
 
-	private $db;
-
-	public function DSTickets(){
-		$this->db = new DepotServer\BaseDatos;
-    	$this->db->bootEloquent();
+	public function iniciarTickets(){
+		$db = new BaseDatos;
+		$db->bootEloquent();
+		return $db;
 	}
 
 	public function obtenerTicketsDelProyecto($idProyecto){
-		$db = $this->db;
-		return $db::table("dstick_ticket")->where("idProyecto",$idProyecto)->get()->all();
+
+		$db = $this->iniciarTickets();
+		return $db::table("dstick_ticket")->where("idProyecto",$idProyecto)->get();
 	}
 }
