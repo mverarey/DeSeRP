@@ -127,12 +127,14 @@ class RoutesController
      $info = $db::table($tabla)->select($campos);
 
      // JOIN
-     if( isset($url['joins']) ){
+     if( isset($url['joins']) && strlen($url['joins']) > 0 ){
        $joins = unserialize(base64_decode($url['joins']));
-       foreach($joins as $join){
-         $info = $info->addSelect($join['col_mostrar']." as FK".$join['col_origen']);
-         $campos[] = $join['col_mostrar'];
-         $info = $info->leftJoin($join['tabla'], $tabla.'.'.$join['col_origen'], '=', $join['tabla'].'.'.$join['col_destino']);
+       if(sizeof($joins) > 0){
+         foreach($joins as $join){
+           $info = $info->addSelect($join['col_mostrar']." as FK".$join['col_origen']);
+           $campos[] = $join['col_mostrar'];
+           $info = $info->leftJoin($join['tabla'], $tabla.'.'.$join['col_origen'], '=', $join['tabla'].'.'.$join['col_destino']);
+         }
        }
      }
 
