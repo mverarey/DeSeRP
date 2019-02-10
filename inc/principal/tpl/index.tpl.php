@@ -400,6 +400,7 @@
 
 <!-- jQuery 3 --><script src="/assets/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 --><script src="/assets/admin-lte/bootstrap/js/bootstrap.min.js"></script>
+<!-- Moment --><script type="text/javascript" src="/assets/moment/min/moment.min.js"></script>
 <!-- SlimScroll --><script src="/assets/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick --><script src="/assets/admin-lte/plugins/fastclick/fastclick.min.js"></script>
 <!-- Pace --><script src="/assets/admin-lte/plugins/pace/pace.js"></script>
