@@ -46,7 +46,7 @@ class RoutesController
        require_once($archivo);
 
        if( $this->accesoPermitido($publica, $_SESSION['usuario']['area'][$url['b']] ) ){
-         $r = $this->obtenerInformacion($url, $tabla, $campos);
+         $r = $this->obtenerInformacion($url, $tabla, $campos, $joins);
        }else{
           $this->container['logger']->warning("Acceso no permitido - ".print_r( [ 'url' => $this->container['url']['uri'], $_SESSION['usuario'], $_SESSION['accesos']] , true)."\n");
           $r = [ "ack" => 405, "error" => "Acceso no permitido"];
@@ -56,29 +56,6 @@ class RoutesController
        $r = [ "ack" => 404, "error" => "Servicio no habilitado"];
      }
 
-     return $response->withJson( $r );
-
-   }
-
-   public function jsonp( Request $request, Response $response, $args){
-/*
-     $url = $this->container['url'];
-     $archivo = "inc/".$url['b']."/ctl/controller.ctl.php";
-     if ( $this->filesystem->existeArchivo($archivo) ){
-       require_once($archivo);
-
-       if( $this->accesoPermitido($publica, $_SESSION['usuario']['area'][$url['b']] ) ){
-         $r = $this->obtenerInformacion($url, $tabla, $campos);
-       }else{
-          $this->container['logger']->warning("Acceso no permitido - ".print_r( [ 'url' => $this->container['url']['uri'], $_SESSION['usuario'], $_SESSION['accesos']] , true)."\n");
-          $r = [ "ack" => 405, "error" => "Acceso no permitido"];
-       }
-     }else{
-       $this->container['logger']->warning("Servicio no habilitado |".$this->container['url']['uri']."|".$_SESSION['usuario']['usuario']."\n");
-       $r = [ "ack" => 404, "error" => "Servicio no habilitado"];
-     }
-*/
-     $r = $_REQUEST;
      return $response->withJson( $r );
 
    }
@@ -91,7 +68,7 @@ class RoutesController
        require_once($archivo);
        if( $this->accesoPermitido($publica, $_SESSION['usuario']['area'][$url['b']] ) ){
          if(!isset($url["limit"])) { $url["limit"] = -1; }
-         $r = $this->obtenerInformacion($url, $tabla, $campos);
+         $r = $this->obtenerInformacion($url, $tabla, $campos, $joins);
        }else{
           $this->container['logger']->warning("Acceso no permitido - ".print_r( [ 'url' => $this->container['url']['uri'], $_SESSION['usuario'], $_SESSION['accesos']] , true)."\n");
           throw new \Exception("Acceso no permitido", 405);
@@ -149,17 +126,19 @@ class RoutesController
      $campos[0] = $db::raw('SQL_CALC_FOUND_ROWS '.$campos[0]);
      $info = $db::table($tabla)->select($campos);
 
-     // JOIN
+     // JOIN [REQUEST]
      if( isset($url['joins']) && strlen($url['joins']) > 0 ){
        $joins = unserialize(base64_decode($url['joins']));
-       if(sizeof($joins) > 0){
-         foreach($joins as $join){
-           $info = $info->addSelect($join['col_mostrar']." as FK".$join['col_origen']);
-           $campos[] = $join['col_mostrar'];
-           $info = $info->leftJoin($join['tabla'], $tabla.'.'.$join['col_origen'], '=', $join['tabla'].'.'.$join['col_destino']);
-         }
-       }
      }
+    if(sizeof($joins) > 0){
+      foreach($joins as $join){
+        $info = $info->addSelect($join['col_mostrar']." as FK".$join['col_origen']);
+        $campos[] = $join['col_mostrar'];
+        $info = $info->leftJoin($join['tabla'], $tabla.'.'.$join['col_origen'], '=', $join['tabla'].'.'.$join['col_destino']);
+      }
+    }
+
+     // JOIN [json]
 
 //    echo $info->toSql();
 // exit;
