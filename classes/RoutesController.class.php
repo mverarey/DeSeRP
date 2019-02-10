@@ -176,7 +176,12 @@ class RoutesController
      $info = $info->take($limit);
      if($offset > 0){ $info = $info->skip($offset); }
 
-     $r['rows'] = $info->get()->all();
+     try{
+       $r['rows'] = $info->get()->all();
+     }catch(\Illuminate\Database\QueryException $e){
+       throw new \Exception("Query no válido");
+     }
+     
      //$r['query'] = $info->toSql();
 
      if($catalogo){
