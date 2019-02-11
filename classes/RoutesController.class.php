@@ -144,7 +144,7 @@ class RoutesController
 
 
      if( $url['c'] == 'obtenerobjetos' ){
-       $info = $info->Where("id", $url['d']);
+       $info = $info->Where($tabla."id", $url['d']);
      }
 
      if(isset($url['search'])){
