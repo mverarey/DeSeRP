@@ -4,7 +4,7 @@ $script = <<<EOM
 $(function () {
     'use strict';
     var url = "/upload/usuarios/";
-    $('#fileupload').fileupload({
+    $('#fileuploadlogotipo').fileupload({
         url: url,
         dataType: 'json',
         filesContainer: '#filesdisponibles',
@@ -30,8 +30,8 @@ $(function () {
     });
 });
 EOM;
-// $this->agregarScript($script);
+$this->agregarScript($script);
 
 $uploadCampo = \DepotServer\DSUploader::generar("logotipo", "/upload/usuarios/");
 $this->ev("campoCarga", $uploadCampo["campo"]);
-$this->agregarScript($uploadCampo["script"]);
+//$this->agregarScript($uploadCampo["script"]);

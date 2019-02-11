@@ -200,7 +200,8 @@ class RoutesController
 
    }
 
-   public function upload( Request $request, Response $response, $args){      $url = $this->container['url'];
+   public function upload( Request $request, Response $response, $args){
+      $url = $this->container['url'];
       $options = [
         "upload_dir" => dirname($_SERVER['SCRIPT_FILENAME'])."/tmp/upload/".$url["b"]."/".$_SESSION['usuario']['id']."/",
         "upload_url" => UploadHandler::get_full_url()."/tmp/upload/".$url['b']."/".$_SESSION['usuario']['id']."/",
