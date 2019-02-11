@@ -19,10 +19,12 @@ class DSUploader{
 		$name_real = $name;
 		$name = preg_replace('/[^A-Za-z0-9\-]/', '', $name);
 
+		$archivos = $multiple ? "los archivos deseados" : "el archivo deseado";
+
 		$campo = <<<EOM
 <span class="btn btn-success btn-block fileinput-button">
 	<i class="glyphicon glyphicon-plus"></i>
-	<span>Seleccione los archivos...</span>
+	<span>Seleccione $archivos...</span>
 	<input id="fileupload$name" type="file" name="$name" multiple>
 </span>
 <br>
@@ -51,7 +53,7 @@ $('#fileupload$name').fileupload({
 	},
 	progressall: function (e, data) {
 		var progress = parseInt(data.loaded / data.total * 100, 10);
-		$('#progress .progress-bar').css(
+		$('#progress$name .progress-bar').css(
 			'width',
 			progress + '%'
 		);

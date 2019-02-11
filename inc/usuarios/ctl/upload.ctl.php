@@ -30,8 +30,8 @@ $(function () {
     });
 });
 EOM;
-$this->agregarScript($script);
+//$this->agregarScript($script);
 
 $uploadCampo = \DepotServer\DSUploader::generar("logotipo", "/upload/usuarios/");
 $this->ev("campoCarga", $uploadCampo["campo"]);
-//$this->agregarScript($uploadCampo["script"]);
+$this->agregarScript($uploadCampo["script"]);
