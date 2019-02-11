@@ -35,6 +35,22 @@ $app = new \Slim\App($configuration);
 $container = $app->getContainer();
 
 // Error Handler
+$container['notFoundHandler'] = function ($container) {
+    return function ($request, $response) use ($container) {
+      $filesystem = new FileManager('../inc/principal/tpl');
+      $archivo = "error.tpl.php";
+      if($filesystem->existeArchivo($archivo)){
+        $archivo = $filesystem->leerArchivo($archivo);
+      }
+      $mensaje = "No se ha encontrado la información";
+      $numError = 404;
+
+      return $container['response']->withStatus($numError)
+                             ->withHeader('Content-Type', 'text/html')
+                             ->write( str_replace(["{@error}", "{@mensaje}"], [$numError, $mensaje], $archivo) );
+    };
+};
+
 $container['errorHandler'] = function ($container) {
     return function ($request, $response, $exception) use ($container) {
       $filesystem = new FileManager('../inc/principal/tpl');
