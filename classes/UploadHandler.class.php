@@ -192,7 +192,8 @@ class UploadHandler
             $this->options = $options + $this->options;
 		}
 		
-		print_r($this->options);
+        // print_r($this->options);
+        
         if ($error_messages) {
             $this->error_messages = $error_messages + $this->error_messages;
         }
