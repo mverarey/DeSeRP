@@ -200,4 +200,14 @@ class RoutesController
 
    }
 
+   public function upload( Request $request, Response $response, $args){
+
+      $url = $this->container['url'];
+      $r = $url;
+      
+      $upload_handler = new UploadHandler();
+
+      return $response->withJson( $r );
+   }
+
 }

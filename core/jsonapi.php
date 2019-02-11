@@ -90,6 +90,7 @@ $container['url'] = function ($container) {
 
 $app->any('/json/{params:.*}', RoutesController::class . ':json');
 $app->any('/xlsx/{params:.*}', RoutesController::class . ':xlsx');
+$app->any('/upload/{params:.*}', RoutesController::class . ':upload');
 
 /*
 $app->group('/json', function () {
