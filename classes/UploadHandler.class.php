@@ -49,8 +49,8 @@ class UploadHandler
         $this->response = array();
         $this->options = array(
             'script_url' => $this->get_full_url().'/'.$this->basename($this->get_server_var('SCRIPT_NAME')),
-            'upload_dir' => dirname($this->get_server_var('SCRIPT_FILENAME')).'/files/',
-            'upload_url' => $this->get_full_url().'/files/',
+            'upload_dir' => dirname($this->get_server_var('SCRIPT_FILENAME')).'/tmp/upload/',
+            'upload_url' => $this->get_full_url().'/tmp/upload/',
             'input_stream' => 'php://input',
             'user_dirs' => false,
             'mkdir_mode' => 0755,
@@ -87,7 +87,7 @@ class UploadHandler
             //     2. Set to 2 to send a X-Sendfile header for lighttpd/Apache
             //     3. Set to 3 to send a X-Accel-Redirect header for nginx
             // If set to 2 or 3, adjust the upload_url option to the base path of
-            // the redirect parameter, e.g. '/files/'.
+            // the redirect parameter, e.g. '/tmp/upload/'.
             'download_via_php' => false,
             // Read files in chunks to avoid memory limits when download_via_php
             // is enabled, set to 0 to disable chunked reading of files:
@@ -190,7 +190,9 @@ class UploadHandler
         );
         if ($options) {
             $this->options = $options + $this->options;
-        }
+		}
+		
+		print_r($this->options);
         if ($error_messages) {
             $this->error_messages = $error_messages + $this->error_messages;
         }
@@ -221,7 +223,7 @@ class UploadHandler
         }
     }
 
-    protected function get_full_url() {
+    public function get_full_url() {
         $https = !empty($_SERVER['HTTPS']) && strcasecmp($_SERVER['HTTPS'], 'on') === 0 ||
             !empty($_SERVER['HTTP_X_FORWARDED_PROTO']) &&
                 strcasecmp($_SERVER['HTTP_X_FORWARDED_PROTO'], 'https') === 0;

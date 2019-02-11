@@ -200,14 +200,13 @@ class RoutesController
 
    }
 
-   public function upload( Request $request, Response $response, $args){
-
-      $url = $this->container['url'];
-      $r = $url;
-      
-      $upload_handler = new UploadHandler();
-
-      return $response->withJson( $r );
+   public function upload( Request $request, Response $response, $args){      $url = $this->container['url'];
+      $options = [
+        "upload_dir" => dirname($_SERVER['SCRIPT_FILENAME'])."/tmp/upload/".$url["b"],
+        "upload_url" => UploadHandler::get_full_url()."/tmp/upload/".$url['b'],
+      ];
+      $upload_handler = new UploadHandler($options);
+      exit;
    }
 
 }
