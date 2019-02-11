@@ -41,8 +41,9 @@ EOM;
 $('#fileupload$name').fileupload({
 	url: '$url', dataType: 'json',
 	done: function (e, data) {
-		console.log(data);
+		
 		var filesURL = "";
+		console.log(data.result);
 		$.each(data.result.files, function (index, file) {
 			if(file.url.length > 0){
 				filesURL += file.url + "|";
