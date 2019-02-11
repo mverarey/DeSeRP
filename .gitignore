@@ -10,3 +10,4 @@ composer.lock
 classes/Configuracion.class.php
 ._*
 inc/prueba
+debug.php

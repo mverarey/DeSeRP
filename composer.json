@@ -20,7 +20,8 @@
 	        "twig/twig": "^2.0",
 	        "imagine/imagine":"^0.7.1",
 					"phpoffice/phpspreadsheet": "dev-master",
-					"monolog/monolog": "*"
+					"monolog/monolog": "*",
+					"maximebf/debugbar": "1.*"
 	},
 	"minimum-stability": "dev",
 	"autoload": {
