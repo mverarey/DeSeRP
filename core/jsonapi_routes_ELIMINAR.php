@@ -9,11 +9,19 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  */
+
+
+ /**********************
+  * 
+  *
+  *	REVISAR dsrp.php
+  *
+  */
 use DepotServer\DeSeRP;
 use DepotServer\Router;
 
 $uri = Router::uri();
-if($uri['a'] == "json" || $uri['a'] == "xlsx"){
+if($uri['a'] == "json" || $uri['a'] == "xlsx" || $uri['a'] == "upload"){
 	/* Start JSON API */
 	require_once("jsonapi.php");
 }else{
