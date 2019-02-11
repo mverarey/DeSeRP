@@ -32,6 +32,8 @@ class DSUploader{
     <div class="progress-bar progress-bar-success"></div>
 </div>
 <input type="hidden" name="$name_real" id="$name" />
+<div id="filesdisponibles" class="files"></div>
+<div id="dropzone" style="width:100%; height:300px; background-color: #FFF; text-align:center;">AREA DE ENTREGA</div>
 EOM;
 
 
