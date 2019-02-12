@@ -23,18 +23,18 @@ class DSUploader{
 		$multipleLabel = $multiple ? "multiple"  : "";
 
 		$campo = <<<EOM
-<span class="btn btn-success btn-block fileinput-button">
+<span class="btn btn-success fileinput-button">
 	<i class="glyphicon glyphicon-plus"></i>
 	<span>Seleccione $archivos...</span>
-	<input id="fileupload$name" type="file[]" name="$name" $multipleLabel>
+	<input id="fileupload$name" type="file" name="files[]" $multipleLabel />
 </span>
 <br>
 <div id="progress$name" class="progress">
     <div class="progress-bar progress-bar-success"></div>
 </div>
 <input type="hidden" name="$name_real" id="$name" />
-<div id="filesdisponibles" class="files"></div>
-<div id="dropzone" style="width:100%; height:300px; background-color: #FFF; text-align:center;">AREA DE ENTREGA</div>
+<div id="fd$name" class="files"></div>
+<!-- <div id="dropzone" style="width:100%; height:300px; background-color: #FFF; text-align:center;">AREA DE ENTREGA</div>-->
 EOM;
 
 
@@ -42,13 +42,13 @@ EOM;
 $('#fileupload$name').fileupload({
 	url: '$url', dataType: 'json',
 	done: function (e, data) {
-		
 		var filesURL = "";
 		console.log(data.result);
 		$.each(data.result.files, function (index, file) {
 			if(file.url.length > 0){
 				filesURL += file.url + "|";
 				console.log(file.name);
+				$("#fd$name").append("<p><i class='fa fa-check'></i> "+ file.name +"</p>");
 			}else{
 				console.log(file.name + " - Archivo no permitido");
 			}
