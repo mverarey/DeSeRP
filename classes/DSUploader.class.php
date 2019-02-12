@@ -20,12 +20,13 @@ class DSUploader{
 		$name = preg_replace('/[^A-Za-z0-9\-]/', '', $name);
 
 		$archivos = $multiple ? "los archivos deseados" : "el archivo deseado";
+		$multipleLabel = $multiple ? "multiple"  : "";
 
 		$campo = <<<EOM
 <span class="btn btn-success btn-block fileinput-button">
 	<i class="glyphicon glyphicon-plus"></i>
 	<span>Seleccione $archivos...</span>
-	<input id="fileupload$name" type="file" name="$name" multiple>
+	<input id="fileupload$name" type="file[]" name="$name" $multipleLabel>
 </span>
 <br>
 <div id="progress$name" class="progress">
