@@ -22,7 +22,7 @@ function usuarios(v,r){
 </script>
 <div class="box">
   <div class="box-header with-border">
-    <h3 class="box-title">cliente</h3>
+    <h3 class="box-title">Clientes disponibles</h3>
     <!-- /.box-tools -->
   </div>
   <!-- /.box-header -->
