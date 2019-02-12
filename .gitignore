@@ -3,6 +3,7 @@ assets/*
 vendor/*
 tmp/*
 !tmp/README
+!tmp/upload/.htaccess
 composer.phar
 composer.lock
 !assets/deserp
