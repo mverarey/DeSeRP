@@ -1,3 +1,25 @@
+<script>
+function logotipo(v,r){
+	if(v.length > 0){
+		return "<img src='" + v + "' class='img-responsive center-block' style='max-height:50px' />";
+	}else{
+		return "";
+	}
+}
+
+function empresa(v,r){
+	return '<div class="container-fluid"><div class="row">\
+		<div class="col-md-2">' + logotipo(r.logotipo, r) + '</div>\
+		<div class="col-md-7"><h2>' + r.nombre + '</h2><br/>' + r.razonSocial + '</div>\
+		<div class="col-md-3"><a class="btn btn-block btn-primary" href="/app/dstickcliente/usuarios/'+ r.id +'" >' + r.id + ' usuarios</a></div>\
+	</div></div>';
+
+}
+
+function usuarios(v,r){
+	return "";
+}
+</script>
 <div class="box">
   <div class="box-header with-border">
     <h3 class="box-title">cliente</h3>
@@ -16,10 +38,7 @@
 	<tr>
 		<th data-field="null" data-radio="true"></th>
 		<th data-field="id" data-sortable="true">No</th>
-		<th data-field="nombre" data-sortable="true" data-visible="true">Nombre</th>
-		<th data-field="razonSocial" data-sortable="true" data-visible="true">RazonSocial</th>
-		<th data-field="logotipo" data-sortable="true" data-visible="true">Logotipo</th>
-
+		<th data-field="empresa" data-sortable="true" data-visible="true" data-formatter="empresa">Cliente</th>
 	</tr>
 	</thead>
 	</table>

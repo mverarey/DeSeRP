@@ -13,7 +13,7 @@ switch( $_REQUEST['acc'] ){
 	break;
 }
 
-$uploadCampo = \DepotServer\DSUploader::generar("txtlogotipo", "upload/dstickcliente/");
+$uploadCampo = \DepotServer\DSUploader::generar("txtlogotipo", "/upload/dstickcliente/");
 $this->ev("txtlogotipo", $uploadCampo["campo"]);
 $this->agregarScript($uploadCampo["script"]);
 
