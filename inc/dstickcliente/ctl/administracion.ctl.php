@@ -13,6 +13,10 @@ switch( $_REQUEST['acc'] ){
 	break;
 }
 
+$uploadCampo = \DepotServer\DSUploader::generar("txtlogotipo", "upload/dstickcliente/");
+$this->ev("txtlogotipo", $uploadCampo["campo"]);
+$this->agregarScript($uploadCampo["script"]);
+
 $script = <<<EOM
 	$('#tbldatabcf44986c63bd375c5b2e2d4baf6f551e').bootstrapTable( 'resetView' , {height: $( document ).height() - 120 } );
 

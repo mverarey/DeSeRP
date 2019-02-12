@@ -71,7 +71,7 @@
 						<div class="form-group">
 							<label for="txtlogotipo" class="col-sm-2 control-label">Logotipo</label>
 							<div class="col-sm-10">
-								<input id="txtlogotipo" name="txtlogotipo" type="text" class="form-control" placeholder="logotipo" />
+								{@pag->txtlogotipo}
 							</div>
 						</div>
 
