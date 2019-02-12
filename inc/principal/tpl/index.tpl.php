@@ -27,6 +27,7 @@
   <![endif]-->
   <!-- Google Font -->
   <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
+{@_encabezado}
 </head>
 <body class="hold-transition sidebar-mini fixed {% if session.usuario.tema %} {{session.usuario.tema}} {% else %} skin-blue {% endif %}">
 <!-- Site wrapper -->

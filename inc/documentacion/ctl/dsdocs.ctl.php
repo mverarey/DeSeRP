@@ -1,0 +1,2 @@
+<?php
+$this->establecerTitulo("Documentación");

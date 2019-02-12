@@ -1,0 +1,7 @@
+{
+	"nombre": "Documentación",
+	"icono": "book",
+	"elementos": {
+		"DS Plugins": "\/app\/documentacion\/dsdocs"
+	}
+}

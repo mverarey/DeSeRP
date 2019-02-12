@@ -18,6 +18,7 @@ use DepotServer\FileManager;
 
 class DeSeRP{
 
+	public $debugbar;
 	private $pagina, $encabezado, $contenido, $menu, $usuario, $d, $modo, $mods, $req, $browser;
 	protected $filesystem;
 
@@ -179,7 +180,7 @@ class DeSeRP{
 
 	private function debug($habilitado){
 		if($habilitado){
-			ob_start();
+			/*ob_start();
 			echo '<h1>Debug</h1><table border="1" width="100%"><tr> <th>variable</th> <th>valor</th> </tr>';
 			foreach( array("D" => $this->d,"Sesión" => $_SESSION) as $key => $value){
 			    if (is_array ($value) )
@@ -223,6 +224,16 @@ class DeSeRP{
 			$vars .= ob_get_contents();
 			ob_end_clean();
 			$this->contenido .= $this->msgInfo($vars);
+			*/
+
+			$this->debugbar = new \DebugBar\StandardDebugBar();
+			$debugbarRenderer = $this->debugbar->getJavascriptRenderer();
+
+			// REGISTAR MENSAJE
+			$this->debugbar["messages"]->addMessage("Debugger listo!");
+
+			$this->encabezado = $debugbarRenderer->renderHead();
+    		$this->contenido .= $debugbarRenderer->render();
 		}
 	}
 
