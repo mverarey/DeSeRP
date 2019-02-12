@@ -1,7 +1,7 @@
 <script>
 function logotipo(v,r){
 	if(v.length > 0){
-		return "<img src='" + v + "' class='img-responsive center-block' style='max-height:50px' />";
+		return "<img src='" + v + "' class='img-responsive vcenter center-block' style='max-height:50px' />";
 	}else{
 		return "";
 	}
@@ -11,7 +11,7 @@ function empresa(v,r){
 	return '<div class="container-fluid"><div class="row">\
 		<div class="col-md-2">' + logotipo(r.logotipo, r) + '</div>\
 		<div class="col-md-7"><h2>' + r.nombre + '</h2><br/>' + r.razonSocial + '</div>\
-		<div class="col-md-3"><a class="btn btn-block btn-primary" href="/app/dstickcliente/usuarios/'+ r.id +'" >' + r.id + ' usuarios</a></div>\
+		<div class="col-md-3"><a class="btn btn-block btn-primary vcenter" href="/app/dstickcliente/usuarios/'+ r.id +'" >' + r.id + ' usuarios</a></div>\
 	</div></div>';
 
 }
