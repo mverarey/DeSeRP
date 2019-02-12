@@ -1,4 +1,6 @@
 
+<a href="/app/dstickcliente/administracion" class="btn btn-default" style="margin-bottom: 10px">Regresar</a>
+
 <form method="POST" role="form">
 	<div class="form-group">
 		<label for="">Nivel 1</label>

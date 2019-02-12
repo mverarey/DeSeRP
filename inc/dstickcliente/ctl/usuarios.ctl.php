@@ -6,7 +6,21 @@ $tblcliente = $bd::table("dstick_cliente")->where("id", $idCliente)->first();
 if(empty((array)$tblcliente)){ throw new Exception("Cliente no válido"); }
 
 if( isset( $_REQUEST['nivel']) ){
-	
+
+	$bd::table("dstick_cliente_usuario")->where("idCliente", $idCliente)->delete();
+	foreach($_REQUEST['nivel'] as $nivel => $usuarios){
+		if(is_array($usuarios) ){
+			foreach($usuarios as $idUsuario){
+				$bd::table("dstick_cliente_usuario")->insert(
+					['idCliente' => $idCliente, 'idUsuario' => $idUsuario, 'nivel' => $nivel]
+				);
+			}
+		}else if($usuarios > 0){
+			$bd::table("dstick_cliente_usuario")->insert(
+				['idCliente' => $idCliente, 'idUsuario' => $usuarios, 'nivel' => $nivel]
+			);
+		}
+	}
 }
 
 $tblusuariosCliente = $bd::table("dstick_cliente_usuario")
