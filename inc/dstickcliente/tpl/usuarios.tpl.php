@@ -1,27 +1,34 @@
 
 <a href="/app/dstickcliente/administracion" class="btn btn-default" style="margin-bottom: 10px">Regresar</a>
 
-<form method="POST" role="form">
-	<div class="form-group">
-		<label for="">Nivel 1</label>
-		<select name="nivel[1]" id="nivel1" class="js-data form-control" multiple="multiple">
-			<option>
-		</select>
+<form method="POST" role="form" class="form-horizontal">
+	<div class="row">
+		<div class="col-md-4">
+			<h3>Nivel 1</h3>
+			<select name="nivel[1]" id="nivel1" class="js-data form-control" multiple="multiple">
+				<option>
+			</select>
+		</div>
+
+		<div class="col-md-4">
+			<h3>Nivel 2</h3>
+			<select name="nivel[2]" id="nivel2" class="js-data form-control" multiple="multiple">
+				<option>
+			</select>
+		</div>
+
+		<div class="col-md-4">
+			<h3>Nivel 3</h3>
+			<select name="nivel[3]" id="nivel3" class="js-data form-control" multiple="multiple">
+				<option>
+			</select>
+		</div>
+
 	</div>
 
-	<div class="form-group">
-		<label for="">Nivel 2</label>
-		<select name="nivel[2]" id="nivel2" class="js-data form-control" multiple="multiple">
-			<option>
-		</select>
+	<div class="row">
+		<div class="col-md-4 col-md-offset-4">
+			<button type="submit" class="btn btn-primary btn-block" style="margin-top:25px">Actualizar</button>
+		</div>
 	</div>
-
-	<div class="form-group">
-		<label for="">Nivel 3</label>
-		<select name="nivel[3]" id="nivel3" class="js-data form-control" multiple="multiple">
-			<option>
-		</select>
-	</div>
-
-	<button type="submit" class="btn btn-primary">Actualizar</button>
 </form>

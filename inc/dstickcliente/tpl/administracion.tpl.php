@@ -11,7 +11,7 @@ function empresa(v,r){
 	return '<div class="container-fluid"><div class="row">\
 		<div class="col-md-2">' + logotipo(r.logotipo, r) + '</div>\
 		<div class="col-md-7"><h2>' + r.nombre + '</h2><br/>' + r.razonSocial + '</div>\
-		<div class="col-md-3"><a class="btn btn-block btn-primary vcenter" href="/app/dstickcliente/usuarios/'+ r.id +'" >' + r.id + ' usuarios</a></div>\
+		<div class="col-md-3"><a class="btn btn-block btn-primary vcenter" href="/app/dstickcliente/usuarios/'+ r.id +'" >Consultar usuarios</a></div>\
 	</div></div>';
 
 }
@@ -30,7 +30,7 @@ function usuarios(v,r){
 
     <div id="administrar">
 	<p>Seleccione cliente y despu&eacute;s d&eacute; click sobre la acci&oacute;n que desee realizar.</p>
-	<table id="tbldatabcf44986c63bd375c5b2e2d4baf6f551e" data-toggle="table" data-url="/json/dstickcliente/?joins=" data-pagination="true"
+	<table id="tbldatabcf44986c63bd375c5b2e2d4baf6f551e" data-toggle="table" data-url="/json/dstickcliente" data-pagination="true"
 	   data-method="post" data-side-pagination="server" data-page-list="[5, 10, 20, 50, 100, 200, 300, 400, 500, 1000, 5000, 10000]" data-toolbar="#toolbar-bootstrapTable"
 	   data-search="true" data-striped="true" data-height="500" data-cache="true" data-show-refresh="true"
 	   data-click-to-select="true" data-select-item-name="id" data-show-toggle="true" data-show-columns="true" >
