@@ -147,6 +147,10 @@ class RoutesController
        $info = $info->Where($tabla.".id", $url['d']);
      }
 
+     if( isset($url['filtrar']) ){
+       $info = $info->where($tabla.".".base64_decode($url['filtrar']), $url['valor']);
+     }
+
      if(isset($url['search'])){
        if(sizeof($camposBusqueda) > 0){
          if(is_numeric($url['search'])){
