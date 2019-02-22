@@ -132,7 +132,7 @@ class RoutesController
      }
     if( is_array($joins) ){
       foreach($joins as $join){
-        $info = $info->addSelect($join['col_mostrar']." as FK".$join['col_origen']);
+        $info = $info->addSelect($join['col_mostrar']." as FK". str_replace(".","",substr($join['col_origen'], strpos($join['col_origen'], ".")))  );
         $campos[] = $join['col_mostrar'];
         $info = $info->leftJoin($join['tabla'], (( strpos($join['col_origen'], '.') !== false ) ? $join['col_origen']: $tabla.'.'.$join['col_origen']), '=', $join['tabla'].'.'.$join['col_destino']);
       }
