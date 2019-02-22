@@ -10,6 +10,8 @@ class Migracion{
   public function crearTablas() {
     try{
       $db = new BaseDatos();
+
+      $db::schema()->enableForeignKeyConstraints();
       $db::schema()->dropIfExists('accesos_schema');
       $db::schema()->create('accesos_schema', function ($table) {
         $table->unsignedInteger('idUsuario');
@@ -46,6 +48,12 @@ class Migracion{
         $table->string('variable');
         $table->string('valor');
       });
+      
+      /*
+      $db::schema()->table("usuarios_schema", function(Blueprint $table) {
+        $table->unsignedInteger('id');
+      });
+      */
       return true;
     }catch(Exception $e){
       return false;
