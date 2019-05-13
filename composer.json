@@ -19,9 +19,10 @@
 	        "illuminate/database": "*",
 	        "twig/twig": "^2.0",
 	        "imagine/imagine":"^0.7.1",
-					"phpoffice/phpspreadsheet": "dev-master",
-					"monolog/monolog": "*",
-					"maximebf/debugbar": "1.*"
+	        "phpoffice/phpspreadsheet": "dev-master",
+	        "monolog/monolog": "*",
+	        "maximebf/debugbar": "1.*",
+	        "neitanod/forceutf8": "~2.0"
 	},
 	"minimum-stability": "dev",
 	"autoload": {
