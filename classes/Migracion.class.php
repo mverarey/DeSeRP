@@ -63,7 +63,7 @@ class Migracion{
   public function crearUsuario($usuario, $password = ""){
     $db = new BaseDatos();
     $idUsuario = $db::table('usuarios_schema')->insertGetId(
-        ['usuario' => $usuario, 'password' => md5($password), 'nombre' => 'Administrador del sistema', 'email' => 'no-reply@localhost', 'servidorSMTP' => '', 'passwordSMTP' => '', 'tema' => 'blue', 'fecha_creacion' => date('Y-m-d H:i:s'), 'activo' => 1]
+        ['usuario' => $usuario, 'password' => md5($password), 'nombre' => 'Administrador del sistema', 'email' => 'no-reply@localhost', 'servidorSMTP' => '', 'passwordSMTP' => '', 'tema' => 'skin-blue', 'fecha_creacion' => date('Y-m-d H:i:s'), 'activo' => 1]
     );
     $db::table('usuarios_permisos_schema')->insert([
       ['idUsuario' => $idUsuario, 'modulo' => 'permisos', 'nivel' => '3'],
