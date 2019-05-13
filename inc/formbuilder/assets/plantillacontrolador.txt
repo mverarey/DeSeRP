@@ -12,6 +12,7 @@ switch( $_REQUEST['acc'] ){
 		if($res > 0){
 			$response['ack'] = 200;
 			$response['msg'] = "Se ha actualizado exitosamente.";
+			$this->agregarRegistro("[{TABLA}] Se actualizó el registro <strong>".$_REQUEST['idObjeto']."</strong>.");
 		}else if($res == 0){
 			$response['ack'] = 201;
 			$response['msg'] = "No se realizaron cambios.";
@@ -25,6 +26,7 @@ switch( $_REQUEST['acc'] ){
 		if($res > 0){
 			$response['ack'] = 200;
 			$response['msg'] = "Se ha eliminado exitosamente.";
+			$this->agregarRegistro("[{TABLA}] Se eliminó el registro <strong>".$_REQUEST['idObjeto']."</strong>.");
 		}else if($res == 0){
 			$response['ack'] = 201;
 			$response['msg'] = "No se realizaron cambios.";

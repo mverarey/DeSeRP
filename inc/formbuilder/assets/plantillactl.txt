@@ -6,6 +6,7 @@ switch( $_REQUEST['acc'] ){
 	case "crear":
 		$res = $bd::table("{TABLA}")->insertGetId([ {INSERTAR} ]);
 		if($res){
+			$this->agregarRegistro("[{TABLA}] Se registro el registro <strong>".$res."</strong>.");
 			echo $this->msgOK("Se registro el {OBJETO} correctamente con el id ".$res.".");
 		}else{
 			echo $this->msgError("Ocurri&oacute; un error, intentelo nuevamente.");
