@@ -67,9 +67,6 @@ if(strlen($_FILES['file']['name']) > 0){
 	exit;
 }
 
-//$res = $c->query("SELECT * FROM usuarios WHERE md5(id) = '".md5($_SESSION['usuario']['id'])."'");
-//$fila = get_object_vars($res[0]);
-
 $usuario = $db::table("usuarios")->whereRaw('md5(id) = "'.md5($_SESSION['usuario']['id']).'"')->get()->first();
 if(!$usuario){
 	throw new Exception("Usuario no válido.");
