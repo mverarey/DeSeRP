@@ -96,6 +96,7 @@ $scr = <<<Script
 	});
 
 	$("#txttema").val("{$_SESSION['usuario']['tema']}");
+	$("#messages").css("height", $( document ).height() - 140 );
 Script;
 $this->agregarScript($scr);
 
