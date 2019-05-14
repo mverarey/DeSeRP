@@ -1,9 +1,9 @@
 <?php namespace DepotServer;
 use \Imagine\Image\Box;
+use PhpOffice\PhpSpreadsheet\Chart\Exception;
 
 $this->establecerTitulo("Datos de mi usuario");
 
-$c = new Conexion();
 $db = new BaseDatos();
 
 if(strlen($this->req['nombre']) > 0){
@@ -28,7 +28,7 @@ if(strlen($this->req['nombre']) > 0){
 	}
 
 	if(strlen($this->req['password']) > 0){
-		$res = $c->actualizar("usuarios", array( "password" => md5($this->req['password']) ), $id, true);
+		$res = $db::table("usuarios")->where('id', $id)->update([ "password" => md5($this->req['password']) ]);
 		if($res){
 			echo $this->msgOK("Cambio de contrase&ntilde;a realizado exitosamente!");
 			$this->agregarRegistro("Modificaste tu contrase&ntilde;a.");
@@ -67,15 +67,19 @@ if(strlen($_FILES['file']['name']) > 0){
 	exit;
 }
 
-$res = $c->query("SELECT * FROM usuarios WHERE md5(id) = '".md5($_SESSION['usuario']['id'])."'");
-$fila = get_object_vars($res[0]);
+//$res = $c->query("SELECT * FROM usuarios WHERE md5(id) = '".md5($_SESSION['usuario']['id'])."'");
+//$fila = get_object_vars($res[0]);
 
-$this->ev("id", $fila['id']);
-$this->ev("nombre", $fila['nombre']);
-$this->ev("usuario", $fila['usuario']);
-$this->ev("email", $fila['email']);
-$this->ev("servidor", $fila['servidorSMTP']);
-$this->ev("passmail", base64_decode($fila['passwordSMTP']));
+$usuario = $db::table("usuarios")->whereRaw('md5(id) = "'.md5($_SESSION['usuario']['id']).'"')->get()->first();
+if(!$usuario){
+	throw new Exception("Usuario no válido.");
+}
+$this->ev("id", $usuario->id);
+$this->ev("nombre", $usuario->nombre);
+$this->ev("usuario", $usuario->usuario);
+$this->ev("email", $usuario->email);
+$this->ev("servidor", $usuario->servidorSMTP);
+$this->ev("passmail", base64_decode($usuario->passwordSMTP));
 $this->ev("temaPred", "selected");
 $this->ev("fotoperfil", $_SESSION['usuario']['imagen']);
 
