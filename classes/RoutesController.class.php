@@ -122,7 +122,12 @@ class RoutesController
        $campos = ["id", $campos[0]." AS objeto"];
        $catalogo = true;
      }
-     $camposBusqueda = $campos;
+     $camposBusqueda = [];
+     foreach($campos as $campo){
+       if(!is_object($campo)){
+        $camposBusqueda[] = $campo;
+       }
+     }
      $campos[0] = $db::raw('SQL_CALC_FOUND_ROWS '.$campos[0]);
      $info = $db::table($tabla)->select($campos);
 
