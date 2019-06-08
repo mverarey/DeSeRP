@@ -1,3 +1,5 @@
+@import url(https://fonts.googleapis.com/css?family=Jaldi|Quicksand&display=swap);
+
 body{font-weight: 400;}
 .main-header .logo{ font-family: Quicksand; font-weight: 300;}
 
@@ -37,7 +39,7 @@ width: 100%; height: 35px; padding: 8px 12px; font-size: 15px; line-height: 30px
 .tt-suggestion p {  margin: 0;}
 .gist {font-size: 14px;}
 
-
-
 /* Style :: 2019 */
-.box{ -webkit-box-shadow: 5px 5px 7px 5px #CCCCCC; box-shadow: 5px 5px 7px 5px #CCCCCC; }
+*{ font-family: Jaldi, Quicksand, sans-serif; }
+.box, .small-box, .panel{ -webkit-box-shadow: 0px 3px 5px 3px #CCCCCC; box-shadow: 0px 3px 5px 3px #CCCCCC; }
+table{ font-size: 1.2em;}

@@ -25,8 +25,6 @@
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
-  <!-- Google Font -->
-  <link href="https://fonts.googleapis.com/css?family=Quicksand" rel="stylesheet">
 {@_encabezado}
 </head>
 <body class="hold-transition sidebar-mini fixed {% if session.usuario.tema %} {{session.usuario.tema}} {% else %} skin-blue {% endif %}">
