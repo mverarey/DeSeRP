@@ -27,6 +27,6 @@
     "ContentTools": "1.6.10",
     "eonasdan-bootstrap-datetimepicker": "4.14.30",
     "blueimp-file-upload":"9.28.0",
-    "forge": "0.8.5"
+    "forge": "0.7.1"
   }
 }
