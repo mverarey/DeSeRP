@@ -41,6 +41,7 @@ class RoutesController
    public function json( Request $request, Response $response, $args){
 
      $url = $this->container['url'];
+
      $archivo = "inc/".$url['b']."/ctl/json.ctl.php";
      if ( $this->filesystem->existeArchivo($archivo) ){
        require_once($archivo);
@@ -122,12 +123,7 @@ class RoutesController
        $campos = ["id", $campos[0]." AS objeto"];
        $catalogo = true;
      }
-     $camposBusqueda = [];
-     foreach($campos as $campo){
-       if(!is_object($campo)){
-        $camposBusqueda[] = $campo;
-       }
-     }
+     $camposBusqueda = $campos;
      $campos[0] = $db::raw('SQL_CALC_FOUND_ROWS '.$campos[0]);
      $info = $db::table($tabla)->select($campos);
 
@@ -157,23 +153,39 @@ class RoutesController
      }
 
      if(isset($url['search'])){
+       
        if(sizeof($camposBusqueda) > 0){
+        $where = [];
          if(is_numeric($url['search'])){
-            $info = $info->Where($camposBusqueda[0], $url['search']);
-            $info = $info->OrWhere($camposBusqueda[0], 'like', '%'.$url['search'].'%');
+            
+            //$info = $info->Where($camposBusqueda[0], $url['search']);
+            //$info = $info->OrWhere($camposBusqueda[0], 'like', '%'.$url['search'].'%');
+            $where[] = [[$camposBusqueda[0],"=", $url['search']]];
+            $where[] = [[$camposBusqueda[0], 'like', '%'.$url['search'].'%']];
          }else{
-            $info = $info->Where($camposBusqueda[0], 'like', '%'.$url['search'].'%');
+            // $info = $info->Where($camposBusqueda[0], 'like', '%'.$url['search'].'%');
+            $where[] = [[$camposBusqueda[0], 'like', '%'.$url['search'].'%']];
          }
          unset($camposBusqueda[0]);
          if(sizeof($camposBusqueda) > 0){
            foreach ($camposBusqueda as $campo) {
              if(is_numeric($url['search'])){
-                $info = $info->OrWhere($campo, $url['search']);
+                //$info = $info->OrWhere($campo, $url['search']);
+                $where[] = [[$campo, '=', $url['search']]];
              }
-             $info = $info->OrWhere($campo, 'like', '%'.$url['search'].'%');
+             //$info = $info->OrWhere($campo, 'like', '%'.$url['search'].'%');
+             $where[] = [[$campo, 'like', '%'.$url['search'].'%']];
            }
          }
+       
+         $info = $info->Where(function($q) use ($where){
+           foreach ($where as $w) {
+            $q->orWhere($w);
+           }
+         });
+
        }
+
      }
 
      if(isset($url['term'])){
