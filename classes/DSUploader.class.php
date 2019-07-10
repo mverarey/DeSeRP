@@ -43,14 +43,14 @@ $('#fileupload$name').fileupload({
 	url: '$url', dataType: 'json',
 	done: function (e, data) {
 		var filesURL = "";
-		console.log(data.result);
 		$.each(data.result.files, function (index, file) {
 			if(file.url.length > 0){
 				filesURL += file.url + "|";
-				console.log(file.name);
-				$("#fd$name").append("<p><i class='fa fa-check'></i> "+ file.name +"</p>");
+				/* console.log(file.name); */
+				$("#fd$name").append("<div class='alert alert-success'><p><i class='fa fa-check'></i> "+ file.name +"</p></div>");
 			}else{
 				console.log(file.name + " - Archivo no permitido");
+				$("#fd$name").append("<div class='alert alert-danger'><p><i class='fa fa-times'></i> "+ file.name +"</p></div>");
 			}
 		});
 		$("#$name").val( filesURL.slice(0, -1) );
