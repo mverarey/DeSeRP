@@ -15,8 +15,8 @@
 
 ## Requirements
 
-- PHP 7.1+
-- MySQL, Postgres, SQL Server, or SQLite
+- PHP 7.2+
+- MySQL, Oracle, Postgres, SQL Server, or SQLite
 - [Composer](https://getcomposer.org/)
 - [Bower](https://bower.io/)
 
