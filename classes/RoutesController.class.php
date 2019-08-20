@@ -41,13 +41,12 @@ class RoutesController
    public function json( Request $request, Response $response, $args){
 
      $url = $this->container['url'];
-
      $archivo = "inc/".$url['b']."/ctl/json.ctl.php";
      if ( $this->filesystem->existeArchivo($archivo) ){
        require_once($archivo);
 
        if( $this->accesoPermitido($publica, $_SESSION['usuario']['area'][$url['b']] ) ){
-         $r = $this->obtenerInformacion($url, $tabla, $campos, $joins);
+         $r = $this->obtenerInformacion($url, $tabla, $campos, $joins, $restricciones);
        }else{
           $this->container['logger']->warning("Acceso no permitido - ".print_r( [ 'url' => $this->container['url']['uri'], $_SESSION['usuario'], $_SESSION['accesos']] , true)."\n");
           $r = [ "ack" => 405, "error" => "Acceso no permitido"];
@@ -69,7 +68,7 @@ class RoutesController
        require_once($archivo);
        if( $this->accesoPermitido($publica, $_SESSION['usuario']['area'][$url['b']] ) ){
          if(!isset($url["limit"])) { $url["limit"] = -1; }
-         $r = $this->obtenerInformacion($url, $tabla, $campos, $joins);
+         $r = $this->obtenerInformacion($url, $tabla, $campos, $joins, $restricciones);
        }else{
           $this->container['logger']->warning("Acceso no permitido - ".print_r( [ 'url' => $this->container['url']['uri'], $_SESSION['usuario'], $_SESSION['accesos']] , true)."\n");
           throw new \Exception("Acceso no permitido", 405);
@@ -112,7 +111,7 @@ class RoutesController
      //return $response->withBody( $body );
    }
 
-   private function obtenerInformacion($url, $tabla, &$campos, $joins){
+   private function obtenerInformacion($url, $tabla, &$campos, $joins, $restricciones = []){
 
      $r = [ "ack" => 200, "requestedURL" => $url['uri'] ];
      $db = $this->container['db'];
@@ -123,7 +122,12 @@ class RoutesController
        $campos = ["id", $campos[0]." AS objeto"];
        $catalogo = true;
      }
-     $camposBusqueda = $campos;
+     $camposBusqueda = [];
+     foreach($campos as $campo){
+       if(!is_object($campo)){
+        $camposBusqueda[] = $campo;
+       }
+     }
      $campos[0] = $db::raw('SQL_CALC_FOUND_ROWS '.$campos[0]);
      $info = $db::table($tabla)->select($campos);
 
@@ -143,50 +147,42 @@ class RoutesController
     // echo $info->toSql();
     // exit;
 
+    /* RESTRICCIONES */
+    if( is_array($restricciones) ){
+      foreach($restricciones as $col => $restric){
+        $info = $info->Where($tabla.".".$col, $restric);
+      }
+    }
 
-     if( $url['c'] == 'obtenerobjetos' ){
-       $info = $info->Where($tabla.".id", $url['d']);
-     }
+    if( $url['c'] == 'obtenerobjetos' ){
+      $info = $info->Where($tabla.".id", $url['d']);
+    }
 
-     if( isset($url['filtrar']) ){
-       $info = $info->where($tabla.".".base64_decode($url['filtrar']), $url['valor']);
-     }
+    if( isset($url['filtrar']) ){
+      $info = $info->where($tabla.".".base64_decode($url['filtrar']), $url['valor']);
+    }
 
-     if(isset($url['search'])){
-       
-       if(sizeof($camposBusqueda) > 0){
-        $where = [];
-         if(is_numeric($url['search'])){
-            
-            //$info = $info->Where($camposBusqueda[0], $url['search']);
-            //$info = $info->OrWhere($camposBusqueda[0], 'like', '%'.$url['search'].'%');
-            $where[] = [[$camposBusqueda[0],"=", $url['search']]];
-            $where[] = [[$camposBusqueda[0], 'like', '%'.$url['search'].'%']];
-         }else{
-            // $info = $info->Where($camposBusqueda[0], 'like', '%'.$url['search'].'%');
-            $where[] = [[$camposBusqueda[0], 'like', '%'.$url['search'].'%']];
-         }
-         unset($camposBusqueda[0]);
-         if(sizeof($camposBusqueda) > 0){
-           foreach ($camposBusqueda as $campo) {
-             if(is_numeric($url['search'])){
-                //$info = $info->OrWhere($campo, $url['search']);
-                $where[] = [[$campo, '=', $url['search']]];
-             }
-             //$info = $info->OrWhere($campo, 'like', '%'.$url['search'].'%');
-             $where[] = [[$campo, 'like', '%'.$url['search'].'%']];
-           }
-         }
-       
-         $info = $info->Where(function($q) use ($where){
-           foreach ($where as $w) {
-            $q->orWhere($w);
-           }
-         });
-
-       }
-
-     }
+    if(isset($url['search'])){
+      if(sizeof($camposBusqueda) > 0){
+        $info = $info->where(function ($query) use ($camposBusqueda, $url) {
+          if(is_numeric($url['search'])){
+            $query->Where($camposBusqueda[0], $url['search'])
+                  ->OrWhere($camposBusqueda[0], 'like', '%'.$url['search'].'%');
+          }else{
+            $query->Where($camposBusqueda[0], 'like', '%'.$url['search'].'%');
+          }
+          unset($camposBusqueda[0]);
+          if(sizeof($camposBusqueda) > 0){
+            foreach ($camposBusqueda as $campo) {
+              if(is_numeric($url['search'])){
+                $query->OrWhere($campo, $url['search']);
+              }
+              $query->OrWhere($campo, 'like', '%'.$url['search'].'%');
+            }
+          }
+        });
+      }
+    }
 
      if(isset($url['term'])){
        $info = $info->Where($columnaCatalogo, 'like', '%'.$url['term'].'%');
