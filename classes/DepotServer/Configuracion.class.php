@@ -19,7 +19,7 @@
 class Configuracion{
 
 	// Base de Datos
-	var $servidor = "localhost";
+	var $servidor = "host.docker.internal";
 	var $usuario = "root";
 	var $password = '';
 	var $db = "ds_deserp";

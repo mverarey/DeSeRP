@@ -1,0 +1,23 @@
+version: '3.7'
+
+volumes:
+    logs:
+        driver: local
+
+services:
+    app:
+        image: php:7.2-fpm-alpine
+        working_dir: /var/www
+        command: php -S 0.0.0.0:8080
+        env_file:
+            - .env
+        environment:
+            docker: "true"
+        ports:
+            - 80:8080
+        volumes:
+            - .:/var/www
+            - logs:/var/www/logs
+        build:
+            context: ./
+            dockerfile: Dockerfile

@@ -65,7 +65,7 @@ class DeSeRP{
 				$this->contenido = $this->obtenerArchivo("inc/principal/ctl/login.ctl.php");
 				$this->contenido .= $this->obtenerArchivo("inc/principal/tpl/login.tpl.php");
 
-				$this->agregarScript('$("body").addClass("layout-top-nav"); $(".main-sidebar").remove(); $(".sidebar-toggle").replaceWith(\'<a href="/" class="navbar-brand">DeSeRP</a>\'); $(".logo").hide();');
+				/* $this->agregarScript('$("body").addClass("layout-top-nav"); $(".main-sidebar").remove(); $(".sidebar-toggle").replaceWith(\'<a href="/" class="navbar-brand">DeSeRP</a>\'); $(".logo").hide();'); */
 			}
 		}catch(\Exception $e){
 			$this->establecerTitulo("Excepci&oacute;n");

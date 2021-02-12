@@ -8,13 +8,18 @@
 	    "homepage": "http://www.mauriciovera.com/"
 	}],
 	"license": "MIT",
+	"config": {
+        "platform": {
+            "php": "7.2"
+        }
+    },
 	"require": {
-	        "php": "^7.0",
+	        "php": "^7.2",
 	        "ezyang/htmlpurifier": "*",
 	        "slim/slim": "^3.8",
 	        "league/flysystem": "^1.0",
 	        "league/flysystem-aws-s3-v3": "^1.0",
-	        "swiftmailer/swiftmailer": "^5.4",
+	        "swiftmailer/swiftmailer": "*",
 	        "firebase/php-jwt": "^5.0",
 	        "illuminate/database": "*",
 	        "twig/twig": "^2.0",
@@ -26,12 +31,17 @@
 	},
 	"minimum-stability": "dev",
 	"autoload": {
+		"classmap": [
+			"classes"
+		],
 		"psr-4": {
-			"DepotServer\\":        "classes"
+			"DepotServer\\":        "DepotServer"
 		},
 		"exclude-from-classmap": ["/classes/Configuracion.Inicial.class.php"]
 	},
-    	"scripts": {
+    "scripts": {
+		"start": "docker-compose up",
+		"start-build": "docker-compose up --build",
 		"post-install-cmd": [
 			"cp bowerrc .bowerrc",
 			"cp htaccess .htaccess",

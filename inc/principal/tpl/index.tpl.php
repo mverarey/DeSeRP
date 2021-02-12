@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <title>{@pag->titulo} :: DeSeRP {@sistema->version} {@sistema->subversion}</title>
-  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1" name="viewport">
   <link rel="stylesheet" href="/assets/admin-lte/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="/assets/font-awesome/css/font-awesome.min.css">
   <link rel="stylesheet" href="/assets/ionicons/css/ionicons.min.css">
@@ -27,7 +27,12 @@
   <![endif]-->
 {@_encabezado}
 </head>
+
+{% if session.activa %}
 <body class="hold-transition sidebar-mini fixed {% if session.usuario.tema %} {{session.usuario.tema}} {% else %} skin-blue {% endif %}">
+{% else %}
+<body class="skin-blue layout-top-nav fixed">
+{% endif %}
 <!-- Site wrapper -->
 <div class="wrapper" id="dsmain">
   <header class="main-header">
@@ -40,6 +45,7 @@
     </a>
     <!-- Header Navbar: style can be found in header.less -->
     <nav class="navbar navbar-static-top">
+      {% if session.activa %}
       <!-- Sidebar toggle button-->
       <a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button"><!-- push-menu -->
         <span class="sr-only">Toggle navigation</span>
@@ -47,6 +53,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </a>
+      {% endif %}
       <div class="navbar-custom-menu">
         <ul class="nav navbar-nav">
           <li><a href="#">CDMX, a <strong>{@sistema->ahoraFormat}</strong></a></li>
@@ -171,10 +178,10 @@
   </header>
   <!-- =============================================== -->
   <!-- Left side column. contains the sidebar -->
+  {% if session.activa %}
   <aside class="main-sidebar">
     <!-- sidebar: style can be found in sidebar.less -->
     <div class="sidebar">
-        {% if session.activa %}
       <!-- Sidebar user panel -->
       <div class="user-panel">
         <div class="pull-left image">
@@ -186,10 +193,10 @@
         </div>
       </div>
         {@_menu}
-        {% endif %}
     </div>
     <!-- /.sidebar -->
   </aside>
+  {% endif %}
   <!-- =============================================== -->
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
@@ -215,7 +222,7 @@
     <div class="pull-right hidden-xs">
       <b>Version</b> D:  {@sistema->version} {@sistema->subversion} | T:2.4.0
     </div>
-    <strong>DeSeRP: Copyright &copy; 2014-2019 <a href="http://depotserver.com">Depot Server</a>. | Theme: Copyright &copy; 2014-2019 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
+    <strong>DeSeRP: Copyright &copy; 2014-2021 <a href="http://depotserver.com">Depot Server</a>. | Theme: Copyright &copy; 2014-2021 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
     reserved.
   </footer>
   <!-- Control Sidebar -->
@@ -400,7 +407,7 @@
 
 <!-- jQuery 3 --><script src="/assets/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap 3.3.7 --><script src="/assets/admin-lte/bootstrap/js/bootstrap.min.js"></script>
-<!-- Moment --><script type="text/javascript" src="/assets/moment/min/moment.min.js"></script>
+<!-- Moment --><script src="/assets/moment/min/moment.min.js"></script>
 <!-- SlimScroll --><script src="/assets/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick --><script src="/assets/admin-lte/plugins/fastclick/fastclick.min.js"></script>
 <!-- Pace --><script src="/assets/admin-lte/plugins/pace/pace.js"></script>
