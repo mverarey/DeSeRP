@@ -27,7 +27,6 @@
   <![endif]-->
 {@_encabezado}
 </head>
-
 {% if session.activa %}
 <body class="hold-transition sidebar-mini fixed {% if session.usuario.tema %} {{session.usuario.tema}} {% else %} skin-blue {% endif %}">
 {% else %}
